@@ -1,14 +1,21 @@
 import React, {Component} from 'react'
+import {
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View
+} from 'react-native';
+import { Provider } from 'react-redux'
+
 import App from './components/App.js'
 // import SOMEREDUCER from './reducers/SOMEREDUCER'
 import { createStore, applyMiddleware } from 'redux'
-
 // let store = creatStore(SOMEREDUCER)
 export default class MySentry extends Component {
   render() {
     return (
       <Provider store = {store} >
-        <App />      
+        <App />
       </Provider>
     )
   }
