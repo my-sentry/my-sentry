@@ -4,8 +4,10 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest --coverage",
-    "server": "nodemon server/index.js --ignore src/"
+    "server": "nodemon server/index.js --ignore src/",
+    "test": "npm run test:server && npm run test:client",
+    "test:server": "mocha --bail --R list tests/server.js",
+    "test:client": "jest --coverage"
   },
   "dependencies": {
     "body-parser": "^1.17.1",
