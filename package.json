@@ -19,6 +19,7 @@
     "knex": "^0.12.9",
     "mocha": "^3.2.0",
     "morgan": "^1.8.1",
+    "mysql": "^2.13.0",
     "native-base": "^2.1.0",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
