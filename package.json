@@ -6,7 +6,7 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "server": "nodemon server/index.js --ignore src/",
     "test": "npm run test:server && npm run test:client",
-    "test:server": "mocha --bail --R list tests/server.js",
+    "test:server": "mocha --recursive --bail --R list tests/server",
     "test:client": "jest --coverage"
   },
   "dependencies": {
@@ -23,6 +23,8 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "react": "15.4.2",
+    "react-addons-test-utils": "^15.4.2",
+    "react-dom": "^15.4.2",
     "react-native": "0.42.3",
     "react-redux": "^5.0.3",
     "redux": "^3.6.0",
@@ -36,6 +38,9 @@
     "react-test-renderer": "15.4.2"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "transformIgnorePatterns": [
+      "/node_modules/(?!native-base)/"
+    ]
   }
 }
