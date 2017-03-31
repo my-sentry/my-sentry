@@ -10,6 +10,7 @@
     "body-parser": "^1.17.1",
     "chai": "^3.5.0",
     "enzyme": "^2.8.0",
+    "eslint-config-hackreactor": "github:reactorcore/eslint-config-hackreactor",
     "express": "^4.15.2",
     "express-session": "^1.15.2",
     "knex": "^0.12.9",
