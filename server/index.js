@@ -33,6 +33,12 @@ app.use((req, res, next)=> {
   next(err);
 });
 
+app.use((err, req, res, next) => {
+  var status = err.status || 500;
+  res.status(status).send(err.message);
+});
+
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
 });
+
