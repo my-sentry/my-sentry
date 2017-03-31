@@ -1,23 +1,20 @@
-import React, {Component} from 'react'
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
-import { connect, Provider } from 'react-redux'
-import Reducer from './reducers/index.js'
-import Dashboard from './components/Dashboard.js'
-import { createStore, applyMiddleware } from 'redux'
-import {Router, Scene, Actions } from 'react-native-router-flux'
-import { logger } from "./reducers/middleware"
+import React, {Component} from 'react';
 
-const RouterWithRedux = connect()(Router)
+import Reducer from './reducers/index.js';
+import Dashboard from './components/Dashboard.js';
+
+import { logger } from './reducers/middleware';
+import { connect, Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import { AppRegistry, StyleSheet, Text, View} from 'react-native';
+import {Router, Scene, Actions } from 'react-native-router-flux';
+
+const RouterWithRedux = connect()(Router);
 
 let store = createStore(
   Reducer,
   applyMiddleware(logger)
-)
+);
 
 const scenes = Actions.create(
     <Scene key="root">
@@ -31,6 +28,6 @@ export default class MySentry extends Component {
       <Provider store = {store} >
         <RouterWithRedux scenes={scenes} />
       </Provider>
-    )
+    );
   }
 }

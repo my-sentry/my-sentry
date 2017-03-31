@@ -12,18 +12,19 @@ var morgan = require('morgan');
 var expressSession = require('express-session');
 var passport = require('passport');
 
+const port = process.env.PORT || 8000;
+
 var app = express();
 app.use(passport.initialize());
 app.use(passport.session());
 
 // setup extra middleware
-app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// app.use('/api/users', users)
-// app.use('/api/events', events)
-// app.use('/api/groups', groups)
+app.use('/api/users', users);
+app.use('/api/events', events);
+app.use('/api/groups', groups);
 
 
 app.use((req, res, next)=> {
@@ -31,6 +32,7 @@ app.use((req, res, next)=> {
   err.status = 404;
   next(err);
 });
-app.listen(8000, () => {
-  console.log('`Server is listening on port !`');
+
+app.listen(port, () => {
+  console.log(`Server is listening on port ${port}`);
 });
