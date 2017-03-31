@@ -30,7 +30,7 @@ app.use((req, res, next)=> {
   var err = new Error('ERROR 404 Sorry can\'t find what you\'re looking for!');
   err.status = 404;
   next(err);
-})
+});
 app.listen(8000, () => {
-  console.log(`Server is listening on port !`);
-})
+  console.log('`Server is listening on port !`');
+});
