@@ -1,4 +1,5 @@
 import {combineReducers} from 'redux';
+import routes from './routes';
 
 function createReducer(initialState, handlers) {
   return function reducer(state = initialState, action) {
@@ -10,8 +11,10 @@ function createReducer(initialState, handlers) {
   };
 }
 
-const Reducer = createReducer([], {
+const MyReducer = createReducer([], {
   // some reduced func
 });
 
-export default Reducer;
+export default combineReducers({
+  routes,
+});
