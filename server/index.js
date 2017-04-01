@@ -1,6 +1,8 @@
 var express = require('express');
 var path = require('path');
 
+global._ = require('lodash');
+
 // require routes
 var events = require('./routes/eventRoutes');
 var users = require('./routes/userRoutes');
@@ -42,4 +44,3 @@ app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
 });
 module.exports = app;
-

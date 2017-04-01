@@ -27,5 +27,47 @@ exports.addUser = function (firstName, lastName, username, password) {
         .then(result => result[0]);
     });
 };
+
 //Get user
+exports.getUser = function (username) {
+  return knex('users')
+    .where('username', username)
+    .then(result => {
+      return _.pick(result[0], ['id', 'first_name', 'last_name', 'username']);
+    });
+};
+
+exports.getUserById = function (id) {
+  return knex('users')
+    .where('id', id)
+    .then(result => {
+      return _.pick(result[0], ['id', 'first_name', 'last_name', 'username']);
+    });
+};
+
 //Get users
+exports.getUsers = function () {
+  return knex.select()
+    .from('users')
+    .then(result => {
+      return result.map(user => {
+        return _.pick(user, ['id', 'first_name', 'last_name', 'username']);
+      });
+    });
+};
+
+//Update user
+exports.updateUserById = function(id) {
+  return knex('users')
+    .where('id', id)
+    .then(result => {
+      return _.pick(result[0], ['id', 'first_name', 'last_name', 'username']);
+    });
+};
+
+//Delete user
+exports.deleteUserById = function(id) {
+  return knex('users')
+    .where('id', id)
+    .del();
+};
