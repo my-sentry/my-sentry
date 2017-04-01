@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import { AppRegistry, StyleSheet, Text, View} from 'react-native';
 import { connect, Provider } from 'react-redux';
-import Header from './Header';
 import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, H1 } from 'native-base';
 
 
@@ -9,13 +8,11 @@ import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body
 //   return {state: state};
 // };
 
-export default connect()(function Groups (state) {
+export default connect()(function Signup (state) {
   return (
     <Container>
-    <Header />
-
     <Content>
-    <H1>Groups Go Here</H1>
+    <H1>Signup goes here</H1>
     </Content>
     </Container>
   );

@@ -6,3 +6,4 @@ export function logger({ getState }) {
     return returnValue;
   };
 }
+
