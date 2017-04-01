@@ -9,12 +9,12 @@ import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body
 //   return {state: state};
 // };
 
-export default connect()(function Groups (state) {
+export default connect()(function EventView (state) {
   return (
     <Container>
     <Header />
     <Content>
-    <H1>Groups Go Here</H1>
+    <H1>EventView Goes Here</H1>
     </Content>
     </Container>
   );

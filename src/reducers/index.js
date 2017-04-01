@@ -1,16 +1,5 @@
 import {combineReducers} from 'redux';
-import { Reducer } from 'react-native-router-flux';
-
-// needs to fake params to pass sanity checks
-const routerReducer = Reducer({initialState: {key: true}, scenes: true});
-
-function router(state = null, action) {
-  if (action.type === 'RootContainerInitialAction') {
-    return action.initialState;
-  } else {
-    return routerReducer(state, action);
-  }
-}
+import routes from './routes';
 
 function createReducer(initialState, handlers) {
   return function reducer(state = initialState, action) {
@@ -27,6 +16,5 @@ const MyReducer = createReducer([], {
 });
 
 export default combineReducers({
-  MyReducer,
-  router,
+  routes,
 });
