@@ -17,6 +17,14 @@ describe('User Controller', () => {
 
     });
 
+    it('should respond with an object describing the inserted user', () => {
+
+    });
+
+    it('should not respond with the inserted password', () => {
+
+    });
+
   });
 
   describe('getUser', () => {
@@ -25,7 +33,11 @@ describe('User Controller', () => {
 
     });
 
-    it('should not return the password in the response', () => {
+    it('should not retrieve the user\'s password', () => {
+
+    });
+
+    it('should respond with undefined if user does not exist', () => {
 
     });
 
@@ -37,7 +49,7 @@ describe('User Controller', () => {
 
     });
 
-    it('should not return the password in the response', () => {
+    it('should not retrieve the user\'s password', () => {
 
     });
 
@@ -50,6 +62,14 @@ describe('User Controller', () => {
     });
 
     xit('should hash a user password if given', () => {
+
+    });
+
+    it('should respond with an object describing the updated user', () => {
+
+    });
+
+    it('should not respond with the user\'s password', () => {
 
     });
 

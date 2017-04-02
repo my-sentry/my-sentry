@@ -13,11 +13,19 @@ describe('Group Controller', () => {
 
     });
 
+    it('should respond with an object describing the inserted group', () => {
+
+    });
+
   });
 
   describe('getGroupById', () => {
 
     it('should retrieve a group from the databse', () => {
+
+    });
+
+    it('should respond with undefined if no group exists', () => {
 
     });
 
@@ -29,11 +37,19 @@ describe('Group Controller', () => {
 
     });
 
+    it('should respond with an empty array if no groups exist', () => {
+
+    });
+
   });
 
   describe('updateGroupById', () => {
 
     it('should update a group in the database', () => {
+
+    });
+
+    it('should respond with an object describing the updated group', () => {
 
     });
 
