@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { AppRegistry, StyleSheet, Text, View} from 'react-native';
 import { connect, Provider } from 'react-redux';
 import Header from './Header';
-import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, H1 } from 'native-base';
+import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, List, ListItem, InputGroup, Picker, Label, Item, Input, Form} from 'native-base';
 
 
 // const mapStateToProps = state => { 
@@ -12,10 +12,46 @@ import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body
 export default connect()(function EventForm (state) {
   return (
     <Container>
-    <Header />
-    <Content>
-    <H1>EventForm Goes Here</H1>
-    </Content>
+    	<Header />
+    		<Content>
+    		<Item stackedLabel>
+    			<Label>Event</Label>
+    			<Input />
+    		</Item>
+    		<Item stackedLabel>
+    			<Label>Location</Label>
+    			<Input />
+    		</Item>
+    		<Item>
+				<InputGroup>
+					<Icon name="ios-alarm"/>
+					<Input placeholder="Start Time:" />
+				
+					<Icon name="ios-alarm"/>
+					<Input placeholder="End Time:" />
+				</InputGroup>
+    		</Item>
+    		<Item>
+    		<Picker
+    			iosHeader="Select one"
+    			mode="dropdown">
+    			 <Item label="Cats" value="key0" />
+                 <Item label="Dogs" value="key1" />
+                 <Item label="Birds" value="key2" />
+                 <Item label="Elephants" value="key3" />
+            </Picker>
+            </Item>
+            <Item stackedLabel>
+            	<Label>Event Description</Label>
+            	<InputGroup regular>
+            		<Input />
+            	</InputGroup>
+            </Item>
+            </Content>
+            <Button style={{ alignSelf: 'center', marginTop: 20, marginBottom: 20 }}>
+            	<Text>Create Event</Text>
+            </Button>
+    	
     </Container>
   );
 });
