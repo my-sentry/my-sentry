@@ -1,20 +1,17 @@
 import {combineReducers} from 'redux';
+import {Reducer} from 'react-native-router-flux';
 import routes from './routes';
 
-function createReducer(initialState, handlers) {
-  return function reducer(state = initialState, action) {
-    if (handlers.hasOwnProperty(action.type)) {
-      return handlers[action.type](state, action);
-    } else {
-      return state;
-    }
+
+export function reducerCreate(params) {
+  const defaultReducer = new Reducer(params);
+  return (state, action) => {
+   // console.log('ACTION:', action);
+    return defaultReducer(state, action);
   };
 }
 
-const MyReducer = createReducer([], {
-  // some reduced func
-});
-
 export default combineReducers({
   routes,
+  // more reducers
 });

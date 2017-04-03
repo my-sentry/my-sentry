@@ -16,29 +16,22 @@ const styles = {
   }
 };
 
-const mapStateToProps = state => { 
-  return {
-    scene: state.scene,
-    history: [...state.history].pop()
-  };
-};
 
+const mapStateToProps = state => { 
+  return {drawer: state.drawer};
+};
 
 // this has to be called MyHeader instead of Header because i am importing Header
 
-export default connect(mapStateToProps)(function MyHeader (state, props) {
-  if (state.history) {
-    var back = state.history.name;    
-  }
- 
+export default connect()(function MyHeader (state, props) { 
   return (
-    <Header> 
+    <Header dark> 
     <Left>
       <Button>
         <Icon 
           name='arrow-back' 
           style={styles.menu}
-          onPress={()=> Actions[back]()}
+          onPress={()=> Actions.pop()}
           />
       </Button>
     </Left>
@@ -53,7 +46,7 @@ export default connect(mapStateToProps)(function MyHeader (state, props) {
         ios='ios-menu' 
         android="md-menu" 
         style={styles.menu}
-        onPress={()=> console.log('hamburger')}
+        onPress={()=> Actions.refresh({key: 'menu', open: value => !value })}
         />
       </Button>
     </Right>

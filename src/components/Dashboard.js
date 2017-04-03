@@ -39,9 +39,7 @@ export default connect(mapStateToProps)(class Dashboard extends Component {
         : (
           <Container style={styles.container}>
           <H1>No Groups</H1>
-          <Button block primary
-          onPress={()=> Actions.groups()}
-          >
+          <Button block primary onPress={Actions.groups} >
             <Text>Find Group</Text>
           </Button>
           </Container>
