@@ -2,63 +2,31 @@ const expect = require('chai').expect;
 const users = require('../../../server/db/controllers/userCtrl.js');
 const knex = require('../../../server/db/db.js');
 
-var sampleIds;
 
-before(() => {
-
-  var sampleUsers = [
-    {
-      username: 'jkrusinski',
-      password: 'some_long_hash',
-      'first_name': 'Jerry',
-      'last_name': 'Krusinski'
-    },
-    {
-      username: 'jgranny',
-      password: 'another_long_hash',
-      'first_name': 'Jonathan',
-      'last_name': 'Grandstaff'
-    }
-  ];
-
-  return Promise.all(sampleUsers.map(user => {
-
-    return knex('users')
-      .returning(['id'])
-      .insert(user)
-      .then(result => result[0]);
-
-  })).then(ids => sampleIds = ids);
-
-});
-
-after(() => {
-
-  return Promise.all(sampleIds.map(id => {
-    return knex('users').where('id', id).del().then(result => null);
-  }));
-
-});
 
 describe('User Controller', () => {
 
+  before(() => {
+    knex.seed.run();
+  });
+
+  after(() => {
+    knex.seed.run();
+  });
 
   describe('addUser', () => {
 
     it('should add a new user to the database', () => {
 
-      return users.addUser('Christian', 'Arredondo', 'dondo', 'hashme')
+      return users.addUser('Megan', 'Rabuse', 'mrabuse', 'hashme')
 
         .then(() => {
-          return knex('users').where('username', 'dondo')
-            .then(result => {
-              sampleIds.push(result[0].id);
-              return result[0];
-            });
+          return knex('users').where('username', 'mrabuse')
+            .then(result => result[0]);
         })
 
         .then(user => {
-          expect(`${user.first_name} ${user.last_name}`).to.equal('Christian Arredondo');
+          expect(`${user.first_name} ${user.last_name}`).to.equal('Megan Rabuse');
         });
 
     });
