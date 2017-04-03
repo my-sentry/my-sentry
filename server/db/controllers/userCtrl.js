@@ -3,7 +3,7 @@ var bcrypt = require('bcrypt-nodejs');
 
 //Hash Password
 var hashPassword = function (password) {
-  return Promise((fulfill, reject) => {
+  return new Promise((fulfill, reject) => {
     bcrypt.hash(password, null, null, (err, hash) => {
       if (err) {
         return reject(err);
