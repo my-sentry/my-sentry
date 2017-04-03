@@ -20,7 +20,22 @@ module.exports = [
   // cory in 512 Realty
   {
     id: 4,
-    'user_id': 4, 
+    'user_id': 4,
     'group_id': 2
+  },
+  {
+    id: 5,
+    'user_id': 2,
+    'group_id': 3
+  },
+  {
+    id: 6,
+    'user_id': 3,
+    'group_id': 3
+  },
+  {
+    id: 7,
+    'user_id': 4,
+    'group_id': 3
   }
 ];

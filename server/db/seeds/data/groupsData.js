@@ -8,5 +8,10 @@ module.exports = [
     id: 2,
     name: '512 Realty',
     'admin_user': 3
+  },
+  {
+    id: 3,
+    name: 'Corn Maze Enthusiasts Group',
+    'admin_user': 1
   }
 ];
