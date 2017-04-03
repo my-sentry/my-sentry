@@ -23,12 +23,18 @@ export default connect()(function EventForm (state) {
     			<Input />
     		</Item>
     		<Item>
+    			<InputGroup>
+    				<Icon name="ios-calendar" style={{color:'blue', fontSize: 20}}/>
+    				<Input placeholder="Event Date" />
+    			</InputGroup>
+    		</Item>
+    		<Item>
 				<InputGroup>
 					<Icon name="ios-alarm"/>
-					<Input placeholder="Start Time:" />
+					<Input placeholder="Start Time" />
 				
 					<Icon name="ios-alarm"/>
-					<Input placeholder="End Time:" />
+					<Input placeholder="End Time" />
 				</InputGroup>
     		</Item>
     		<Item>
