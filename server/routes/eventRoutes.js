@@ -65,8 +65,12 @@ router.put('/:id', (req, res, next) => {
 });
 
 router.delete('/:id', (req, res) => {
-  events.deleteEventById(req.params.id);
-  res.end();
+  events.deleteEventById(req.params.id)
+    .then(result => res.json(result))
+    .catch(err => {
+      console.log(err);
+      next(err);
+    });
 });
 
 module.exports = router;

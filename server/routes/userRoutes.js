@@ -35,7 +35,7 @@ router.post('/', (req, res, next) => {
 
 router.put('/:id', (req, res, next) => {
   users.updateUserById(req.params.id)
-  .then(result => res.json(result))
+    .then(result => res.json(result))
     .catch(err => {
       console.log(err);
       next(err);
@@ -43,8 +43,12 @@ router.put('/:id', (req, res, next) => {
 });
 
 router.delete('/:id', (req, res) => {
-  users.deleteUserById(req.params.id);
-  res.end();
+  users.deleteUserById(req.params.id)
+    .then(result => res.json(result))
+    .catch(err => {
+      console.log(err);
+      next(err);
+    });
 });
 
 
