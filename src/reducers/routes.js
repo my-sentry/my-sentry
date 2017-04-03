@@ -1,21 +1,16 @@
 import { ActionConst } from 'react-native-router-flux';
 
-const initialState = {
-  scene: {},
+const INITIALSTATE = {
+  scene: {name: 'home'},
 };
 
-export default function reducer(state = initialState, action = {}) {
+export default function(state = INITIALSTATE, action = {}) {
   switch (action.type) {
-    // focus action is dispatched when a new screen comes into focus
-    case ActionConst.FOCUS:
-      return {
-        ...state,
-        scene: action.scene,
-      };
-
-    // ...other actions
-
-    default:
-      return state;
+  // case ActionConst.FOCUS:
+  //   return { ...state,  
+  //     scene: action.scene,
+  //      };
+  default:
+    return state;
   }
 }

@@ -1,6 +1,8 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import { connect } from 'react-redux';
 import { AppRegistry, StyleSheet, Text, View} from 'react-native';
+import {Actions, ActionConst} from 'react-native-router-flux';
+
 import { Container, Header, Title, Content, Button, Left, Right, Body, Icon, H1 } from 'native-base';
 
 const styles = {
@@ -15,23 +17,28 @@ const styles = {
 };
 
 
+const mapStateToProps = state => { 
+  return {name: state.scene};
+};
+
 // this has to be called MyHeader instead of Header because i am importing Header
 
-export default connect()(function MyHeader () {
+export default connect(mapStateToProps)(function MyHeader ({name}) { 
+  console.log(name)
   return (
-    <Header> 
+    <Header > 
     <Left>
       <Button>
         <Icon 
           name='arrow-back' 
           style={styles.menu}
-          onPress={()=> console.log('back')}
+          onPress={()=> Actions.pop()}
           />
       </Button>
     </Left>
 
       <Body style={styles.header}>
-        <Text>Dashboard</Text>
+        <Text></Text>
       </Body>      
          
     <Right>
@@ -40,10 +47,11 @@ export default connect()(function MyHeader () {
         ios='ios-menu' 
         android="md-menu" 
         style={styles.menu}
-        onPress={()=> console.log('hamburger')}
+        onPress={()=> Actions.refresh({key: 'menu', open: value => !value })}
         />
       </Button>
     </Right>
     </Header>
   );
 });
+

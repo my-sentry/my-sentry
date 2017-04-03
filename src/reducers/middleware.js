@@ -1,3 +1,5 @@
+
+//this function just logs the actions before and after they are processed
 export function logger({ getState }) {
   return (next) => (action) => {
     console.log('will dispatch', action);
@@ -6,3 +8,4 @@ export function logger({ getState }) {
     return returnValue;
   };
 }
+

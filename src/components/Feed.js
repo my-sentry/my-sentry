@@ -13,7 +13,7 @@ export default connect()(class Feed extends Component {
       <Container>
       <Text> FEED GOES HERE </Text>
         <Button block primary
-        onPress={()=> Actions.EventForm()}
+        onPress={() =>Actions.eventForm()}
         >
           <Text>Create Event</Text>
         </Button>
