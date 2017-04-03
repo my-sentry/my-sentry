@@ -12,12 +12,23 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/:id', (req, res, next) => {
-  users.getUserById(req.params.id)
-    .then(result => res.json(result))
-    .catch(err => {
-      console.log(err);
-      next(err);
-    });
+  var id = req.params.id;
+  
+  if (typeof id === 'string') {
+    users.getUser(id)
+      .then(result => res.json(result))
+      .catch(err => {
+        console.log(err);
+        next(err);
+      });
+  } else {
+    users.getUserById(id)
+      .then(result => res.json(result))
+      .catch(err => {
+        console.log(err);
+        next(err);
+      });
+  }
 });
 
 router.post('/', (req, res, next) => {
