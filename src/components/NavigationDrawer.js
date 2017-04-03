@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
 import Drawer from 'react-native-drawer';
 import SideMenu from './SideMenu';
-import {Actions, DefaultRenderer} from 'react-native-router-flux';
+import {Actions, ActionConst, DefaultRenderer} from 'react-native-router-flux';
 
+const drawerStyles = {
+  drawer: { backgroundColor: '#ddf0f0', shadowColor: '#000000', opacity: 0.8, shadowRadius: 3, overflow: 'hidden'},
+};
 export default class NavigationDrawer extends Component {
   render() {
     const state = this.props.navigationState;
@@ -13,14 +16,14 @@ export default class NavigationDrawer extends Component {
             open={state.open}
             onOpen={()=>Actions.refresh({key: state.key, open: true})}
             onClose={()=>Actions.refresh({key: state.key, open: false})}
-            type="displace"
+            type="overlay"
             content={<SideMenu />}
             tapToClose={true}
             openDrawerOffset={0.1}
             side={'right'}
             panCloseMask={0.2}
-            negotiatePan={true}
-            tweenHandler={Drawer.tweenPresets.parallax}
+            acceptPan={true}
+            styles={drawerStyles}
             >
             <DefaultRenderer navigationState={children[children.length - 1]} onNavigate={this.props.onNavigate} />
         </Drawer>

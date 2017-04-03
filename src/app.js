@@ -24,8 +24,8 @@ const store = compose(
 //this could get moved to its own file. 
 const scenes = Actions.create(
   <Scene key="root" hideNavBar>
-    <Scene key='menu' component={NavigationDrawer} open={false} >
-      <Scene key="dashboard" direction={'horizontal'} component={Dashboard} title="Dashboard"/>
+    <Scene key='menu' component={NavigationDrawer} open={false}>
+      <Scene key="dashboard" tabs={true} direction={'vertical'} component={Dashboard} title="Dashboard"/>
       <Scene key="groups" tabs={true} component={Groups} title="groups" />
       <Scene key="login" component={Login} />
       <Scene key="signup" component={Signup} />

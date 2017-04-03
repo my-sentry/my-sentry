@@ -18,14 +18,15 @@ const styles = {
 
 
 const mapStateToProps = state => { 
-  return {drawer: state.drawer};
+  return {name: state.scene};
 };
 
 // this has to be called MyHeader instead of Header because i am importing Header
 
-export default connect()(function MyHeader (state, props) { 
+export default connect(mapStateToProps)(function MyHeader ({name}) { 
+  console.log(name)
   return (
-    <Header dark> 
+    <Header > 
     <Left>
       <Button>
         <Icon 

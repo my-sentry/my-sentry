@@ -10,6 +10,7 @@ import { Container, Title, Content, Button, Left, Right, Body, Icon, H1 } from '
 
 const styles = {
   container: {
+    backgroundColor: '#ffffff',
     flex: 0,
     justifyContent: 'center',
     alignItems: 'center',
