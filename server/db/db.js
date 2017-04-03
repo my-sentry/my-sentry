@@ -3,7 +3,3 @@ var env = 'development';
 var knex = require('knex')(config[env]);
 
 module.exports = knex;
-
-if (process.env.TESTING) {
-  knex.migrate.latest([config]);
-}
