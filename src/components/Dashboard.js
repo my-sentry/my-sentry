@@ -18,11 +18,10 @@ const styles = {
 };
 
 const mapStateToProps = state => { 
-  console.log(state)
   return {
     // returns verification from store as state to dashboard
-    hasGroups: state.hasGroups,
-    isAuth: state.authReducer.isAuth
+    hasGroups: state.groups,
+    isAuth: state.auth.isAuth
   };
 };
 

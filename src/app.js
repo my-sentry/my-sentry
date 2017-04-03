@@ -25,13 +25,13 @@ const store = compose(
 const scenes = Actions.create(
   <Scene key="root" hideNavBar>
     <Scene key='menu' component={NavigationDrawer} open={false}>
-      <Scene key="dashboard" tabs={true} direction={'vertical'} component={Dashboard} title="Dashboard"/>
-      <Scene key="groups" tabs={true} component={Groups} title="groups" />
+      <Scene key="dashboard" tabs={true} component={Dashboard} />
+      <Scene key="groups" tabs={true} component={Groups} />
       <Scene key="login" component={Login} />
       <Scene key="signup" component={Signup} />
-      <Scene key="feed" tabs={true} component={Feed} title="feed"/>
-        <Scene key="eventForm" tabs={true} component={EventForm} title="Create Event" />
-        <Scene key="eventView" tabs={true} component={EventView} title="SomeEventName" />
+      <Scene key="feed" tabs={true} component={Feed} />
+      <Scene key="eventForm" tabs={true} component={EventForm} />
+      <Scene key="eventView" tabs={true} component={EventView} />
     </Scene>
   </Scene>
 );
