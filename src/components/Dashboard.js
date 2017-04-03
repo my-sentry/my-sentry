@@ -18,24 +18,26 @@ const styles = {
 };
 
 const mapStateToProps = state => { 
+  console.log(state)
   return {
     // returns verification from store as state to dashboard
     hasGroups: state.hasGroups,
-    Auth: state.auth
+    isAuth: state.authReducer.isAuth
   };
 };
 
 export default connect(mapStateToProps)(class Dashboard extends Component {
   render() {
-    const {hasGroups, auth} = this.props; 
+    const {hasGroups, isAuth} = this.props; 
+    console.log(isAuth);
 
     // if session, or token, shows dashboard
-    return !auth 
+    return isAuth 
     ? (
       <Container>
       <MyHeader />
         <Content>
-        {hasGroups 
+        {!hasGroups 
         ? <Feed />
         : (
           <Container style={styles.container}>
@@ -48,7 +50,7 @@ export default connect(mapStateToProps)(class Dashboard extends Component {
         </Content>
       </Container>
     )
-    : (<Login />);
+    : <Login />;
   }
 });
 

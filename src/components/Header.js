@@ -18,21 +18,21 @@ const styles = {
 
 
 const mapStateToProps = state => { 
-  return {name: state.scene};
+  return {scene: state.scene};
 };
 
 // this has to be called MyHeader instead of Header because i am importing Header
 
-export default connect(mapStateToProps)(function MyHeader ({name}) { 
-  console.log(name)
+export default connect(mapStateToProps)(function MyHeader ({scene}) { 
+  console.log(scene)
   return (
     <Header > 
     <Left>
-      <Button>
+      <Button onPress={()=> Actions.pop()}>
         <Icon 
           name='arrow-back' 
           style={styles.menu}
-          onPress={()=> Actions.pop()}
+          
           />
       </Button>
     </Left>
@@ -42,12 +42,12 @@ export default connect(mapStateToProps)(function MyHeader ({name}) {
       </Body>      
          
     <Right>
-      <Button>
+      <Button onPress={()=> Actions.refresh({key: 'menu', open: value => !value })}
+>
         <Icon 
         ios='ios-menu' 
         android="md-menu" 
         style={styles.menu}
-        onPress={()=> Actions.refresh({key: 'menu', open: value => !value })}
         />
       </Button>
     </Right>
