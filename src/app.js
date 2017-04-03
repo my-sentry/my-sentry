@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import MasterReducer, {reducerCreate} from './reducers/index.js';
+import MasterReducer, {routerReducer} from './reducers/index.js';
 import Dashboard from './components/Dashboard';
 import NavigationDrawer from './components/NavigationDrawer';
 import Feed from './components/Feed';
@@ -40,7 +40,7 @@ export default class MySentry extends Component {
   render() {
     return (
       <Provider store = {store} >
-        <RouterWithRedux createReducer={reducerCreate} scenes={scenes} />
+        <RouterWithRedux createReducer={routerReducer} scenes={scenes} />
       </Provider>
     );
   }
