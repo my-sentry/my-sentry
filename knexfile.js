@@ -4,6 +4,9 @@ module.exports = {
     connection: {
       user: 'root',
       database: 'mysentry'
+    },
+    seeds: {
+      directory: './server/db/seeds/run/'
     }
   }
 };
