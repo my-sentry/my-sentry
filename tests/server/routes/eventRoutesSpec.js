@@ -1,5 +1,4 @@
 const expect = require('chai').expect;
-const server = require('../../server/index.js');
 const request = require('request');
 
 describe('Event Routes', () => {
@@ -71,7 +70,7 @@ describe('Event Routes', () => {
     });
 
     it('should respond with a status 404 if no event is found', () => {
-      
+
     });
 
   });

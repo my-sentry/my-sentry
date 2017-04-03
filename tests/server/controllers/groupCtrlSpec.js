@@ -1,5 +1,5 @@
 const expect = require('chai').expect;
-const groups = require('../../server/db/controllers/groupCtrl.js');
+const groups = require('../../../server/db/controllers/groupCtrl.js');
 
 describe('Group Controller', () => {
 

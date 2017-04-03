@@ -1,5 +1,5 @@
 const expect = require('chai').expect;
-const events = require('../../server/db/controllers/eventCtrl.js');
+const events = require('../../../server/db/controllers/eventCtrl.js');
 
 describe('Event Controller', () => {
 

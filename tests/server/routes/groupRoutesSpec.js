@@ -1,5 +1,4 @@
 const expect = require('chai').expect;
-const server = require('../../server/index.js');
 const request = require('request');
 
 describe('Group Routes', () => {

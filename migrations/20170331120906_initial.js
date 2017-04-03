@@ -14,19 +14,19 @@ exports.up = function(knex, Promise) {
     knex.schema.createTable('groups', function(table) {
       table.increments('id').primary();
       table.string('name', 100).notNullable();
-      table.foreign('admin_user').references('users.id');
+      table.integer('admin_user').unsigned().references('users.id');
     }),
 
     knex.schema.createTable('group_user', function(table) {
       table.increments('id').primary();
-      table.foreign('user_id').references('users.id');
-      table.foreign('group_id').references('groups.id');
+      table.integer('user_id').unsigned().references('users.id');
+      table.integer('group_id').unsigned().references('groups.id');
     }),
 
     knex.schema.createTable('events', function(table) {
       table.increments('id').primary();
-      table.foreign('user_id').references('users.id');
-      table.foreign('group_id').references('groups.id');
+      table.integer('user_id').unsigned().references('users.id');
+      table.integer('group_id').unsigned().references('groups.id');
       table.string('name', 100).notNullable();
       table.string('begin', 50).notNullable();
       table.string('end', 50).notNullable();
