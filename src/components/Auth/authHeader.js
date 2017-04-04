@@ -18,38 +18,20 @@ const styles = {
 
 
 const mapStateToProps = state => { 
+  console.log(state)
   return {title: state.header.title};
 };
 
 // this has to be called MyHeader instead of Header because i am importing Header
 
-export default connect(mapStateToProps)(function MyHeader ({title}) { 
+export default connect(mapStateToProps)(function MyHeader (state) { 
+  console.log(">>", state)
+  const title = state.title
   return (
     <Header > 
-    <Left>
-      <Button onPress={()=> Actions.dashboard()}>
-        <Icon 
-          name='arrow-back' 
-          style={styles.menu}
-          
-          />
-      </Button>
-    </Left>
-
       <Body style={styles.header}>
         <Text>{title.toUpperCase()}</Text>
       </Body>      
-         
-    <Right>
-      <Button onPress={()=> Actions.refresh({key: 'menu', open: value => !value })}
->
-        <Icon 
-        ios='ios-menu' 
-        android="md-menu" 
-        style={styles.menu}
-        />
-      </Button>
-    </Right>
     </Header>
   );
 });

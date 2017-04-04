@@ -28,15 +28,13 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps)(class Dashboard extends Component {
   render() {
     const {hasGroups, isAuth} = this.props; 
-    console.log(isAuth);
 
     // if session, or token, shows dashboard
-    return isAuth 
-    ? (
+    return (
       <Container>
       <MyHeader />
         <Content>
-        {!hasGroups 
+        {hasGroups 
         ? <Feed />
         : (
           <Container style={styles.container}>
@@ -48,8 +46,7 @@ export default connect(mapStateToProps)(class Dashboard extends Component {
         )}
         </Content>
       </Container>
-    )
-    : <Login />;
+    );
   }
 });
 

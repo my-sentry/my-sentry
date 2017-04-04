@@ -10,7 +10,6 @@ export default class NavigationDrawer extends Component {
   render() {
     const state = this.props.navigationState;
     const children = state.children;
-    console.log("nav drawer triggered", state.open)
     return (
         <Drawer
             ref="navigation"

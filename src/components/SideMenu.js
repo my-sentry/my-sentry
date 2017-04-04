@@ -7,14 +7,30 @@ import {Actions} from 'react-native-router-flux';
 
 import { Container, Title, Content, Footer, FooterTab, Button, Body, Icon, H1 } from 'native-base';
 
-
+/*  to remove the hacky settimeouts,
+this all has to be reformatted to THUNK. aka async redux promises
+it needs to do the actions asynchrounously, else the first function blocks.
+*/
 export default connect()(function SideMenu (state) {
   return (
     <Container>
     <Content>
-    <H1 onPress={() => state.dispatch({type: 'LOGOUT'})}>LOGOUT</H1>
-    <H1 onPress={() => Actions.groups()}>Groups</H1>
-    <H1 onPress={() => Actions.eventView()}>EVENTS</H1>
+
+    <H1 onPress={() => {
+      setTimeout(() =>Actions.menu());
+      setTimeout(() =>Actions.login());
+      state.dispatch({type: 'LOGOUT'});
+    }}>LOGOUT</H1>
+
+    <H1 onPress={() => {
+      setTimeout(() =>Actions.refresh({key: 'menu', open: value => !value }));
+      Actions.groups();
+    }}>Groups</H1>
+
+    <H1 onPress={() =>{
+      setTimeout(() =>Actions.refresh({key: 'menu', open: value => !value }));
+      Actions.eventView();
+    }}>EVENTS</H1>
     </Content>
     </Container>
   );
