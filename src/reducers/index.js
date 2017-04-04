@@ -52,10 +52,11 @@ const auth = (state = {isAuth: true}, action) => {
 
 
 
-const groups = (state = {hasGroups: false, groups: null}, action) => {
+const groups = (state = {hasGroups: false, groups: []}, action) => {
   switch(action.type) {
-  case 'ADD_GROUPS' : 
+  case 'ADD_GROUP' : 
     return {...state,
+      groups: [...state.groups, action.item],
       hasGroups: true,
   }
   case 'REMOVE_GROUP' :

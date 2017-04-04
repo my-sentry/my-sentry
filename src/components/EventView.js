@@ -38,7 +38,7 @@ const mapStateToProps = ({events}) => {
 
 
 export default connect(mapStateToProps)(function EventView (state) {
-  var {active, isPersonal,name, begin, end, description, dispatch} = state;
+  var {active, isPersonal, name, begin, end, description, dispatch} = state;
   dispatch({type: 'HEADER_CHANGE_FORCE', title: name});
   return (
     <Container>

@@ -20,8 +20,8 @@ export default connect()(function Signup (state) {
     <Content>
     <H1>Signup goes here</H1>
     <H1 onPress={() => {
-        Actions.dashboard();
-      }}>CREATE ACCOUNT</H1>
+      Actions.dashboard();
+    }}>CREATE ACCOUNT</H1>
     </Content>
     </Container>
   );
