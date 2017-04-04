@@ -12,7 +12,7 @@ import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body
 // };
 
 export default connect()(function Login (state) {
-  // state.dispatch({type: 'HEADER_CHANGE_FORCE', title: 'login'});
+  state.dispatch({type: 'HEADER_CHANGE_FORCE', title: 'login'});
   return (
     <Container>
     <Header />

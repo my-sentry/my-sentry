@@ -81,8 +81,14 @@ const feed = (state = {}, action) => {
   }
 }
 
-const events =(state = {active: false, isPersonal: false}, action) => {
+const events =(state = {id: null, active: false, isPersonal: false}, action) => {
 	switch(action.type) {
+    case 'UPDATE_ITEM': 
+    console.log(">>>>>>>>>>>>",state,action)
+      return {...state,
+        id: action.item,
+      }
+
 		case 'ACTIVE' :
 			return {...state,
 				active: true,
@@ -104,6 +110,7 @@ const events =(state = {active: false, isPersonal: false}, action) => {
 export default combineReducers({
   auth,
   header,
-  groups
+  groups,
+  events,
   // more reducers
 });

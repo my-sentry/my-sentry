@@ -25,6 +25,7 @@ const store = compose(
 
 const RouterWithRedux = connect()(Router);
 
+
 //this could get moved to its own file. 
 const scenes = Actions.create(
   <Scene key='root' tabs={true} hideNavBar>
