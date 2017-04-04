@@ -29,7 +29,7 @@ export default connect()(function SideMenu (state) {
 
     <H1 onPress={() =>{
       setTimeout(() =>Actions.refresh({key: 'menu', open: value => !value }));
-      Actions.eventView();
+      Actions.dashboard();
     }}>EVENTS</H1>
     </Content>
     </Container>
