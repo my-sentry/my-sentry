@@ -19,6 +19,12 @@ module.exports = function(passport) {
             req.body.password
           );
         })
+        .then(id => {
+          return users.getUserById(id);
+        })
+        .then(newUser => {
+          done(null, newUser);
+        })
         .catch(err => {
           console.log('Signup Error: ', err);
           done(err);
