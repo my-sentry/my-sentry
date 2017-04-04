@@ -16,12 +16,12 @@ var compareHash = function(password, hash) {
 
 xdescribe('User Controller', () => {
 
-  before(() => {
-    knex.seed.run();
+  beforeEach(() => {
+    return knex.seed.run();
   });
 
   after(() => {
-    knex.seed.run();
+    return knex.seed.run();
   });
 
   describe('addUser', () => {
