@@ -20,5 +20,15 @@ module.exports = [
     lat: 30.264562,
     long: -97.744294,
     description: 'Showing an apartment at the Austonian. The contact is 5129384898.'
+  },
+  {
+    id: 3,
+    'user_id': 4,
+    'group_id': 3,
+    name: 'The Best Corn Maze',
+    begin: 'Wed May 10 2017 17:00:00 GMT-0500 (CDT)',
+    end: 'Wed May 10 2017 19:00:00 GMT-0500 (CDT)',
+    lat: 30.162990,
+    long: -97.391634
   }
 ];
