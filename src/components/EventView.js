@@ -25,9 +25,12 @@ const styles = {
    //  };
   
 
-// const mapStateToProps = state => { 
-//   return {state: state};
-// };
+const mapStateToProps = state => { 
+  return {
+  	active: state.events.active
+  	//isPersonal: state.events.isPersonal
+  };
+};
 
 
 
@@ -45,7 +48,6 @@ export default connect()(function EventView (state) {
    							) : (
    							<H1>Start Time</H1>
    							)}
-   						}
    						</Body>
    					</CardItem> 
    				</Card>
@@ -66,6 +68,7 @@ export default connect()(function EventView (state) {
     		</Content>
             <Container>
             {state.active && state.isPersonal ? (
+            <Container>
             	<Button block style={styles.button}>
             		<Text>Safe</Text>
             	</Button>
@@ -75,14 +78,19 @@ export default connect()(function EventView (state) {
             	<Button danger block style={styles.button}>
             		<Text>Emergency Alert</Text>
             	</Button>
-			) : ( <MapView
-              		style={styles.map}
-              		initialRegion={coordinates}
-            	/>)}
+            </Container>
+			) : ( 
+				<Text>Map will go here</Text>
+			)}
             </Container>
     </Container>
   );
 });
+
+//<MapView
+              		//style={styles.map}
+              		//initialRegion={coordinates}
+            	///>
 
 
 

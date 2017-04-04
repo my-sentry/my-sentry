@@ -81,6 +81,26 @@ const feed = (state = {}, action) => {
   }
 }
 
+const events =(state = {active: false, isPersonal: false}, action) => {
+	switch(action.type) {
+		case 'ACTIVE' :
+			return {...state,
+				active: true,
+			}
+		case 'INACTIVE' :
+			return {...state, 
+				active: false
+			}
+		case 'PERSONAL' :
+			return {...state, 
+				isPersonal: true
+			}
+	default:
+		return state;
+
+	}
+}
+
 export default combineReducers({
   auth,
   header,
