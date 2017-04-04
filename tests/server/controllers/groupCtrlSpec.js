@@ -4,12 +4,12 @@ const knex = require('../../../server/db/db.js');
 
 xdescribe('Group Controller', () => {
 
-  before(() => {
-    knex.seed.run();
+  beforeEach(() => {
+    return knex.seed.run();
   });
 
   after(() => {
-    knex.seed.run();
+    return knex.seed.run();
   });
 
   describe('createGroup', () => {
