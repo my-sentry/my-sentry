@@ -49,6 +49,11 @@ module.exports = function(passport) {
     }
   );
 
+  router.post('/logout', (req, res, next) => {
+    req.logout();
+    res.sendStatus(200);
+  });
+
   router.put('/:id', (req, res, next) => {
     users.updateUserById(req.params.id)
       .then(result => res.json(result))

@@ -15,7 +15,7 @@ var hashPassword = function (password) {
 
 //Compare Passwords
 exports.comparePassword = function (attempted, correct) {
-  return new Promise((fullfill, reject) => {
+  return new Promise((fulfill, reject) => {
     bcrypt.compare(attempted, correct, (err, res) => {
       if (err) {
         return reject(err);
