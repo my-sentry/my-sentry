@@ -23,8 +23,10 @@ app.use(expressSession({
   resave: false,
   saveUninitialized: false
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
+require('./passport/init')(passport);
 
 // setup extra middleware
 app.use(bodyParser.urlencoded({ extended: true }));

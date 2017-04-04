@@ -1,9 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var users = require('../db/controllers/userCtrl');
+var auth = require('../authHelper');
 
 module.exports = function(passport) {
-  router.get('/', (req, res, next) => {
+  router.get('/', auth.isAuth, (req, res, next) => {
     users.getUsers()
       .then(results => res.json(results))
       .catch(err => {
