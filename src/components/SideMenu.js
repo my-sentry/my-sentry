@@ -12,7 +12,7 @@ export default connect()(function SideMenu (state) {
   return (
     <Container>
     <Content>
-    <H1>LOGOUT</H1>
+    <H1 onPress={() => state.dispatch({type: 'LOGOUT'})}>LOGOUT</H1>
     <H1 onPress={() => Actions.groups()}>Groups</H1>
     <H1 onPress={() => Actions.eventView()}>EVENTS</H1>
     </Content>

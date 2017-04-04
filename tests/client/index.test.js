@@ -1,18 +1,29 @@
 import 'react-native';
 import React from 'react';
 import MySentry from '../../src/app.js';
-import {mount, shallow, render} from 'enzyme';
-import ReactDOM from 'react-dom';
+import { createStore, applyMiddleware, compose } from 'redux';
+import MasterReducer from '../../src/reducers/index.js';
+import { Provider } from 'react-redux';
+import {shallow} from 'enzyme';
 
-
-// Note: test renderer must be required after react-native.
-import renderer from 'react-test-renderer';
+const store = compose(
+  applyMiddleware()
+)(createStore)(MasterReducer);
 
 describe('app.js', function() {
-  var app;
-  it('renders correctly', () => {
-    app = shallow( <MySentry /> );
+  let _wrapper;
+  beforeEach(() => {
+    _wrapper = shallow( <Provider store={store}><MySentry /></Provider>);
   });
+  it('renders correctly', () => {
+  });
+  it('', () => {
+  });
+  it('', () => {
+  });
+  it('', () => {
+  });
+
 });
 
 
