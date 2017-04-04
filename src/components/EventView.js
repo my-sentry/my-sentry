@@ -2,11 +2,34 @@ import React, {Component} from 'react';
 import { AppRegistry, StyleSheet, Text, View} from 'react-native';
 import { connect, Provider } from 'react-redux';
 import Header from './Header';
-import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, Card, CardItem } from 'native-base';
+import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, Card, CardItem, Image } from 'native-base';
+
+const styles = {
+	text: {
+		fontSize: 20,
+		fontWeight: 'bold',
+	},
+	button: {
+		marginTop: 20,
+		marginRight: 20,
+		marginLeft: 20,
+	}
+};
+
+
+   // const initialRegion = {
+   //    latitude: 37.78825,
+   //    longitude: -122.4324,
+   //    latitudeDelta: 0.0922,
+   //    longitudeDelta: 0.0421,
+   //  };
+  
 
 // const mapStateToProps = state => { 
 //   return {state: state};
 // };
+
+
 
 export default connect()(function EventView (state) {
   return (
@@ -17,38 +40,52 @@ export default connect()(function EventView (state) {
    				<Card>
    					<CardItem>
    						<Body>
-   							<H1>
-   							Timer will go here
-   							</H1>
+   						{state.active ? (
+   							<H1>Timer will go here</H1>
+   							) : (
+   							<H1>Start Time</H1>
+   							)}
+   						}
    						</Body>
    					</CardItem> 
    				</Card>
    				<Card>
    					<CardItem header>
-   						<Text  style={{fontSize: 20, fontWeight: 'bold'}}>Event Descrition</Text>
+   						<Text  style={styles.text}>Event Descrition</Text>
    					</CardItem>
    					<CardItem>
    						<Body>
-   							<Text style={{fontSize: 20}}>Location</Text>
-   							<Text style={{fontSize: 20}}>Start</Text>
-   							<Text style={{fontSize: 20}}>End</Text>
-   							<Text style={{fontSize: 20}}>Group</Text>
-   							<Text style={{fontSize: 20}}>Descrition</Text>
+   							<Text style={styles.text}>Location</Text>
+   							<Text style={styles.text}>Start</Text>
+   							<Text style={styles.text}>End</Text>
+   							<Text style={styles.text}>Group</Text>
+   							<Text style={styles.text}>Descrition</Text>
    						</Body>
    					</CardItem> 
    				</Card>
     		</Content>
-    		<Button block style={{marginTop: 20, marginLeft: 20, marginRight: 20}}>
-            	<Text>Safe</Text>
-            </Button>
             <Container>
-            <Button warning block style={{marginTop: 20, marginLeft: 20, marginRight: 20}}>
-            	<Text>Extend Event</Text>
-            </Button>
-            <Button danger block style={{marginTop: 20, marginLeft: 20, marginRight: 20}}>
-            	<Text>Emergency Alert</Text>
-            </Button>
+            {state.active && state.isPersonal ? (
+            	<Button block style={styles.button}>
+            		<Text>Safe</Text>
+            	</Button>
+            	<Button block style={styles.button}>
+            		<Text>Extend Event</Text>
+            	</Button>
+            	<Button danger block style={styles.button}>
+            		<Text>Emergency Alert</Text>
+            	</Button>
+			) : ( <MapView
+              		style={styles.map}
+              		initialRegion={coordinates}
+            	/>)}
             </Container>
     </Container>
   );
 });
+
+
+
+
+
+
