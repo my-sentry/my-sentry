@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import { AppRegistry, StyleSheet, Text, View} from 'react-native';
-import { connect, Provider } from 'react-redux';
+import { Text, View } from 'react-native';
+import { connect } from 'react-redux';
 import Header from '../components/Header';
 import {Actions} from 'react-native-router-flux';
 import ActionButton from 'react-native-action-button';

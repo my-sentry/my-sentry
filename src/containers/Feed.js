@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import { AppRegistry, StyleSheet, Text, View} from 'react-native';
-import { connect, Provider } from 'react-redux';
+import { Text, View } from 'react-native';
+import { connect } from 'react-redux';
 import {Actions} from 'react-native-router-flux';
 import ActionButton from 'react-native-action-button';
 import Header from '../components/Header';
@@ -9,7 +9,7 @@ import Header from '../components/Header';
 
 import { Container, Title, Content, Button, Left, Right, List, ListItem, Body, Fab, Icon, H1, H2, H3 } from 'native-base';
 
-var mock = [{id: null, name: 'test', description: 'some description here'}];
+var mock = [{id: null, name: 'test', description: 'some description here'}, {id: null, name: 'test', description: 'some description here'}];
 
 // fetch('http://192.168.1.163:8000/api/events')
 //   .then(res=> res.json()).then(res=> mock = res);
@@ -33,6 +33,9 @@ export default connect()(class Feed extends Component {
         }>
       </List>
       </Container>
+          <ActionButton
+          buttonColor='rgba(231,76,60,1)'
+          onPress={() => Actions.eventForm()}/>  
     
       </Container>
     );
