@@ -15,13 +15,9 @@ export function routerReducer(params) {
 // changes name of header when scene changes
 const header = (state = {title: 'Dashboard'}, action) => {
   switch (action.type) {
-  case 'HEADER_CHANGE_FORCE': 
-    return {...state,
-      title: action.title
-    }
   case ActionConst.PUSH :
     return { ...state,
-      title: action.key
+      title: action.title ? action.title : action.key
     }
   case ActionConst.BACK_ACTION :
     return {...state,
@@ -52,10 +48,11 @@ const auth = (state = {isAuth: true}, action) => {
 
 
 
-const groups = (state = {hasGroups: false, groups: null}, action) => {
+const groups = (state = {hasGroups: false, groups: []}, action) => {
   switch(action.type) {
-  case 'ADD_GROUPS' : 
+  case 'ADD_GROUP' : 
     return {...state,
+      groups: [...state.groups, action.item],
       hasGroups: true,
   }
   case 'REMOVE_GROUP' :
