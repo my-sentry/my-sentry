@@ -8,7 +8,6 @@ import ActionButton from 'react-native-action-button';
 
 import { Container, Title, Content, List, ListItem, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, H3 } from 'native-base';
 
-// const mapStateToProps = 
 
 var mock = [{id: 'abc', name: 'Jeep Sales Committee', description: 'abc'}];
 
