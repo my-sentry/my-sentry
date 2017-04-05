@@ -12,8 +12,18 @@ module.exports = function(passport) {
           if (user) {
             return done(null, false);
           }
-
-          return users.insertUser(req.body);
+          return users.addUser(
+            req.body.firstName,
+            req.body.lastName,
+            req.body.username,
+            req.body.password
+          );
+        })
+        .then(id => {
+          return users.getUserById(id);
+        })
+        .then(newUser => {
+          done(null, newUser);
         })
         .catch(err => {
           console.log('Signup Error: ', err);

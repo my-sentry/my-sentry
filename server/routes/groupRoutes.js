@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var groups = require('../db/controllers/groupCtrl');
+var auth = require('../authHelper');
 
 router.get('/', (req, res, next) => {
   groups.getGroups()
@@ -41,8 +42,12 @@ router.put('/:id', (req, res, next) => {
 });
 
 router.delete('/:id', (req, res) => {
-  groups.deleteGroupById(req.params.id);
-  res.end();
+  groups.deleteGroupById(req.params.id)
+    .then(result => res.json(result))
+    .catch(err => {
+      console.log(err);
+      next(err);
+    });
 });
 
 module.exports = router;

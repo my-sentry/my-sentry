@@ -12,7 +12,7 @@ module.exports = function(passport) {
           return done(null, false);
         }
 
-        return user.comparePassword(password)
+        return users.comparePassword(password, user.password)
           .then(match => {
             if (match) {
               done(null, user);

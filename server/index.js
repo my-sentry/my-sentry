@@ -17,14 +17,22 @@ var passport = require('passport');
 const port = process.env.PORT || 8000;
 
 var app = express();
+
+app.use(expressSession({
+  secret: 'sessionSecret',
+  resave: false,
+  saveUninitialized: false
+}));
+
 app.use(passport.initialize());
 app.use(passport.session());
+require('./passport/init')(passport);
 
 // setup extra middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use('/api/users', users);
+app.use('/api/users', users(passport));
 app.use('/api/events', events);
 app.use('/api/groups', groups);
 

@@ -12,6 +12,20 @@ var hashPassword = function (password) {
     });
   });
 };
+
+//Compare Passwords
+exports.comparePassword = function (attempted, correct) {
+  return new Promise((fulfill, reject) => {
+    bcrypt.compare(attempted, correct, (err, res) => {
+      if (err) {
+        return reject(err);
+      }
+
+      fulfill(res);
+    });
+  });
+};
+
 //Add user
 exports.addUser = function (firstName, lastName, username, password) {
   return hashPassword(password)
@@ -33,7 +47,7 @@ exports.getUser = function (username) {
   return knex('users')
     .where('username', username)
     .then(result => {
-      return _.pick(result[0], ['id', 'first_name', 'last_name', 'username']);
+      return result[0];
     });
 };
 
