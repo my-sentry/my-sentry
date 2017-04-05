@@ -99,7 +99,7 @@ describe('Event Controller', () => {
             })
 
             .then(results => {
-
+              expect(results).to.eql(events);
             });
         });
 
@@ -107,6 +107,12 @@ describe('Event Controller', () => {
 
     it('should respond with an empty array if user cannot see any events', () => {
 
+      return knex('users').insert({
+        username: 'tonyTheTiger',
+        password: 'some-long-hash',
+        'first_name': 'Tony',
+        'last_name': 'The Tiger'
+      })
     });
 
   });
