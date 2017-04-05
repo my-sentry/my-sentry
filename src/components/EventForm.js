@@ -9,7 +9,7 @@ import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body
 //   return {state: state};
 // };
 
-export default connect()(function EventForm (state) {
+export default function EventForm (state) {
   return (
     <Container>
       <Header />
@@ -60,4 +60,4 @@ export default connect()(function EventForm (state) {
       
     </Container>
   );
-});
+};
