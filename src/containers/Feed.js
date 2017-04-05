@@ -6,7 +6,6 @@ import ActionButton from 'react-native-action-button';
 import Header from '../components/Header';
 
 
-
 import { Container, Title, Content, Button, Left, Right, List, ListItem, Body, Fab, Icon, H1, H2, H3 } from 'native-base';
 
 var mock = [{id: null, name: 'test', description: 'some description here'}, {id: null, name: 'test', description: 'some description here'}];

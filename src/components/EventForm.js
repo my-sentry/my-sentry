@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {Text, View} from 'react-native';
 import { connect } from 'react-redux';
 import Header from './Header';
+import Datepicker, {TimePicker} from './Datepicker';
+
 import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, List, ListItem, InputGroup, Picker, Label, Item, Input, Form} from 'native-base';
 
 
@@ -9,7 +11,7 @@ import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body
 //   return {state: state};
 // };
 
-export default connect()(function EventForm (state) {
+export default function EventForm (state) {
   return (
     <Container>
       <Header />
@@ -24,17 +26,17 @@ export default connect()(function EventForm (state) {
         </Item>
         <Item>
           <InputGroup>
-            <Icon name="ios-calendar" style={{color: 'blue', fontSize: 20}}/>
-            <Input placeholder="Event Date" />
+            <Datepicker />
           </InputGroup>
         </Item>
         <Item>
         <InputGroup>
           <Icon name="ios-alarm"/>
-          <Input placeholder="Start Time" />
+          <TimePicker />
         
           <Icon name="ios-alarm"/>
-          <Input placeholder="End Time" />
+          <TimePicker />
+
         </InputGroup>
         </Item>
         <Item>
@@ -60,4 +62,4 @@ export default connect()(function EventForm (state) {
       
     </Container>
   );
-});
+};

@@ -1,26 +1,37 @@
 import React, {Component} from 'react';
 import {Actions} from 'react-native-router-flux';
 import Header from './authHeader';
+import { connect } from 'react-redux';
 
-import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, H1 } from 'native-base';
+
+import { Container, Title, Content, Label, Form, Button, Item, Icon, Right, Body, Input, H1 } from 'native-base';
 
 
 // const mapStateToProps = state => { 
 //   return {state: state};
 // };
 
-export default function Login (state) {
+export default connect()(function Login (state) {
   return (
-    <Container>
-    <Header />
+   <Container>
     <Content>
-      <H1 onPress={() => {
-        Actions.dashboard();
-      }}>login</H1>
-      <H1 onPress={() => {
-        Actions.signup();
-      }}>SIGNUP</H1>
+      <Form>
+        <Item floatingLabel>
+          <Label>Username</Label>
+          <Input/>
+        </Item>
+        <Item floatingLabel last>
+          <Label>Password</Label>
+          <Input />
+        </Item>
+      </Form>
+      <Button onPress={()=> Actions.renderedmodal()}>
+        <Icon 
+          name='arrow-back' 
+          
+          />
+          </Button>
     </Content>
-    </Container>
+  </Container>
   );
-}
+})

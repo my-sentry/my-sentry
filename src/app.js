@@ -11,13 +11,15 @@ import EventForm from './components/EventForm';
 import EventView from './components/EventView';
 import Login from './components/Auth/Login';
 import Signup from './components/Auth/Signup';
+import Datepicker from './components/Datepicker';
+
 import { logger } from './reducers/middleware';
 import { connect, Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 // import thunk from 'redux-thunk';
 
 import { Text, View } from 'react-native';
-import {Router, Scene, Actions, ActionConst, Switch} from 'react-native-router-flux';
+import {Router, Modal, Scene, Actions, ActionConst, Switch, } from 'react-native-router-flux';
 
 
 // let middleware = [thunk, logger];
@@ -30,7 +32,8 @@ const RouterWithRedux = connect()(Router);
 
 //this could get moved to its own file. 
 const scenes = Actions.create(
-  <Scene key='root' tabs={true} hideNavBar>
+  <Scene key='modal' component={Modal} >
+  <Scene key='root' tabs={true} hideNavBar >
     <Scene key='menu' hideNavBar component={NavigationDrawer} open={false}>
       <Scene key='dashboard' hideNavBar tabs={true} component={Dashboard} />
       <Scene key='groups' tabs={true} component={Groups} />
@@ -40,8 +43,10 @@ const scenes = Actions.create(
       <Scene key='eventView' tabs={true} component={EventView} />
       <Scene key='groupView' tabs={true} component={GroupView} />
       <Scene key='signup' component={Signup} />
-      <Scene key='login'initial={!store.getState().auth.isAuth} schema='modal' tabs={true} component={Login} />
+      <Scene key='login'initial={!store.getState().auth.isAuth} tabs={true} component={Login} />
+      <Scene key='renderedmodal'component={Datepicker} hideNavBar/>
     </Scene>
+  </Scene>
   </Scene>
 );
 
