@@ -12,7 +12,8 @@ import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body
 export default connect()(function GroupForm (state) {
   return (
     <Container>
-      <Header />    
+      <Header />   
+      <Text>GROUPFORM</Text> 
         <Button 
         style={{ alignSelf: 'center', marginTop: 20, marginBottom: 20 }}
         onPress={()=> state.dispatch({type: 'ADD_GROUP', item: {name: 'test'}})}

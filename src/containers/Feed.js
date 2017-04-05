@@ -22,8 +22,8 @@ export default connect()(class Feed extends Component {
        <List dataArray={mock}
         renderRow={item =>
             <ListItem onPress={() => {
-              setTimeout(()=> Actions.eventView());
               this.props.dispatch({type: 'UPDATE_ITEM', item: item});
+              setTimeout(()=> Actions.eventView({title: item.name}));
             }}>
             <Body>
                 <H3>{item.name}</H3>

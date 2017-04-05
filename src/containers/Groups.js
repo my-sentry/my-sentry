@@ -8,27 +8,21 @@ import ActionButton from 'react-native-action-button';
 
 import { Container, Title, Content, List, ListItem, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, H3 } from 'native-base';
 
-const mapStateToProps = state => { 
+// const mapStateToProps = 
 
-  return {groups: state.groups.groups};
-}
-
-var mock = [{id: "abc", name: 'Jeep Sales Committee', description: 'abc'}];
+var mock = [{id: 'abc', name: 'Jeep Sales Committee', description: 'abc'}];
 
 
-export default connect()(function Groups (state) {
-  state.dispatch({type: 'HEADER_CHANGE_FORCE', title: 'groups'});
-
-
+export default connect(({groups}) => groups)(function Groups (state) {
   // then there would be a state.members inside here
   return (
       <Container>
-      <Header />
+      <Header title={'groups'}/>
       <Container>
        <List dataArray={mock}
         renderRow={(item) =>
             <ListItem onPress={() => {
-              setTimeout(()=> Actions.groups());
+              setTimeout(()=> Actions.groupView({title: item.name}));
               state.dispatch({type: 'UPDATE_GROUP', item: item});
             }}>
                 <Body>
@@ -40,7 +34,7 @@ export default connect()(function Groups (state) {
       </List>
       </Container>
       <ActionButton
-          buttonColor="rgba(231,76,60,1)"
+          buttonColor='rgba(231,76,60,1)'
           onPress={() => Actions.groupForm()}/>  
     
       </Container>
