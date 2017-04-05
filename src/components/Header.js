@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import { connect } from 'react-redux';
-import { AppRegistry, StyleSheet, Text, View} from 'react-native';
+import { Text, View} from 'react-native';
 import {Actions, ActionConst} from 'react-native-router-flux';
 
 import { Container, Header, Title, Content, Button, Left, Right, Body, Icon, H1 } from 'native-base';

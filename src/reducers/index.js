@@ -81,7 +81,6 @@ const feed = (state = {}, action) => {
 const events =(state = {id: null, active: false, isPersonal: false}, action) => {
 	switch(action.type) {
     case 'UPDATE_ITEM': 
-    console.log(">>>>>>>>>>>>",state,action)
       return {...state,
         id: action.item,
       }

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import { AppRegistry, StyleSheet, Text, View} from 'react-native';
-import { connect, Provider } from 'react-redux';
+import { Text, View} from 'react-native';
+import { connect } from 'react-redux';
 import Header from './Header';
 import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, Card, CardItem, Image } from 'native-base';
 
@@ -26,7 +26,6 @@ const styles = {
   
 
 const mapStateToProps = ({events}) => { 
-  console.log("mapstatetoprops", events)
   return {
     name: events.id.name,
     begin: events.id.begin,
@@ -39,7 +38,6 @@ const mapStateToProps = ({events}) => {
 
 export default connect(mapStateToProps)(function EventView (state) {
   var {active, isPersonal, name, begin, end, description, dispatch} = state;
-  dispatch({type: 'HEADER_CHANGE_FORCE', title: name});
   return (
     <Container>
 
@@ -58,7 +56,7 @@ export default connect(mapStateToProps)(function EventView (state) {
           </Card>
           <Card>
             <CardItem header>
-              <Text  style={styles.text}>{description}</Text>
+              <Text style={styles.text}>{description}</Text>
             </CardItem>
             <CardItem>
               <Body>

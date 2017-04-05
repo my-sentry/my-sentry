@@ -1,10 +1,7 @@
 import React, {Component} from 'react';
-import { AppRegistry, StyleSheet, Text, View} from 'react-native';
-import { connect, Provider } from 'react-redux';
-import Header from './Header';
+import { Text, View} from 'react-native';
+import { connect } from 'react-redux';
 import {Actions} from 'react-native-router-flux';
-
-
 import { Container, Title, Content, Footer, FooterTab, Button, Body, Icon, H1 } from 'native-base';
 
 /*  to remove the hacky settimeouts,

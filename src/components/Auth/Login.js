@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import { AppRegistry, StyleSheet, Text, View} from 'react-native';
-import { connect, Provider } from 'react-redux';
 import {Actions} from 'react-native-router-flux';
 import Header from './authHeader';
 
@@ -11,8 +9,7 @@ import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body
 //   return {state: state};
 // };
 
-export default connect()(function Login (state) {
-  state.dispatch({type: 'HEADER_CHANGE_FORCE', title: 'login'});
+export default function Login (state) {
   return (
     <Container>
     <Header />
@@ -26,4 +23,4 @@ export default connect()(function Login (state) {
     </Content>
     </Container>
   );
-});
+}

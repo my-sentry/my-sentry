@@ -1,9 +1,8 @@
 import React, {Component, PropTypes} from 'react';
 import { connect } from 'react-redux';
-import { AppRegistry, StyleSheet, Text, View} from 'react-native';
+import {Text} from 'react-native';
 import {Actions, ActionConst} from 'react-native-router-flux';
-
-import { Container, Header, Title, Content, Button, Left, Right, Body, Icon, H1 } from 'native-base';
+import { Container, Header, Title, Content, Button, Body, H1 } from 'native-base';
 
 const styles = {
   header: {
@@ -16,21 +15,11 @@ const styles = {
   }
 };
 
-
-const mapStateToProps = state => { 
-  console.log(state)
-  return {title: state.header.title};
-};
-
-// this has to be called MyHeader instead of Header because i am importing Header
-
-export default connect(mapStateToProps)(function MyHeader (state) { 
-  console.log(">>", state)
-  const title = state.title
+export default connect(({header}) => ({title: header.title}))(function ({title}) { 
   return (
     <Header > 
       <Body style={styles.header}>
-        <Text>{title.toUpperCase()}</Text>
+        <Text>{title === 'Dashboard' ? 'LOGIN' : title.toUpperCase()}</Text>
       </Body>      
     </Header>
   );

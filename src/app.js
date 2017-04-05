@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 import MasterReducer, {routerReducer} from './reducers/index.js';
-import Dashboard from './components/Dashboard';
+import Dashboard from './containers/Dashboard';
 import NavigationDrawer from './components/NavigationDrawer';
 import Feed from './containers/Feed';
 import Groups from './containers/Groups';
@@ -16,10 +16,10 @@ import { connect, Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 // import thunk from 'redux-thunk';
 
-import { AppRegistry, StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import {Router, Scene, Actions, ActionConst, Switch} from 'react-native-router-flux';
 
-// 
+
 // let middleware = [thunk, logger];
 const store = compose(
   applyMiddleware(logger)
@@ -39,19 +39,16 @@ const scenes = Actions.create(
       <Scene key='eventForm' tabs={true} component={EventForm} />
       <Scene key='eventView' tabs={true} component={EventView} />
       <Scene key='groupView' tabs={true} component={GroupView} />
-
       <Scene key='signup' component={Signup} />
-      <Scene key='login'tabs={true} component={Login} />
+      <Scene key='login'initial={!store.getState().auth.isAuth} schema='modal' tabs={true} component={Login} />
     </Scene>
   </Scene>
 );
 
-export default class MySentry extends Component {
-  render() {
-    return (
-      <Provider store = {store} >
-        <RouterWithRedux createReducer={routerReducer} scenes={scenes} />
-      </Provider>
-    );
-  }
+export default function MySentry () {
+  return (
+    <Provider store = {store} >
+      <RouterWithRedux createReducer={routerReducer} scenes={scenes} />
+    </Provider>
+  );
 }
