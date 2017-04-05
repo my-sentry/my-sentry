@@ -1,17 +1,20 @@
 import React, { Component } from 'react'
 import DatePicker from 'react-native-datepicker'
+import {connect} from 'react-redux'
 
-export default class MyDatePicker extends Component {
-  constructor(props){
-    super(props)
-    this.state = {date:"2016-05-15"}
+const mapStateToProps = ({dateReducer}) => {
+  return {
+    date: dateReducer.date
   }
+}
 
+export default connect(mapStateToProps)(class MyDatePicker extends Component {
+ 
   render(){
     return (
       <DatePicker
         style={{width: 200}}
-        date={this.state.date}
+        date={this.props.date}
         mode="date"
 
         placeholder="select date"
@@ -31,36 +34,9 @@ export default class MyDatePicker extends Component {
             borderWidth: 0,
             marginLeft: 36
           }
-          // ... You can check the source to find the other keys.
         }}
-        onDateChange={(date) => {this.setState({date: date})}}
+        onDateChange={(date) => {this.props.dispatch({type: 'DATE_CHANGE', date: date})}}
       />
     )
   }
-}
-export class TimePicker extends Component {
-    constructor(props){
-    super(props)
-    this.state = {date:"2016-05-15"}
-  }
-  render() {
-    return (
-        <DatePicker
-          style={{width: 100}}
-          date={this.state.time}
-          mode="time"
-          customStyles={{
-          dateInput: {
-            borderWidth: 0,
-            marginLeft: 36
-          }}}
-          format="HH:mm"
-          confirmBtnText="Confirm"
-          cancelBtnText="Cancel"
-          minuteInterval={10}
-          showIcon={false}
-          onDateChange={(time) => {this.setState({time: time});}}
-        />
-      )
-  }
-}
+})
