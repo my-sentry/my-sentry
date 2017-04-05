@@ -40,7 +40,9 @@ exports.getGroupById = function (id) {
 
         // add the usersarray to the group object
         .then(users => {
-          group.users = users;
+          group.users = users.map(user => {
+            return _.pick(user, ['id', 'username', 'first_name', 'last_name']);
+          });
           return group;
         });
 
@@ -70,12 +72,22 @@ exports.getGroups = function (username) {
     });
 };
 
-exports.addUserToGroup = function() {
-
+// add user to group
+exports.addUserToGroup = function(groupId, userId) {
+  return knex('group_user')
+    .insert({
+      'group_id': groupId,
+      'user_id': userId
+    })
+    .then(results => results[0]);
 };
 
-exports.deleteUserFromGroup = function() {
-
+// delete user from group
+exports.deleteUserFromGroup = function(groupId, userId) {
+  return knex('group_user')
+    .where('group_id', groupId)
+    .andWhere('user_id', userId)
+    .del();
 };
 
 // delete group

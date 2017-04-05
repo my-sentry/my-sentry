@@ -21,6 +21,7 @@ exports.up = function(knex, Promise) {
       table.increments('id').primary();
       table.integer('user_id').unsigned().references('users.id');
       table.integer('group_id').unsigned().references('groups.id');
+
     }),
 
     knex.schema.createTable('events', function(table) {
@@ -40,9 +41,9 @@ exports.up = function(knex, Promise) {
 exports.down = function(knex, Promise) {
 
   return Promise.all([
-    knex.schema.dropTable('users'),
-    knex.schema.dropTable('groups'),
+    knex.schema.dropTable('events'),
     knex.schema.dropTable('group_user'),
-    knex.schema.dropTable('events')
+    knex.schema.dropTable('groups'),
+    knex.schema.dropTable('users')
   ]);
 };

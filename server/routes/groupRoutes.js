@@ -33,15 +33,25 @@ router.post('/', (req, res, next) => {
 });
 
 router.put('/:id', (req, res, next) => {
-  groups.updateGroupById(req.params.id)
-    .then(result => res.json(result))
-    .catch(err => {
-      console.log(err);
-      next(err);
-    });
+
+  if (req.query.delete) {
+    groups.deleteUserFromGroup(req.params.id, req.body.userId)
+      .then(() => res.sendStatus(200))
+      .catch(err => {
+        console.log(err);
+        next(err);
+      });
+  } else {
+    groups.addUserToGroup(req.params.id, req.body.userId)
+      .then(id => res.json(id))
+      .catch(err => {
+        console.log(err);
+        next(err);
+      });
+  }
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', (req, res, next) => {
   groups.deleteGroupById(req.params.id)
     .then(result => res.json(result))
     .catch(err => {
