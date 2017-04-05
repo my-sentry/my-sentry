@@ -4,7 +4,7 @@ var groups = require('../db/controllers/groupCtrl');
 var auth = require('../authHelper');
 
 router.get('/', (req, res, next) => {
-  groups.getGroups()
+  groups.getGroups(req.user.username)
     .then(results => res.json(results))
     .catch(err => {
       console.log(err);
@@ -13,7 +13,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/:id', (req, res, next) => {
-  groups.getGroup(req.params.id)
+  groups.getGroupById(req.params.id)
     .then(result => res.json(result))
     .catch(err => {
       console.log(err);
@@ -24,7 +24,7 @@ router.get('/:id', (req, res, next) => {
 router.post('/', (req, res, next) => {
   groups.createGroup(
     req.body.name,
-    req.body.adminUser
+    req.user.id
   ).then(result = res.json(result))
   .catch(err => {
     console.log(err);
@@ -33,15 +33,25 @@ router.post('/', (req, res, next) => {
 });
 
 router.put('/:id', (req, res, next) => {
-  groups.updateGroupById(req.params.id)
-    .then(result => res.json(result))
-    .catch(err => {
-      console.log(err);
-      next(err);
-    });
+
+  if (req.query.delete) {
+    groups.deleteUserFromGroup(req.params.id, req.body.userId)
+      .then(() => res.sendStatus(200))
+      .catch(err => {
+        console.log(err);
+        next(err);
+      });
+  } else {
+    groups.addUserToGroup(req.params.id, req.body.userId)
+      .then(id => res.json(id))
+      .catch(err => {
+        console.log(err);
+        next(err);
+      });
+  }
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', (req, res, next) => {
   groups.deleteGroupById(req.params.id)
     .then(result => res.json(result))
     .catch(err => {
