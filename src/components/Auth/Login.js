@@ -12,6 +12,7 @@ import { Container, Title, Content, Label, Form, Button, Item, Icon, Right, Body
 // };
 
 export default connect()(function Login (state) {
+  console.log(state)
   return (
    <Container>
     <Content>
@@ -22,10 +23,11 @@ export default connect()(function Login (state) {
         </Item>
         <Item floatingLabel last>
           <Label>Password</Label>
-          <Input />
+          <Input onChangeText={(text) => state.dispatch(text)}
+/>
         </Item>
       </Form>
-      <Button onPress={()=> Actions.renderedmodal()}>
+      <Button onPress={()=> console.log(Input)}>
         <Icon 
           name='arrow-back' 
           
