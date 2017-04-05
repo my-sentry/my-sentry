@@ -5,15 +5,15 @@ var auth = require('../authHelper');
 
 //Get all events
 router.get('/', auth.isAuth, (req, res, next) => {
-  if (req.query.userid) {
-    events.getEventsByUserId(req.query.userid)
+  if (req.query.username) {
+    events.getUserEvents(req.query.username)
       .then(results => res.json(results))
       .catch(err => {
         console.log(err);
         next(err);
       });
   } else {
-    events.getEvents()
+    events.getEvents(req.user.username)
       .then(results => res.json(results))
       .catch(err => {
         console.log(err);
@@ -32,32 +32,23 @@ router.get('/:id', auth.isAuth, (req, res, next) => {
     });
 });
 
-//Get a users events by user_id
-router.get('/:uid', auth.isAuth, (req, res, next) => {
-  events.getEventsByUserId(req.params.uid)
-    .then(results => res.json(results))
-    .catch(err => {
-      console.log(err);
-      next(err);
-    });
-});
-
 router.post('/', auth.isAuth, (req, res, next) => {
   events.createEvent(
+    req.user.id,
+    req.body.groupId,
     req.body.name,
     req.body.begin,
     req.body.end,
     req.body.lat,
     req.body.long,
     req.body.description
-  ).then(result => res.json(result))
+  ).then(result => res.status(201).json(result))
   .catch(err => {
     console.log(err);
     next(err);
   });
 });
 
-//NOTE: Not sure if this will work if a field is undefined...
 router.put('/:id', (req, res, next) => {
   events.updateEventById(
     req.params.id,
