@@ -1,5 +1,6 @@
 var knex = require('../db.js');
 var bcrypt = require('bcrypt-nodejs');
+var _ = require('lodash');
 
 //Hash Password
 var hashPassword = function (password) {

@@ -1,11 +1,18 @@
 const expect = require('chai').expect;
-const request = require('request');
+const request = require('request-promise');
 
 describe('Event Routes', () => {
 
   describe('GET /api/events', () => {
 
     it('should be a protected route', () => {
+
+      request({
+        method: 'GET',
+        uri: 'http://127.0.0.1:8000/api/events'
+      })
+
+      .then(() => {});
 
     });
 
