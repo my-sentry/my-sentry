@@ -2,16 +2,14 @@ import React, {Component} from 'react';
 import {Text, View} from 'react-native';
 import { connect } from 'react-redux';
 import Header from './Header';
-import Datepicker, {TimePicker} from './Datepicker';
+import Datepicker from './Datepicker';
+import TimePicker from './TimePicker';
 
 import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, List, ListItem, InputGroup, Picker, Label, Item, Input, Form} from 'native-base';
 
 
-// const mapStateToProps = state => { 
-//   return {state: state};
-// };
 
-export default function EventForm (state) {
+export default function EventForm () {
   return (
     <Container>
       <Header />
@@ -32,10 +30,10 @@ export default function EventForm (state) {
         <Item>
         <InputGroup>
           <Icon name="ios-alarm"/>
-          <TimePicker />
+          <TimePicker type={'START'} />
         
           <Icon name="ios-alarm"/>
-          <TimePicker />
+          <TimePicker type={'END'} />
 
         </InputGroup>
         </Item>

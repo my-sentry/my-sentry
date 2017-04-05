@@ -80,27 +80,56 @@ const feed = (state = {}, action) => {
 
 const events =(state = {id: null, active: false, isPersonal: false}, action) => {
 	switch(action.type) {
-    case 'UPDATE_ITEM': 
-      return {...state,
-        id: action.item,
-      }
+  case 'UPDATE_ITEM': 
+    return {...state,
+      id: action.item,
+    }
 
-		case 'ACTIVE' :
-			return {...state,
-				active: true,
-			}
-		case 'INACTIVE' :
-			return {...state, 
-				active: false
-			}
-		case 'PERSONAL' :
-			return {...state, 
-				isPersonal: true
-			}
+	case 'ACTIVE' :
+		return {...state,
+			active: true,
+		}
+	case 'INACTIVE' :
+		return {...state, 
+			active: false
+		}
+	case 'PERSONAL' :
+		return {...state, 
+			isPersonal: true
+		}
 	default:
 		return state;
 
 	}
+}
+
+const dateReducer =(state = {date: new Date(), start: new Date(), end: new Date()}, action) => {
+  switch(action.type) {
+  case 'DATE_CHANGE':
+    return {...state,
+      date: action.date
+    }
+  case 'START':
+  console.log(action)
+    return {...state,
+      start: action.time
+    }
+  case 'END':
+  console.log(action)
+    return {...state,
+      end: action.time
+    }  
+  case 'NEW_DATE':
+    return {...state,
+      date: new Date()
+    }
+  case 'NEW_TIME':
+    return {...state,
+      time: new Date()
+    }
+    default:
+    return state;
+  }
 }
 
 export default combineReducers({
@@ -108,5 +137,6 @@ export default combineReducers({
   header,
   groups,
   events,
+  dateReducer,
   // more reducers
 });
