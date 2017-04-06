@@ -5,6 +5,7 @@ exports.up = function(knex, Promise) {
     table.integer('event_id').unsigned().references('events.id');
     table.string('type', 25).notNullable();
     table.string('time', 50).notNullable();
+    table.integer('active').defaultTo(1);
     table.unique(['event_id', 'type']);
   });
 };
