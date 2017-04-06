@@ -1,4 +1,4 @@
-var timers = require('../server/db/controllers/timersCtrl');
+var timers = require('../../server/db/controllers/timersCtrl');
 
 var MS_PER_MINUTE = 60000;
 
