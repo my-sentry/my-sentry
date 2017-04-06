@@ -43,7 +43,7 @@ const scenes = Actions.create(
       <Scene key='eventView' tabs={true} component={EventView} />
       <Scene key='groupView' tabs={true} component={GroupView} />
       <Scene key='signup' component={Signup} />
-      <Scene key='login'initial={store.getState().auth.isAuth} tabs={true} component={Login} />
+      <Scene key='login'initial={!store.getState().auth.isAuth} tabs={true} component={Login} />
     </Scene>
   </Scene>
   </Scene>

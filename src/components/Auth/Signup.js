@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 
 
-import { Container, Title, Content, Label, Form, Button, Item, Icon, Right, Body, Input, H1 } from 'native-base';
+import { Container, Title, Content, Label, Form, Button, Item, Text, Icon, Right, Body, Input, H1 } from 'native-base';
 
 
 const mapStateToProps = ({signup}) => { 
@@ -22,6 +22,9 @@ export default connect(mapStateToProps)(function Login ({signup, dispatch}) {
   return (
    <Container>
     <Content>
+          <Button onPress={Actions.login}>
+        <Icon name='arrow-back'/>
+          </Button>
       <Form>
         <Item >
           <Input placeholder='First Name' onChangeText={(text) => dispatch({type: 'FIRST_NAME', text: text})}/>
@@ -45,9 +48,7 @@ export default connect(mapStateToProps)(function Login ({signup, dispatch}) {
         </Item>
 
       </Form>
-      <Button onPress={Actions.login}>
-        <Icon name='arrow-back'/>
-          </Button>
+
       <Button block onPress={() => {
         let data = JSON.stringify({
           firstName: signup.firstName,
@@ -68,14 +69,14 @@ export default connect(mapStateToProps)(function Login ({signup, dispatch}) {
         }).then(res => {
           setTimeout(() => Actions.dashboard());
           dispatch({type: 'CLEAR_SIGNUP'});
-          console.log('GOOD RESPONSE', res)}).catch(err => {
+        })
+          .catch(err => {
           setTimeout(() => alert('invalid submission'));
           dispatch({type: 'CLEAR_SIGNUP'});
           })
         : null;
 
-      }} />
-    </Content>
+      }} ><Text> Create Account</Text></Button></Content>
   </Container>
   );
 });
