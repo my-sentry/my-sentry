@@ -14,9 +14,6 @@ const styles = {
     justifyContent: 'center',
     backgroundColor: '#cccccc',
   },
-  gray: {
-    backgroundColor: '#cccccc',
-  },
   spinner: {
     marginTop: 250,
     flexDirection: 'column',
@@ -25,7 +22,8 @@ const styles = {
   },
 };
 export default function Loading() {
-  AsyncStorage.getItem('AUTHENTICATION').then(res=> res === 'true' ? Actions.dashboard() : Actions.login());
+
+  AsyncStorage.getItem('AUTHENTICATION').then(res=> res === 'true' ? Actions.menu() : Actions.login());
 
   return (
   <Container style = {styles.centering} >

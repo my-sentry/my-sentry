@@ -37,6 +37,7 @@ console.log(auth);
 const scenes = Actions.create(
   <Scene key='modal' component={Modal} >
   <Scene key='root' tabs={true} hideNavBar >
+      <Scene key="loading" hideNavBar initial={true} component={Loading} />
     <Scene key='menu' hideNavBar component={NavigationDrawer} open={false}>
       <Scene key='dashboard' hideNavBar tabs={true} component={Dashboard} />
       <Scene key='groups' tabs={true} component={Groups} />
@@ -46,7 +47,6 @@ const scenes = Actions.create(
       <Scene key='eventView' tabs={true} component={EventView} />
       <Scene key='groupView' tabs={true} component={GroupView} />
       <Scene key='signup' component={Signup} />
-      <Scene key="loading" initial={true} component={Loading} />
       <Scene key='login' tabs={true} component={Login} />
     </Scene>
   </Scene>

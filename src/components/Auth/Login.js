@@ -6,9 +6,14 @@ import {AsyncStorage} from 'react-native';
 
 import axios from 'axios';
 
+const styles = {
+  container: {
+    flex: 1
+  }
+};
 
 
-import { Container, Title, Content, Label, Form, Button, Text, Item, Icon, Right, Body, Input, H1 } from 'native-base';
+import { Container, Title, Content, Label, Form, Button, Text, Item, Icon, Right, Body, Input, H1, Grid, Row } from 'native-base';
 
 
 const mapStateToProps = state => { 
@@ -16,11 +21,12 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps)(function Login ({login, dispatch}) {
-  AsyncStorage.getItem('AUTHENTICATION').then(res=> res === 'true' ? Actions.dashboard() : null);
   return (
    <Container>
+    <Grid style={{flex: 1}}>
+    <Row >
     <Content>
-      <Form>
+    <Form style={styles.container}>
         <Item floatingLabel>
           <Label>Username</Label>
           <Input value={login.username} onChangeText={(text) => dispatch({type: 'USERNAME', text: text})}/>
@@ -29,7 +35,10 @@ export default connect(mapStateToProps)(function Login ({login, dispatch}) {
           <Label>Password</Label>
           <Input value={login.password} secureTextEntry={true} onChangeText={(text) => dispatch({type: 'PASSWORD', text: text})}/>
         </Item>
-      </Form>
+    </Form>
+    </Content>
+    </Row>
+    <Row style={{flex: 0}}>
       <Button onPress={Actions.signup} ><Text> SIGNUP</Text></Button>
       <Button onPress={()=> {
         axios({
@@ -50,8 +59,9 @@ export default connect(mapStateToProps)(function Login ({login, dispatch}) {
           alert('LOGIN FAILED');
         });
       }}><Text> LOGIN </Text>
-          </Button>
-    </Content>
+      </Button>
+    </Row>
+  </Grid>
   </Container>
   );
 });
