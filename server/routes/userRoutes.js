@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var users = require('../db/controllers/userCtrl');
 var auth = require('../authHelper');
+var _ = require('lodash');
 
 module.exports = function(passport) {
   router.get('/', auth.isAuth, (req, res, next) => {
@@ -37,7 +38,7 @@ module.exports = function(passport) {
     '/signup',
     passport.authenticate('signup'),
     (req, res, next) => {
-      res.sendStatus(201);
+      res.json(_.pick(req.user, ['id', 'username', 'first_name', 'last_name']));
     }
   );
 
@@ -45,7 +46,7 @@ module.exports = function(passport) {
     '/login',
     passport.authenticate('login'),
     (req, res, next) => {
-      res.sendStatus(200);
+      res.json(_.pick(req.user, ['id', 'username', 'first_name', 'last_name']));
     }
   );
 
