@@ -4,14 +4,16 @@ import { connect } from 'react-redux';
 import {Actions} from 'react-native-router-flux';
 import ActionButton from 'react-native-action-button';
 import Header from '../components/Header';
+import axios from 'axios';
 
 
 import { Container, Title, Content, Button, Left, Right, List, ListItem, Body, Fab, Icon, H1, H2, H3 } from 'native-base';
 
-var mock = [{id: null, name: 'test', description: 'some description here'}, {id: null, name: 'test', description: 'some description here'}];
+var mock = [];
 
-// fetch('http://192.168.1.163:8000/api/events')
-//   .then(res=> res.json()).then(res=> mock = res);
+// axios('http://192.168.1.163:8000/api/events')
+//   .then(res=> console.log('GOOD', res)).catch(err => console.log('ERR', err))
+//   .then(res=> mock = res);
 
 
 export default connect()(class Feed extends Component {

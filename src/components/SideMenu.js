@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import { Text, View} from 'react-native';
+import { Text, View, AsyncStorage} from 'react-native';
 import { connect } from 'react-redux';
+
 import {Actions} from 'react-native-router-flux';
 import { Container, Title, Content, Footer, FooterTab, Button, Body, Icon, H1 } from 'native-base';
 
