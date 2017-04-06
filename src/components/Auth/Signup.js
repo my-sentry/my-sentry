@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 
 
+
 import { Container, Title, Content, Label, Form, Button, Item, Text, Icon, Right, Body, Input, H1 } from 'native-base';
 
 
@@ -38,13 +39,13 @@ export default connect(mapStateToProps)(function Login ({signup, dispatch}) {
           <Input placeholder='Username' onChangeText={(text) => dispatch({type: 'USERNAME_SIGNUP', text: text})}/>
         </Item>
 
-        <Item  >
+        <Item >
           <Input placeholder='Password' secureTextEntry={true} onChangeText={(text) => dispatch({type: 'PASSWORD_SIGNUP', text: text})}/>
         </Item>
 
-        <Item  >
-          <Input placeholder='Confirm Password' secureTextEntry={true}  onChangeText={(text) => dispatch({type: 'CONFIRM_PASSWORD', text: text})}/>
-          {signup.confirm === signup.password ? null : <Icon name='ios-close-circle' style={{color:'red'}}/>}
+        <Item >
+          <Input placeholder='Confirm Password' secureTextEntry={true} onChangeText={(text) => dispatch({type: 'CONFIRM_PASSWORD', text: text})}/>
+          {signup.confirm === signup.password ? null : <Icon name='ios-close-circle' style={{color: 'red'}}/>}
         </Item>
 
       </Form>
@@ -68,11 +69,12 @@ export default connect(mapStateToProps)(function Login ({signup, dispatch}) {
           data: data
         }).then(res => {
           setTimeout(() => Actions.dashboard());
+          dispatch({type: 'LOGIN'});
           dispatch({type: 'CLEAR_SIGNUP'});
         })
           .catch(err => {
-          setTimeout(() => alert('invalid submission'));
-          dispatch({type: 'CLEAR_SIGNUP'});
+            setTimeout(() => alert('invalid submission'));
+            dispatch({type: 'CLEAR_SIGNUP'});
           })
         : null;
 

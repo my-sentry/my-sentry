@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {Actions} from 'react-native-router-flux';
 import Header from './authHeader';
 import { connect } from 'react-redux';
+import {AsyncStorage} from 'react-native';
+
 import axios from 'axios';
 
 
@@ -14,7 +16,7 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps)(function Login ({login, dispatch}) {
-  console.log(login)
+  AsyncStorage.getItem('AUTHENTICATION').then(res=> res === 'true' ? Actions.dashboard() : null);
   return (
    <Container>
     <Content>
@@ -40,6 +42,7 @@ export default connect(mapStateToProps)(function Login ({login, dispatch}) {
           data: JSON.stringify(login)
         }).then(res => {
           setTimeout(() => Actions.dashboard());
+          dispatch({type: 'LOGIN'});
           dispatch({type: 'CLEAR_LOGIN'});
 
         }).catch(err => {

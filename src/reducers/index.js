@@ -1,4 +1,5 @@
 import {combineReducers} from 'redux';
+import {AsyncStorage} from 'react-native'
 import {Reducer} from 'react-native-router-flux';
 import { ActionConst } from 'react-native-router-flux';
 
@@ -7,7 +8,7 @@ import { ActionConst } from 'react-native-router-flux';
 export function routerReducer(params) {
   const defaultReducer = new Reducer(params);
   return (state, action) => {
-    console.log('ACTION', action);
+    // console.log('ACTION', action);
     return defaultReducer(state, action);
   };
 }
@@ -27,16 +28,18 @@ const header = (state = {title: 'DASHBOARD'}, action) => {
     return state;
   }
 };
-
 // authorization reducer
-const auth = (state = {isAuth: true}, action) => {
+const auth = (state = {isAuth: false}, action) => {
   switch (action.type) {
+
   case 'LOGIN' :
+    AsyncStorage.setItem('AUTHENTICATION', 'true').catch(err=> console.log("ERR",err));
     return {...state,
       isAuth: true
       };
+
   case 'LOGOUT' :
-    console.log(state)
+    AsyncStorage.setItem('AUTHENTICATION', 'null').catch(err=> console.log("ERR",err));
     return { ...state,  
       isAuth: false,
        };
