@@ -7,14 +7,14 @@ var types = ['warning10', 'warning2', 'danger'];
 var offsets = {
   warning10: 10,
   warning2: 2,
-  danger: 2
+  danger: 0
 };
 
 var offsetMinutes = function(offset, date) {
   return new Date(date - (offset * MS_PER_MINUTE));
 };
 
-exports.createTimers = function(event) {
+module.exports = function(event) {
   var insertTimers = types
     // create each timer to insert into db
     .map(type => {
@@ -29,5 +29,5 @@ exports.createTimers = function(event) {
       return timers.createTimer(timer);
     });
 
-  return Promise.all(insertTimers).then(console.log.bind(null, 'Timers Inserted: '));
+  return Promise.all(insertTimers);
 };

@@ -1,4 +1,4 @@
-var client = require('./timers-client');
+var client = require('./client');
 
 client.initialize();
 

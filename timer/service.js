@@ -1,5 +1,5 @@
 const ipc = require('node-ipc');
-const util = require('./util');
+const createTimers = require('./helpers/createTimers');
 
 ipc.config.id = 'timer';
 ipc.config.port = 6060;
@@ -14,7 +14,9 @@ ipc.serve(() => {
 
   ipc.server.on('event', (data, socket) => {
     var event = JSON.parse(data);
-    util.createTimers(event);
+    createTimers(event).then(ids => {
+      console.log('Created timers: ', ids);
+    });
   });
 
 });
