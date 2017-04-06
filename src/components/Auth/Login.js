@@ -2,38 +2,53 @@ import React, {Component} from 'react';
 import {Actions} from 'react-native-router-flux';
 import Header from './authHeader';
 import { connect } from 'react-redux';
+import axios from 'axios';
 
 
-import { Container, Title, Content, Label, Form, Button, Item, Icon, Right, Body, Input, H1 } from 'native-base';
+
+import { Container, Title, Content, Label, Form, Button, Text, Item, Icon, Right, Body, Input, H1 } from 'native-base';
 
 
-// const mapStateToProps = state => { 
-//   return {state: state};
-// };
+const mapStateToProps = state => { 
+  return { login: {username: state.login.username, password: state.login.pw}};
+};
 
-export default connect()(function Login (state) {
-  console.log(state)
+export default connect(mapStateToProps)(function Login ({login, dispatch}) {
+  console.log(login)
   return (
    <Container>
     <Content>
       <Form>
         <Item floatingLabel>
           <Label>Username</Label>
-          <Input/>
+          <Input value={login.username} onChangeText={(text) => dispatch({type: 'USERNAME', text: text})}/>
         </Item>
-        <Item floatingLabel last>
+        <Item floatingLabel last >
           <Label>Password</Label>
-          <Input onChangeText={(text) => state.dispatch(text)}
-/>
+          <Input value={login.password} secureTextEntry={true} onChangeText={(text) => dispatch({type: 'PASSWORD', text: text})}/>
         </Item>
       </Form>
-      <Button onPress={()=> console.log(Input)}>
-        <Icon 
-          name='arrow-back' 
-          
-          />
+      <Button onPress={Actions.signup} ><Text> SIGNUP</Text></Button>
+      <Button onPress={()=> {
+        axios({
+          method: 'post',
+          headers: { 
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          url: 'http://192.168.1.163:8000/api/users/login',
+          data: JSON.stringify(login)
+        }).then(res => {
+          setTimeout(() => Actions.dashboard());
+          dispatch({type: 'CLEAR_LOGIN'});
+
+        }).catch(err => {
+          dispatch({type: 'CLEAR_LOGIN'});
+          alert('LOGIN FAILED');
+        });
+      }}><Text> LOGIN </Text>
           </Button>
     </Content>
   </Container>
   );
-})
+});

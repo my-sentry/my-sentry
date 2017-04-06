@@ -132,11 +132,69 @@ const dateReducer =(state = {date: new Date(), start: new Date(), end: new Date(
   }
 }
 
+const login = (state = {username: null, pw: null}, action) => {
+  switch(action.type) {
+  case 'PASSWORD' : 
+    return {...state,
+      pw: action.text
+    }  
+  case 'USERNAME' : 
+    return {...state,
+      username: action.text
+    } 
+  case 'CLEAR_LOGIN' : 
+    return {...state,
+      username: null,
+      pw: null
+    } 
+    default:
+    return state;
+  }
+}
+const signup = (state = {firstName:null, lastName: null, userName:null, password:null, confirm: null}, action)=> {
+  switch(action.type) {
+  case 'FIRST_NAME':
+  return {...state,
+    firstName: action.text
+  }
+
+  case 'LAST_NAME':
+  return {...state,
+    lastName: action.text
+  }
+  case 'USERNAME_SIGNUP':
+  return {...state,
+    userName: action.text
+  } 
+  case 'PASSWORD_SIGNUP':
+  return {...state,
+    password: action.text
+
+  }
+  case 'CLEAR_SIGNUP' :
+  return {
+    firstName: null,
+    lastName: null,
+    userName: null,
+    password: null,
+    confirm: null
+  }
+  case 'CONFIRM_PASSWORD':
+  return {...state,
+    confirm: action.text
+  }
+  default:
+    return state;      
+  }
+}
 export default combineReducers({
   auth,
   header,
   groups,
   events,
   dateReducer,
+  login,
+  signup,
+
   // more reducers
 });
