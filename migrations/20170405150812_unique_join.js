@@ -6,10 +6,7 @@ exports.up = function(knex, Promise) {
 };
 
 exports.down = function(knex, Promise) {
-  return Promise.all([
-    knex.schema.dropTable('events'),
-    knex.schema.dropTable('group_user'),
-    knex.schema.dropTable('groups'),
-    knex.schema.dropTable('users')
-  ]);
+  return knex.schema.table('group_user', function(table) {
+    table.dropUnique(['group_id', 'user_id']);
+  });
 };
