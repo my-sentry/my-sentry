@@ -67,6 +67,10 @@ const groups = (state = {hasGroups: false, groups: []}, action) => {
 
 const feed = (state = {}, action) => {
   switch(action.type) {
+  case 'UPDATE_FEED': 
+    return{...state,
+      data: action.data
+    }
   case 'ADD_ITEM':
     return {...state,
   }
@@ -196,6 +200,8 @@ export default combineReducers({
   dateReducer,
   login,
   signup,
+  feed,
+  
 
   // more reducers
 });

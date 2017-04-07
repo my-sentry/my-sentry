@@ -80,7 +80,7 @@ export default connect(mapStateToProps)(function Login ({signup, dispatch}) {
           url: 'http://192.168.1.163:8000/api/users/signup',
           data: data
         }).then(res => {
-          setTimeout(() => Actions.dashboard());
+          setTimeout(() => Actions.loading());
           dispatch({type: 'LOGIN'});
           dispatch({type: 'CLEAR_SIGNUP'});
         })

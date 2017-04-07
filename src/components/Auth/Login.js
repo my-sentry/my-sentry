@@ -48,8 +48,7 @@ export default connect(mapStateToProps)(function Login ({login, dispatch}) {
       <Button onPress={()=> {
         axios({
           method: 'post',
-            credentials: 'include',
-
+          credentials: 'include',
           headers: { 
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -57,13 +56,12 @@ export default connect(mapStateToProps)(function Login ({login, dispatch}) {
           url: 'http://192.168.1.163:8000/api/users/login',
           data: JSON.stringify(login)
         }).then(res => {
-          console.log(res)
-          setTimeout(() => Actions.dashboard());
+          setTimeout(() => Actions.loading());
           dispatch({type: 'LOGIN', ID: res.data.id});
           dispatch({type: 'CLEAR_LOGIN'});
 
         }).catch(err => {
-          console.log('ERR', err)
+          console.log('ERR', err);
           dispatch({type: 'CLEAR_LOGIN'});
           alert('LOGIN FAILED');
         });

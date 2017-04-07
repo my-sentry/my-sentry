@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import { Text, View, AsyncStorage} from 'react-native';
 import { connect } from 'react-redux';
-
 import {Actions} from 'react-native-router-flux';
 import { Container, Title, Content, Footer, FooterTab, Button, Body, Icon, H1 } from 'native-base';
 
@@ -15,13 +14,8 @@ export default connect()(function SideMenu (state) {
     <Content>
 
     <H1 onPress={() => {
-      setTimeout(() =>Actions.menu());
-      setTimeout(() =>Actions.login());
-      CookieManager.clearAll((err, res) => {
-  console.log('cookies cleared!');
-  console.log(err);
-  console.log(res);
-});
+      setTimeout(() =>Actions.loading());
+      setTimeout(() =>Actions.refresh({key: 'menu', open: value => !value }));
       state.dispatch({type: 'LOGOUT'});
     }}>LOGOUT</H1>
 
@@ -32,7 +26,7 @@ export default connect()(function SideMenu (state) {
 
     <H1 onPress={() =>{
       setTimeout(() =>Actions.refresh({key: 'menu', open: value => !value }));
-      Actions.dashboard();
+      setTimeout(() =>Actions.dashboard());
     }}>EVENTS</H1>
     </Content>
     </Container>
