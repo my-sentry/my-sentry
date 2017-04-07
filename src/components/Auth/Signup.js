@@ -70,9 +70,8 @@ export default connect(mapStateToProps)(function Login ({signup, dispatch}) {
           password: signup.password
         });
 
-        console.log('button pressed');
         signup.confirm === signup.password 
-        ? fetch({
+        ? axios({
           method: 'post',
           headers: { 
             'Accept': 'application/json',

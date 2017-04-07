@@ -17,6 +17,11 @@ export default connect()(function SideMenu (state) {
     <H1 onPress={() => {
       setTimeout(() =>Actions.menu());
       setTimeout(() =>Actions.login());
+      CookieManager.clearAll((err, res) => {
+  console.log('cookies cleared!');
+  console.log(err);
+  console.log(res);
+});
       state.dispatch({type: 'LOGOUT'});
     }}>LOGOUT</H1>
 
