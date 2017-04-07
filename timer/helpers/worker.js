@@ -3,10 +3,7 @@ var timers = require('../../server/db/controllers/timersCtrl');
 var activeTimers = {};
 
 var getMillisecondsToEnd = function(end) {
-  var now = new Date();
-  var then = new Date(end);
-
-  return then.valueOf() - now.valueOf();
+  return new Date().valueOf() - new Date(end).valueOf();
 };
 
 var startTimer = function(id, time, callback) {
@@ -27,7 +24,11 @@ var setUninitializedTimers = function() {
   timers
     .getActiveTimers()
     .then(timers => timers.filter(timer => !activeTimers[timer.id]))
+    .then(results => {
+      return Promise.all(results.map(item => timers.getTimerById(item.id)));
+    })
     .then(inactiveTimers => {
+      console.log('Inactive Timers: ', inactiveTimers);
       inactiveTimers.forEach(timer => {
         startTimer(timer.id, timer.time, notifications.bind(null, timer.id, timer.name, timer.type));
       });
@@ -35,3 +36,7 @@ var setUninitializedTimers = function() {
 };
 
 setUninitializedTimers();
+
+module.exports = function() {
+  setInterval(setUninitializedTimers, 30000);
+};

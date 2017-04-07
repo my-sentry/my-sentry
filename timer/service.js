@@ -1,5 +1,6 @@
 const ipc = require('node-ipc');
 const createTimers = require('./helpers/createTimers');
+const worker = require('./helpers/worker')();
 
 ipc.config.id = 'timer';
 ipc.config.port = 6060;
