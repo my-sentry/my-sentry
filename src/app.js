@@ -29,11 +29,7 @@ const store = compose(
 )(createStore)(MasterReducer);
 
 const RouterWithRedux = connect()(Router);
-var auth;
-AsyncStorage.getItem('AUTHENTICATION').then(res=> {console.log("RES", res === 'null')});
 
-console.log(auth);
-//this could get moved to its own file. 
 const scenes = Actions.create(
   <Scene key='modal' component={Modal} >
   <Scene key='root' tabs={true} hideNavBar >

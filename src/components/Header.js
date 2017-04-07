@@ -26,7 +26,6 @@ const mapStateToProps = state => {
 // this has to be called MyHeader instead of Header because i am importing Header
 
 export default connect(mapStateToProps)(function MyHeader ({title}) { 
-  console.log(title)
   return (
     <Header > 
     <Left> 
@@ -34,8 +33,7 @@ export default connect(mapStateToProps)(function MyHeader ({title}) {
       <Button onPress={()=> Actions.dashboard()}>
         <Icon 
           name='arrow-back' 
-          style={styles.menu}
-          
+          style={styles.menu}          
           />
       </Button>
       ) : null

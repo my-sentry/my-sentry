@@ -115,13 +115,11 @@ const dateReducer =(state = {date: new Date(), start: new Date(), end: new Date(
       date: action.date
     }
   case 'START':
-  console.log(action)
     return {...state,
       start: action.time
     }
   case 'END':
-  console.log(action)
-    return {...state,
+      return {...state,
       end: action.time
     }  
   case 'NEW_DATE':
@@ -201,7 +199,7 @@ export default combineReducers({
   login,
   signup,
   feed,
-  
+
 
   // more reducers
 });
