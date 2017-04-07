@@ -21,7 +21,8 @@ exports.getTimerById = function(id) {
       'events.group_id'
     ])
     .where('timers.id', id)
-    .innerJoin('events', 'events.id', 'timers.event_id');
+    .innerJoin('events', 'events.id', 'timers.event_id')
+    .then(results => results[0]);
 };
 
 exports.makeTimerInactive = function(id) {

@@ -3,7 +3,9 @@ var timers = require('../../server/db/controllers/timersCtrl');
 var activeTimers = {};
 
 var getMillisecondsToEnd = function(end) {
-  return new Date().valueOf() - new Date(end).valueOf();
+  var now = new Date();
+  var then = new Date(end);
+  return then.valueOf() - now.valueOf();
 };
 
 var startTimer = function(id, time, callback) {
