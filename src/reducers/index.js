@@ -29,22 +29,22 @@ const header = (state = {title: 'DASHBOARD'}, action) => {
     return state;
   }
 };
-
- const groups = (state = {id: null, groups: [], users: [], groupName: null, members: []}, action) => {
+const groups = (state = {id: null, groups: [], users: [], groupName: null, members: []}, action) => {
   switch(action.type) {
   case 'CURRENT_GROUP':
     return{...state,
       id: action.item
-    }
-  case 'UPDATE_GROUPS': 
+  }
+  case 'UPDATE_GROUPS':
     return{...state,
       groups: action.data
-    }
+  }
   case 'ADD_GROUP' :
     let store = JSON.stringify(action.id)
     AsyncStorage.setItem('GROUP', store)
     return {...state,
       groups: [...state.groups, action.item],
+      hasGroups: true,
   }
   case 'REMOVE_GROUP' :
     return {...state,
@@ -59,16 +59,24 @@ const header = (state = {title: 'DASHBOARD'}, action) => {
       groupName: action.text
   }
   case 'ADD_MEMBER' :
-    return {...state,
-      members: [...state.members, action.member],
-      highlighted: true
+    if (state.members.includes(action.id)) {
+      var idx = state.members.indexOf(action.id);
+      var updated = state.members.filter(id => id !== action.id);
+      console.log('remove members ---->', updated);
+
+      return {...state,
+        members: [...updated]
+      }
+    } else {
+      console.log('added id ---->', action.id);
+      return {...state,
+        members: [...state.members, action.id]
+    }
   }
   default:
     return state;
   }
 }
-
-
 export default combineReducers({
   auth,
   header,

@@ -5,7 +5,7 @@ var auth = require('../authHelper');
 var _ = require('lodash');
 
 module.exports = function(passport) {
-  router.get('/', auth.isAuth, (req, res, next) => {
+  router.get('/', /*auth.isAuth, */(req, res, next) => {
     users.getUsers()
       .then(results => res.json(results))
       .catch(err => {
