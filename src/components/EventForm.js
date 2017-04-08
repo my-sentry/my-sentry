@@ -51,16 +51,11 @@ export default connect(mapStateToProps)(function EventForm ({form, dispatch}) {
 
         </InputGroup>
         </Item>
-        <Item>
-        <Picker
-          iosHeader="Select one"
-          mode="dropdown">
-           <Item label="Cats" value="key0" />
-                 <Item label="Dogs" value="key1" />
-                 <Item label="Birds" value="key2" />
-                 <Item label="Elephants" value="key3" />
-            </Picker>
-            </Item>
+        
+        <Picker style= {{width: 100}}>
+           
+        </Picker>
+            
             <Item stackedLabel>
               <Label>Event Description</Label>
               <InputGroup regular>
