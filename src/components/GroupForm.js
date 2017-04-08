@@ -17,39 +17,40 @@ axios.get('http://192.168.1.127:8000/api/users')
     console.log('--------- data ---------', data.data);
   });
 
-var testData = [
-  {
-    first_name: 'Jerry',
-    last_name: 'Krusinski',
-    id: 1,
-    username: 'jkrusr'
-  },
-  {
-    first_name: 'Jonathan',
-    last_name: 'Granstaff',
-    id: 2,
-    username: 'jgranny'
-  },
-  {
-    first_name: 'Christian',
-    last_name: 'Arredondo',
-    id: 3,
-    username: 'theDondo9000'
-  },
-  {
-    first_name: 'Cory',
-    last_name: 'Grinstead',
-    id: 4,
-    username: 'cGrins'
-  }
-];
+// var testData = [
+//   {
+//     first_name: 'Jerry',
+//     last_name: 'Krusinski',
+//     id: 1,
+//     username: 'jkrusr'
+//   },
+//   {
+//     first_name: 'Jonathan',
+//     last_name: 'Granstaff',
+//     id: 2,
+//     username: 'jgranny'
+//   },
+//   {
+//     first_name: 'Christian',
+//     last_name: 'Arredondo',
+//     id: 3,
+//     username: 'theDondo9000'
+//   },
+//   {
+//     first_name: 'Cory',
+//     last_name: 'Grinstead',
+//     id: 4,
+//     username: 'cGrins'
+//   }
+// ];
 
-var search = function (text) {
-
+const mapStateToProps = ({groups}) => {
+  return {
+    users: groups.users
+  };
 };
 
-
-export default connect()(function GroupForm (state) {
+export default connect(mapStateToProps)(function GroupForm (state) {
   return (
     <Container>
 
@@ -59,7 +60,7 @@ export default connect()(function GroupForm (state) {
 
         <Form>
           <Item>
-            <Input onChangeText={(text) => dispatch({type: 'ADD_NAME', text: text})} placeholder='Group Name' />
+            <Input onChangeText={(text) => state.dispatch({type: 'ADD_NAME', text: text})} placeholder='Group Name' />
           </Item>
         </Form>
 
@@ -69,9 +70,9 @@ export default connect()(function GroupForm (state) {
             </Item>
         </Form>
 
-        <List dataArray={testData}
+        <List dataArray={state.users}
           renderRow={user =>
-            <ListItem onPress={(member) => dispatch({type: 'ADD_MEMBER', member: user})}>
+            <ListItem onPress={(member) => state.dispatch({type: 'ADD_MEMBER', member: user})}>
               <Text>{`${user.first_name} ${user.last_name}`}</Text>
             </ListItem>
           }>
