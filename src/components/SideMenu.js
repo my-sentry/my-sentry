@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import { Text, View, AsyncStorage} from 'react-native';
 import { connect } from 'react-redux';
-
 import {Actions} from 'react-native-router-flux';
 import { Container, Title, Content, Footer, FooterTab, Button, Body, Icon, H1 } from 'native-base';
+import axios from 'axios';
 
 /*  to remove the hacky settimeouts,
 this all has to be reformatted to THUNK. aka async redux promises
@@ -15,8 +15,15 @@ export default connect()(function SideMenu (state) {
     <Content>
 
     <H1 onPress={() => {
-      setTimeout(() =>Actions.menu());
-      setTimeout(() =>Actions.login());
+      axios({
+        method: 'post',
+        headers: { 
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        url: 'http://192.168.1.163:8000/api/users/logout'
+      }).then(() => Actions.loading());
+      setTimeout(() =>Actions.refresh({key: 'menu', open: value => !value }));
       state.dispatch({type: 'LOGOUT'});
     }}>LOGOUT</H1>
 

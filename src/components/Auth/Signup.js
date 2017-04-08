@@ -3,11 +3,19 @@ import {Actions} from 'react-native-router-flux';
 import Header from './authHeader';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import { Container, Title, Content, Label, Form, Button, Item, Text, Icon, Right, Body, Input, H1, Grid, Row } from 'native-base';
 
-
-
-import { Container, Title, Content, Label, Form, Button, Item, Text, Icon, Right, Body, Input, H1 } from 'native-base';
-
+const styles = {
+  centering: {
+    flex: 1
+  },
+  spinner: {
+    marginTop: 250,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+};
 
 const mapStateToProps = ({signup}) => { 
   return { signup: {
@@ -21,12 +29,11 @@ const mapStateToProps = ({signup}) => {
 
 export default connect(mapStateToProps)(function Login ({signup, dispatch}) {
   return (
-   <Container>
+   <Container >
+      <Grid style={{flex: 1}}>
+      <Row >
     <Content>
-          <Button onPress={Actions.login}>
-        <Icon name='arrow-back'/>
-          </Button>
-      <Form>
+      <Form >
         <Item >
           <Input placeholder='First Name' onChangeText={(text) => dispatch({type: 'FIRST_NAME', text: text})}/>
         </Item>
@@ -43,14 +50,19 @@ export default connect(mapStateToProps)(function Login ({signup, dispatch}) {
           <Input placeholder='Password' secureTextEntry={true} onChangeText={(text) => dispatch({type: 'PASSWORD_SIGNUP', text: text})}/>
         </Item>
 
-        <Item >
+        <Item last >
           <Input placeholder='Confirm Password' secureTextEntry={true} onChangeText={(text) => dispatch({type: 'CONFIRM_PASSWORD', text: text})}/>
           {signup.confirm === signup.password ? null : <Icon name='ios-close-circle' style={{color: 'red'}}/>}
         </Item>
-
       </Form>
-
+    </Content>
+      </Row>
+      <Row style={{flex: 0}}>
+        <Button block onPress={Actions.login}>
+          <Icon name='arrow-back'/>
+        </Button>
       <Button block onPress={() => {
+
         let data = JSON.stringify({
           firstName: signup.firstName,
           lastName: signup.lastName,
@@ -68,7 +80,7 @@ export default connect(mapStateToProps)(function Login ({signup, dispatch}) {
           url: 'http://192.168.1.163:8000/api/users/signup',
           data: data
         }).then(res => {
-          setTimeout(() => Actions.dashboard());
+          setTimeout(() => Actions.loading());
           dispatch({type: 'LOGIN'});
           dispatch({type: 'CLEAR_SIGNUP'});
         })
@@ -76,9 +88,11 @@ export default connect(mapStateToProps)(function Login ({signup, dispatch}) {
             setTimeout(() => alert('invalid submission'));
             dispatch({type: 'CLEAR_SIGNUP'});
           })
-        : null;
+        : alert('passwords dont match');
 
-      }} ><Text> Create Account</Text></Button></Content>
+      }} ><Text> Create Account</Text></Button>
+    </Row>
+    </Grid>
   </Container>
   );
 });
