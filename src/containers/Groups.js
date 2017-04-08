@@ -12,18 +12,18 @@ import { Container, Title, Content, List, ListItem, Footer, FooterTab, Button, L
 export default connect(({groups}) => groups)(function Groups ({groups, dispatch}) {
   return (
       <Container>
-      <Header title={'groups'}/>
+      <Header />
       <Container>
        <List dataArray={groups}
-        renderRow={(item) =>
+        renderRow={item =>
             <ListItem onPress={() => {
               AsyncStorage.getItem('AUTHENTICATION').then(res=> {
               dispatch({type: 'CURRENT_GROUP', item: {...item, userId: res}});
               }).then(()=> Actions.groupView({title: item.name}));
             }}>
                 <Body>
-                <H3>{item.name}</H3>
-                <Text>{item.description}</Text>
+                  <H3>{item.name}</H3>
+                  <Text>{item.description}</Text>
                 </Body>
             </ListItem>
         }>
@@ -33,7 +33,11 @@ export default connect(({groups}) => groups)(function Groups ({groups, dispatch}
           buttonColor='rgba(231,76,60,1)'
           onPress={() => {
             axios('http://192.168.1.163:8000/api/users')
-              .then(response => dispatch({type: 'RECEIVE_USERS', users: response.data}))
+              .then(res => {
+                dispatch({type: 'RECEIVE_USERS', users: res.data})
+                Actions.groupForm()
+              })
+              .catch(err => console.log(err))
           }}/>
 
       </Container>

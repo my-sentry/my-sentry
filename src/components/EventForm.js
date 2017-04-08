@@ -19,7 +19,6 @@ const mapStateToProps = ({eventForms, dateReducer, groups}) => {
     description: eventForms.description,
     lat: 123456,
     long: 78910,
-
     // group id is currently hardcoded
     groupId: 3
   }
@@ -34,6 +33,8 @@ const styles = {
     marginBottom: 20 
   }
 };
+
+
 export default connect(mapStateToProps)(function EventForm ({form, dispatch}) {
   return (
     <Container>
@@ -41,11 +42,11 @@ export default connect(mapStateToProps)(function EventForm ({form, dispatch}) {
         <Content>
         <Item stackedLabel>
           <Label>Event</Label>
-          <Input onChangeText={(text) => dispatch({type: 'EVENT_NAME', text: text})}/>
+          <Input onChangeText={text => dispatch({type: 'EVENT_NAME', text: text})}/>
         </Item>
         <Item stackedLabel>
           <Label>Location</Label>
-          <Input onChangeText={(text) => dispatch({type: 'LOCATION', text: text})}/>
+          <Input onChangeText={text => dispatch({type: 'LOCATION', text: text})}/>
         </Item>
         <Item>
           <InputGroup>
@@ -70,7 +71,7 @@ export default connect(mapStateToProps)(function EventForm ({form, dispatch}) {
             <Item stackedLabel>
               <Label>Event Description</Label>
               <InputGroup regular>
-                <Input onChangeText={(text) => dispatch({type: 'EVENT_DESC', text: text})}/>
+                <Input onChangeText={text => dispatch({type: 'EVENT_DESC', text: text})}/>
               </InputGroup>
             </Item>
             </Content>

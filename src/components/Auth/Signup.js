@@ -35,23 +35,23 @@ export default connect(mapStateToProps)(function Login ({signup, dispatch}) {
     <Content>
       <Form >
         <Item >
-          <Input placeholder='First Name' onChangeText={(text) => dispatch({type: 'FIRST_NAME', text: text})}/>
+          <Input placeholder='First Name' onChangeText={text => dispatch({type: 'FIRST_NAME', text: text})}/>
         </Item>
 
         <Item >
-          <Input placeholder='Last Name' onChangeText={(text) => dispatch({type: 'LAST_NAME', text: text})}/>
+          <Input placeholder='Last Name' onChangeText={text => dispatch({type: 'LAST_NAME', text: text})}/>
         </Item>
 
         <Item >
-          <Input placeholder='Username' onChangeText={(text) => dispatch({type: 'USERNAME_SIGNUP', text: text})}/>
+          <Input placeholder='Username' onChangeText={text => dispatch({type: 'USERNAME_SIGNUP', text: text})}/>
         </Item>
 
         <Item >
-          <Input placeholder='Password' secureTextEntry={true} onChangeText={(text) => dispatch({type: 'PASSWORD_SIGNUP', text: text})}/>
+          <Input placeholder='Password' secureTextEntry={true} onChangeText={text => dispatch({type: 'PASSWORD_SIGNUP', text: text})}/>
         </Item>
 
         <Item last >
-          <Input placeholder='Confirm Password' secureTextEntry={true} onChangeText={(text) => dispatch({type: 'CONFIRM_PASSWORD', text: text})}/>
+          <Input placeholder='Confirm Password' secureTextEntry={true} onChangeText={text => dispatch({type: 'CONFIRM_PASSWORD', text: text})}/>
           {signup.confirm === signup.password ? null : <Icon name='ios-close-circle' style={{color: 'red'}}/>}
         </Item>
       </Form>
@@ -90,7 +90,9 @@ export default connect(mapStateToProps)(function Login ({signup, dispatch}) {
           })
         : alert('passwords dont match');
 
-      }} ><Text> Create Account</Text></Button>
+      }}>
+        <Text> Create Account</Text>
+      </Button>
     </Row>
     </Grid>
   </Container>
