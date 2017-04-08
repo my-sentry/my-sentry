@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Text, View} from 'react-native';
 import { connect } from 'react-redux';
 import Header from './Header';
-import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, List, ListItem, InputGroup, Picker, Label, Item, Input, Form} from 'native-base';
+import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, List, ListItem, InputGroup, Picker, Label, Item, Input, Form, style} from 'native-base';
 import axios from 'axios';
 
 // const mapStateToProps = state => {
@@ -46,11 +46,12 @@ axios.get('http://192.168.1.127:8000/api/users')
 
 const mapStateToProps = ({groups}) => {
   return {
-    users: groups.users
+    users: groups.users,
+    members: groups.members
   };
 };
 
-export default connect(mapStateToProps)(function GroupForm (state) {
+export default connect(mapStateToProps)(function GroupForm ({users, members, dispatch}) {
   return (
     <Container>
 
@@ -60,20 +61,26 @@ export default connect(mapStateToProps)(function GroupForm (state) {
 
         <Form>
           <Item>
-            <Input onChangeText={(text) => state.dispatch({type: 'ADD_NAME', text: text})} placeholder='Group Name' />
+            <Input onChangeText={(text) => dispatch({type: 'ADD_NAME', text: text})} placeholder='Group Name' />
           </Item>
         </Form>
 
         <Form>
             <Item>
-              <Input onChangeText={(text) => search(text)} placeholder='Search Users'/>
+              <Input placeholder='Search Users'/>
             </Item>
         </Form>
 
-        <List dataArray={state.users}
+        <List dataArray={users}
           renderRow={user =>
-            <ListItem onPress={(member) => state.dispatch({type: 'ADD_MEMBER', member: user})}>
-              <Text>{`${user.first_name} ${user.last_name}`}</Text>
+            <ListItem key={user.id} onPress={() => {
+              dispatch({type: 'ADD_MEMBER', id: user.id});
+            }}>
+              <Text
+                style={{
+                  backgroundColor: members.includes(user.id) ? 'green' : null
+                }}
+                >{`${user.first_name} ${user.last_name}`}</Text>
             </ListItem>
           }>
         </List>
@@ -82,7 +89,7 @@ export default connect(mapStateToProps)(function GroupForm (state) {
 
       <Button
         style={{ alignSelf: 'center', marginTop: 20, marginBottom: 20 }}
-        onPress={()=> state.dispatch({type: 'ADD_GROUP', item: {name: 'test'}})}
+        onPress={()=> dispatch({type: 'ADD_GROUP', item: {name: 'test'}})}
         >
         <Text>Create Group</Text>
       </Button>
