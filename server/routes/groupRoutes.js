@@ -22,11 +22,16 @@ router.get('/:id', (req, res, next) => {
 });
 
 router.post('/', auth.isAuth, (req, res, next) => {
-  console.log(req.body.members);
   groups.createGroup(
     req.body.name,
     req.user.id
-  ).then(result => res.json(result))
+  ).then(groupId => {
+    return Promise.all(req.body.members.map(memberId => {
+      return groups.addUserToGroup(groupId, memberId);
+    })).then(() => {
+      res.json(groupId);
+    });
+  })
   .catch(err => {
     console.log(err);
     next(err);
