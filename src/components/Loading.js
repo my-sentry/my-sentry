@@ -24,9 +24,11 @@ const styles = {
   },
 };
 export default connect()(function Loading({dispatch}) {
-  AsyncStorage.getItem('AUTHENTICATION').then(res=> res === 'true' 
+  AsyncStorage.getItem('AUTHENTICATION').then(res=> res !== 'null' 
   ? axios('http://192.168.1.163:8000/api/events')
-    .then(res => dispatch({type: 'UPDATE_FEED', data: res.data})).catch(err => console.log('ERR', err)).then(() => Actions.menu())
+    .then(res => dispatch({type: 'UPDATE_FEED', data: res.data}))
+    .catch(err => console.log('ERR', err))
+    .then(() => Actions.menu())
   : Actions.login());
   
 

@@ -9,16 +9,15 @@ import axios from 'axios';
 
 import { Container, Title, Content, Button, Left, Right, List, ListItem, Body, Fab, Icon, H1, H2, H3 } from 'native-base';
 
-const mapStateToProps = ({feed}) => feed;
 
-export default connect(mapStateToProps)(class Feed extends Component {
+export default connect(({feed}) => feed)(class Feed extends Component {
   render() {
     return (
       <Container><Header /><Container>
        <List dataArray={this.props.data}
         renderRow={item =>
             <ListItem onPress={() => {
-              this.props.dispatch({type: 'UPDATE_ITEM', item: item});
+              this.props.dispatch({type: 'CURRENT_ITEM', item: item});
               setTimeout(()=> Actions.eventView({title: item.name}));
             }}>
             <Body>

@@ -16,20 +16,27 @@ const styles = {
   }
 };
 
-export default function EventView (state) {
-  return (
+const mapStateToProps = ({groups, auth}) => (
+  {
+    isAdmin: groups.id.admin_user === Number(groups.id.userId),
+    group: groups.id
+  });
+
+export default connect(mapStateToProps)(function EventView ({group, isAdmin, dispatch}) {
+  return isAdmin 
+  ? (
     <Container>
       <Header />
-      <Text>GROUP VIEW</Text>
-
+      <Text>ADMIN VIEW</Text>
+    </Container>
+  )
+  : (
+    <Container>
+      <Header />
+      <Text>MEMBER VIEW</Text>
     </Container>
   );
-}
-
-  //<MapView
-  //style={styles.map}
-  //initialRegion={coordinates}
-  ///>
+});
 
 
 

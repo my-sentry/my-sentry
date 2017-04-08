@@ -3,8 +3,9 @@ import {Actions} from 'react-native-router-flux';
 import Header from './authHeader';
 import { connect } from 'react-redux';
 import {AsyncStorage} from 'react-native';
-
+import { Container, Title, Content, Label, Form, Button, Text, Item, Icon, Spinner, Right, Body, Input, H1, Grid, Row } from 'native-base';
 import axios from 'axios';
+
 
 const styles = {
   container: {
@@ -18,11 +19,10 @@ const styles = {
 };
 
 
-import { Container, Title, Content, Label, Form, Button, Text, Item, Icon, Spinner, Right, Body, Input, H1, Grid, Row } from 'native-base';
 
 
-const mapStateToProps = state => { 
-  return { login: {username: state.login.username, password: state.login.pw}};
+const mapStateToProps = ({login}) => { 
+  return { login: {username: login.username, password: login.pw}};
 };
 
 export default connect(mapStateToProps)(function Login ({login, dispatch}) {
@@ -34,11 +34,11 @@ export default connect(mapStateToProps)(function Login ({login, dispatch}) {
     <Form >
         <Item stackedLabel >
           <Label>Username</Label>
-          <Input value={login.username} onChangeText={(text) => dispatch({type: 'USERNAME', text: text})}/>
+          <Input value={login.username} onChangeText={text => dispatch({type: 'USERNAME', text: text})}/>
         </Item>
         <Item stackedLabel last >
           <Label>Password</Label>
-          <Input value={login.password} secureTextEntry={true} onChangeText={(text) => dispatch({type: 'PASSWORD', text: text})}/>
+          <Input value={login.password} secureTextEntry={true} onChangeText={text => dispatch({type: 'PASSWORD', text: text})}/>
         </Item>
     </Form>
     </Content>
@@ -57,7 +57,7 @@ export default connect(mapStateToProps)(function Login ({login, dispatch}) {
           data: JSON.stringify(login)
         }).then(res => {
           setTimeout(() => Actions.loading());
-          dispatch({type: 'LOGIN', ID: res.data.id});
+          dispatch({type: 'LOGIN', id: res.data.id});
           dispatch({type: 'CLEAR_LOGIN'});
 
         }).catch(err => {

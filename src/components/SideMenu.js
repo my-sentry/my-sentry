@@ -9,7 +9,7 @@ import axios from 'axios';
 this all has to be reformatted to THUNK. aka async redux promises
 it needs to do the actions asynchrounously, else the first function blocks.
 */
-export default connect()(function SideMenu (state) {
+export default connect()(function SideMenu ({dispatch}) {
   return (
     <Container>
     <Content>
@@ -24,12 +24,18 @@ export default connect()(function SideMenu (state) {
         url: 'http://192.168.1.163:8000/api/users/logout'
       }).then(() => Actions.loading());
       setTimeout(() =>Actions.refresh({key: 'menu', open: value => !value }));
-      state.dispatch({type: 'LOGOUT'});
+      dispatch({type: 'LOGOUT'});
     }}>LOGOUT</H1>
 
     <H1 onPress={() => {
+
+      axios('http://192.168.1.163:8000/api/groups')
+      .then(res => dispatch({type: 'UPDATE_GROUPS', data: res.data}))
+        .catch(err => console.log('err', err))
+        .then(() => Actions.groups());
+
       setTimeout(() =>Actions.refresh({key: 'menu', open: value => !value }));
-      Actions.groups();
+      
     }}>Groups</H1>
 
     <H1 onPress={() =>{

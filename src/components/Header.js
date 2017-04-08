@@ -17,11 +17,7 @@ const styles = {
 };
 
 
-const mapStateToProps = state => { 
-  return {
-    title: state.header.title
-  };
-};
+const mapStateToProps = ({header}) => ({title: header.title});
 
 // this has to be called MyHeader instead of Header because i am importing Header
 
@@ -45,8 +41,7 @@ export default connect(mapStateToProps)(function MyHeader ({title}) {
       </Body>      
          
     <Right>
-      <Button onPress={()=> Actions.refresh({key: 'menu', open: value => !value })}
->
+      <Button onPress={()=> Actions.refresh({key: 'menu', open: value => !value })}>
         <Icon 
         ios='ios-menu' 
         android="md-menu" 

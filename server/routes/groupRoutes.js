@@ -25,7 +25,7 @@ router.post('/', (req, res, next) => {
   groups.createGroup(
     req.body.name,
     req.user.id
-  ).then(result = res.json(result))
+  ).then(result => res.json(result))
   .catch(err => {
     console.log(err);
     next(err);
