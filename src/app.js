@@ -22,7 +22,6 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { Text, View, AsyncStorage } from 'react-native';
 import {Router, Modal, Scene, Actions, ActionConst, Switch, } from 'react-native-router-flux';
 
-
 // let middleware = [thunk, logger];
 const store = compose(
   applyMiddleware(logger)
@@ -33,15 +32,19 @@ const RouterWithRedux = connect()(Router);
 const scenes = Actions.create(
   <Scene key='modal' component={Modal} >
   <Scene key='root' tabs={true} hideNavBar >
-      <Scene key="loading" hideNavBar initial={true} component={Loading} />
+    
+    <Scene key="loading" hideNavBar initial={true} component={Loading} />
     <Scene key='menu' hideNavBar component={NavigationDrawer} open={false}>
       <Scene key='dashboard' hideNavBar tabs={true} component={Dashboard} />
+
       <Scene key='groups' tabs={true} component={Groups} />
-      <Scene key='feed' tabs={true} component={Feed}/>
       <Scene key='groupForm' tabs={true} component={GroupForm} />
+      <Scene key='groupView' tabs={true} component={GroupView} />
+
+      <Scene key='feed' tabs={true} component={Feed}/>
       <Scene key='eventForm' tabs={true} component={EventForm} />
       <Scene key='eventView' tabs={true} component={EventView} />
-      <Scene key='groupView' tabs={true} component={GroupView} />
+
       <Scene key='signup' component={Signup} />
       <Scene key='login' tabs={true} component={Login} />
     </Scene>

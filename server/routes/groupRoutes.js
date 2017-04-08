@@ -22,10 +22,11 @@ router.get('/:id', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
+  console.log(req.body)
   groups.createGroup(
     req.body.name,
-    req.user.id
-  ).then(result = res.json(result))
+    req.body.id
+  ).then(result => res.json(result))
   .catch(err => {
     console.log(err);
     next(err);

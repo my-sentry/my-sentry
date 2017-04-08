@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, AsyncStorage } from 'react-native';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import {Actions} from 'react-native-router-flux';
@@ -11,16 +11,17 @@ import { Container, Title, Content, List, ListItem, Footer, FooterTab, Button, L
 var mock = [{id: 'abc', name: 'Jeep Sales Committee', description: 'abc'}];
 
 
-export default connect(({groups}) => groups)(function Groups (state) {
+export default connect(({groups}) => groups)(function Groups ({groups, dispatch}) {
   return (
       <Container>
       <Header title={'groups'}/>
       <Container>
-       <List dataArray={mock}
+       <List dataArray={groups}
         renderRow={(item) =>
             <ListItem onPress={() => {
-              setTimeout(()=> Actions.groupView({title: item.name}));
-              state.dispatch({type: 'UPDATE_GROUP', item: item});
+              AsyncStorage.getItem('AUTHENTICATION').then(res=> {
+              dispatch({type: 'CURRENT_GROUP', item: {...item, userId: res}});
+              }).then(()=> Actions.groupView({title: item.name}));
             }}>
                 <Body>
                 <H3>{item.name}</H3>
@@ -32,8 +33,13 @@ export default connect(({groups}) => groups)(function Groups (state) {
       </Container>
       <ActionButton
           buttonColor='rgba(231,76,60,1)'
-          onPress={() => Actions.groupForm()}/>  
-    
+          onPress={() => {
+            axios.get('http://192.168.1.163:8000/api/users')
+              .then(response => dispatch({type: 'RECEIVE_USERS', users: response.data}))
+              .catch(err => console.log(err))
+              .then(() => Actions.groupForm());
+          }}/>
+
       </Container>
   );
 });

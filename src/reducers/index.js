@@ -29,29 +29,40 @@ const header = (state = {title: 'DASHBOARD'}, action) => {
   }
 };
 // authorization reducer
-const auth = (state = {ID: null}, action) => {
+const auth = (state = {id: null}, action) => {
   switch (action.type) {
   case 'LOGIN' :
-    AsyncStorage.setItem('AUTHENTICATION', 'true').catch(err=> console.log("ERR",err));
+    console.log(action.id.toString())
+    let store = JSON.stringify(action.id)
+    AsyncStorage.setItem('AUTHENTICATION', store)
+
     return {...state,
-      ID: action.id
+      id: action.id
     };
   case 'LOGOUT' :
-    AsyncStorage.setItem('AUTHENTICATION', 'null').catch(err=> console.log("ERR",err));
+    AsyncStorage.setItem('AUTHENTICATION', 'null')
     return { ...state,  
-      ID: null,
+      id: null,
     };
 
   default:
     return state;
   }
-};
+}
 
 
 
-const groups = (state = {hasGroups: false, groups: []}, action) => {
+const groups = (state = {id: null, hasGroups: false, groups: [], users: []}, action) => {
   switch(action.type) {
-  case 'ADD_GROUP' : 
+  case 'CURRENT_GROUP':
+    return{...state,
+      id: action.item
+    }
+  case 'UPDATE_GROUPS': 
+    return{...state,
+      groups: action.data
+    }
+    case 'ADD_GROUP' :
     return {...state,
       groups: [...state.groups, action.item],
       hasGroups: true,
@@ -60,7 +71,7 @@ const groups = (state = {hasGroups: false, groups: []}, action) => {
     return {...state,
 
   }
-  default: 
+  default:
     return state;
   }
 }
@@ -85,7 +96,7 @@ const feed = (state = {}, action) => {
 
 const events =(state = {id: null, active: false, isPersonal: false}, action) => {
 	switch(action.type) {
-  case 'UPDATE_ITEM': 
+  case 'CURRENT_ITEM': 
     return {...state,
       id: action.item,
     }
