@@ -21,7 +21,8 @@ router.get('/:id', (req, res, next) => {
     });
 });
 
-router.post('/', (req, res, next) => {
+router.post('/', auth.isAuth, (req, res, next) => {
+  console.log(req.body.members);
   groups.createGroup(
     req.body.name,
     req.user.id

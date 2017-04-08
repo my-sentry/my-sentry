@@ -17,11 +17,11 @@ const styles = {
   },
 };
 
-const mapStateToProps = ({signup}) => { 
+const mapStateToProps = ({signup}) => {
   return { signup: {
     firstName: signup.firstName,
     lastName: signup.lastName,
-    username: signup.userName, 
+    username: signup.userName,
     password: signup.password,
     confirm: signup.confirm
   }};
@@ -70,14 +70,14 @@ export default connect(mapStateToProps)(function Login ({signup, dispatch}) {
           password: signup.password
         });
 
-        signup.confirm === signup.password 
+        signup.confirm === signup.password
         ? axios({
           method: 'post',
-          headers: { 
+          headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           },
-          url: 'http://192.168.1.163:8000/api/users/signup',
+          url: 'http://192.168.1.127:8000/api/users/signup',
           data: data
         }).then(res => {
           setTimeout(() => Actions.loading());
