@@ -3,11 +3,7 @@ import {Actions} from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import {AsyncStorage } from 'react-native';
 import axios from 'axios';
-
-
 import { Container, Content, Spinner, Body } from 'native-base';
-
-
 
 const styles = {
   centering: {
@@ -23,6 +19,7 @@ const styles = {
     justifyContent: 'center',
   },
 };
+
 export default connect()(function Loading({dispatch}) {
   AsyncStorage.getItem('AUTHENTICATION').then(res=> res !== 'null' 
   ? axios('http://192.168.1.163:8000/api/events')
@@ -30,9 +27,6 @@ export default connect()(function Loading({dispatch}) {
     .catch(err => console.log('ERR', err))
     .then(() => Actions.menu())
   : Actions.login());
-  
-
-
   return (
   <Container style = {styles.centering} >
   <Content >
