@@ -17,11 +17,12 @@ export default connect(({groups}) => groups)(function Groups ({groups, dispatch}
         renderRow={item =>
             <ListItem onPress={() => {
               AsyncStorage.getItem('AUTHENTICATION').then(res=> {
-              dispatch({type: 'CURRENT_GROUP', item: {...item, userId: res}});
-              }).then(()=> Actions.groupView({title: item.name}));
+              dispatch({type: 'CURRENT_GROUP', item: {...item, userId: res} } );
+              })
+              .then(()=> Actions.groupView({title: item.name}));
             }}>
                 <Body>
-                  <H3>{item.name}</H3>
+                  <Text>{item.name}</Text>
                   <Text>{item.description}</Text>
                 </Body>
             </ListItem>

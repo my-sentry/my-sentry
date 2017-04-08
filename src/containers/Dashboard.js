@@ -23,10 +23,9 @@ const mapStateToProps = ({groups}) => ({hasGroups: groups});
 
 export default connect(mapStateToProps)(class Dashboard extends Component {
   render() {
-    const {hasGroups} = this.props; 
     return (
       <Container>
-        {hasGroups ? <Feed /> : <Groups /> }
+        <Feed />
       </Container>
     );
   }

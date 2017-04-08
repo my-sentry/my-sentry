@@ -21,7 +21,7 @@ export default connect(({feed}) => feed)(class Feed extends Component {
               setTimeout(()=> Actions.eventView({title: item.name}));
             }}>
             <Body>
-                <H3>{item.name}</H3>
+                <Text>{item.name}</Text>
                 <Text>{item.description}</Text>
                 </Body>
             </ListItem>
