@@ -8,9 +8,6 @@ import ActionButton from 'react-native-action-button';
 
 import { Container, Title, Content, List, ListItem, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, H3 } from 'native-base';
 
-var mock = [{id: 'abc', name: 'Jeep Sales Committee', description: 'abc'}];
-
-
 export default connect(({groups}) => groups)(function Groups ({groups, dispatch}) {
   return (
       <Container>
@@ -34,7 +31,7 @@ export default connect(({groups}) => groups)(function Groups ({groups, dispatch}
       <ActionButton
           buttonColor='rgba(231,76,60,1)'
           onPress={() => {
-            axios.get('http://192.168.1.163:8000/api/users')
+            axios('http://192.168.1.163:8000/api/users')
               .then(response => dispatch({type: 'RECEIVE_USERS', users: response.data}))
               .catch(err => console.log(err))
               .then(() => Actions.groupForm());

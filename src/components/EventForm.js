@@ -2,13 +2,14 @@ import React, {Component} from 'react';
 import {Text, View} from 'react-native';
 import { connect } from 'react-redux';
 import Header from './Header';
+import {Actions} from 'react-native-router-flux';
 import Datepicker from './Datepicker';
 import TimePicker from './TimePicker';
 import axios from 'axios';
 
 import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, List, ListItem, InputGroup, Picker, Label, Item, Input, Form} from 'native-base';
 
-const mapStateToProps = ({eventForms, dateReducer}) => { 
+const mapStateToProps = ({eventForms, dateReducer, groups}) => { 
   return { form: {
     name: eventForms.name,
     location: eventForms.location,
@@ -18,11 +19,21 @@ const mapStateToProps = ({eventForms, dateReducer}) => {
     description: eventForms.description,
     lat: 123456,
     long: 78910,
-    groupId: 4
+
+    // group id is currently hardcoded
+    groupId: 3
   }
   };
 };
 
+
+const styles = {
+  button: {
+    alignSelf: 'center',
+    marginTop: 20, 
+    marginBottom: 20 
+  }
+};
 export default connect(mapStateToProps)(function EventForm ({form, dispatch}) {
   return (
     <Container>
@@ -63,21 +74,17 @@ export default connect(mapStateToProps)(function EventForm ({form, dispatch}) {
               </InputGroup>
             </Item>
             </Content>
-            <Button style={{ alignSelf: 'center', marginTop: 20, marginBottom: 20 }} onPress={() => {
-              console.log(form)
-
-              let data = JSON.stringify(form);
-
+            <Button style={styles.button} onPress={() => {
               axios({
-              method: 'post',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-              url: 'http://192.168.1.163:8000/api/events/',
-              data: data
-            }).then(response => response.json()
-            ).catch(err =>  console.log('err', err));
+                method: 'post',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+                },
+                url: 'http://192.168.1.163:8000/api/events/',
+                data: JSON.stringify(form)
+              }).then(() => Actions.loading())
+              .catch(err => console.log('err', err));
             }}>
               <Text>Create Event</Text>
             </Button>
