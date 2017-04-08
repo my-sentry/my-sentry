@@ -32,15 +32,8 @@ export default connect(({groups}) => groups)(function Groups ({groups, dispatch}
       <ActionButton
           buttonColor='rgba(231,76,60,1)'
           onPress={() => {
-<<<<<<< HEAD
             axios('http://192.168.1.163:8000/api/users')
               .then(response => dispatch({type: 'RECEIVE_USERS', users: response.data}))
-=======
-            axios.get('http://192.168.1.127:8000/api/users')
-              .then(response => state.dispatch({type: 'RECEIVE_USERS', users: response.data}))
->>>>>>> Add to group reducer
-              .catch(err => console.log(err))
-              .then(() => Actions.groupForm());
           }}/>
 
       </Container>
