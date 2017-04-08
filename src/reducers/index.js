@@ -190,6 +190,28 @@ const signup = (state = {firstName:null, lastName: null, userName:null, password
     return state;      
   }
 }
+
+const eventForms =(state = {id: null, name: null, location: null, description: null}, action) => {
+  switch(action.type) {
+  case 'EVENT_NAME': 
+    return {...state,
+      name: action.text,
+    }
+  case 'LOCATION':
+    return {...state,
+      location: action.text,
+    }
+  case 'EVENT_DESC' :
+    return {...state, 
+      description: action.text,
+    }
+  default:
+    return state;
+
+  }
+}
+
+
 export default combineReducers({
   auth,
   header,
@@ -199,7 +221,6 @@ export default combineReducers({
   login,
   signup,
   feed,
-
-
+  eventForms,
   // more reducers
 });
