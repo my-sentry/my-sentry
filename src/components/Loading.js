@@ -2,6 +2,8 @@ import React from 'react';
 import {Actions} from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import {AsyncStorage } from 'react-native';
+import axios from 'axios';
+
 
 import { Container, Content, Spinner, Body } from 'native-base';
 
@@ -14,9 +16,6 @@ const styles = {
     justifyContent: 'center',
     backgroundColor: '#cccccc',
   },
-  gray: {
-    backgroundColor: '#cccccc',
-  },
   spinner: {
     marginTop: 250,
     flexDirection: 'column',
@@ -24,8 +23,13 @@ const styles = {
     justifyContent: 'center',
   },
 };
-export default function Loading() {
-  AsyncStorage.getItem('AUTHENTICATION').then(res=> res === 'true' ? Actions.dashboard() : Actions.login());
+export default connect()(function Loading({dispatch}) {
+  AsyncStorage.getItem('AUTHENTICATION').then(res=> res === 'true' 
+  ? axios('http://192.168.1.163:8000/api/events')
+    .then(res => dispatch({type: 'UPDATE_FEED', data: res.data})).catch(err => console.log('ERR', err)).then(() => Actions.menu())
+  : Actions.login());
+  
+
 
   return (
   <Container style = {styles.centering} >
@@ -38,4 +42,4 @@ export default function Loading() {
   );
 
 
-}
+});

@@ -29,20 +29,18 @@ const header = (state = {title: 'DASHBOARD'}, action) => {
   }
 };
 // authorization reducer
-const auth = (state = {isAuth: false}, action) => {
+const auth = (state = {ID: null}, action) => {
   switch (action.type) {
-
   case 'LOGIN' :
     AsyncStorage.setItem('AUTHENTICATION', 'true').catch(err=> console.log("ERR",err));
     return {...state,
-      isAuth: true
-      };
-
+      ID: action.id
+    };
   case 'LOGOUT' :
     AsyncStorage.setItem('AUTHENTICATION', 'null').catch(err=> console.log("ERR",err));
     return { ...state,  
-      isAuth: false,
-       };
+      ID: null,
+    };
 
   default:
     return state;
@@ -69,6 +67,10 @@ const groups = (state = {hasGroups: false, groups: []}, action) => {
 
 const feed = (state = {}, action) => {
   switch(action.type) {
+  case 'UPDATE_FEED': 
+    return{...state,
+      data: action.data
+    }
   case 'ADD_ITEM':
     return {...state,
   }
@@ -113,13 +115,11 @@ const dateReducer =(state = {date: new Date(), start: new Date(), end: new Date(
       date: action.date
     }
   case 'START':
-  console.log(action)
     return {...state,
       start: action.time
     }
   case 'END':
-  console.log(action)
-    return {...state,
+      return {...state,
       end: action.time
     }  
   case 'NEW_DATE':
@@ -135,7 +135,7 @@ const dateReducer =(state = {date: new Date(), start: new Date(), end: new Date(
   }
 }
 
-const login = (state = {username: null, pw: null}, action) => {
+const login = (state = {username: null, pw: null, ID: null}, action) => {
   switch(action.type) {
   case 'PASSWORD' : 
     return {...state,
@@ -198,6 +198,8 @@ export default combineReducers({
   dateReducer,
   login,
   signup,
+  feed,
+
 
   // more reducers
 });

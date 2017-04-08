@@ -29,14 +29,11 @@ const store = compose(
 )(createStore)(MasterReducer);
 
 const RouterWithRedux = connect()(Router);
-var auth;
-AsyncStorage.getItem('AUTHENTICATION').then(res=> {console.log("RES", res === 'null')});
 
-console.log(auth);
-//this could get moved to its own file. 
 const scenes = Actions.create(
   <Scene key='modal' component={Modal} >
   <Scene key='root' tabs={true} hideNavBar >
+      <Scene key="loading" hideNavBar initial={true} component={Loading} />
     <Scene key='menu' hideNavBar component={NavigationDrawer} open={false}>
       <Scene key='dashboard' hideNavBar tabs={true} component={Dashboard} />
       <Scene key='groups' tabs={true} component={Groups} />
@@ -46,7 +43,6 @@ const scenes = Actions.create(
       <Scene key='eventView' tabs={true} component={EventView} />
       <Scene key='groupView' tabs={true} component={GroupView} />
       <Scene key='signup' component={Signup} />
-      <Scene key="loading" initial={true} component={Loading} />
       <Scene key='login' tabs={true} component={Login} />
     </Scene>
   </Scene>
