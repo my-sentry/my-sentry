@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import {Actions} from 'react-native-router-flux';
 import { Container, Title, Content, Footer, FooterTab, Button, Body, Icon, H1 } from 'native-base';
 import axios from 'axios';
+import URL_CONFIG from '../../config/config';
 
 /*  to remove the hacky settimeouts,
 this all has to be reformatted to THUNK. aka async redux promises
@@ -21,7 +22,7 @@ export default connect()(function SideMenu ({dispatch}) {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        url: 'http://192.168.1.163:8000/api/users/logout'
+        url: `${URL_CONFIG}/api/users/logout`
       }).then(() => Actions.loading());
       setTimeout(() =>Actions.refresh({key: 'menu', open: value => !value }));
       dispatch({type: 'LOGOUT'});
@@ -29,7 +30,7 @@ export default connect()(function SideMenu ({dispatch}) {
 
     <H1 onPress={() => {
 
-      axios('http://192.168.1.163:8000/api/groups')
+      axios(`${URL_CONFIG}/api/groups`)
       .then(res => dispatch({type: 'UPDATE_GROUPS', data: res.data}))
         .catch(err => console.log('err', err))
         .then(() => Actions.groups());

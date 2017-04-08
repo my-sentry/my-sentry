@@ -6,6 +6,7 @@ import {Actions} from 'react-native-router-flux';
 import Datepicker from './Datepicker';
 import TimePicker from './TimePicker';
 import axios from 'axios';
+import URL_CONFIG from '../../config/config';
 
 import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, List, ListItem, InputGroup, Picker, Label, Item, Input, Form} from 'native-base';
 
@@ -17,6 +18,7 @@ const mapStateToProps = ({eventForms, dateReducer, groups}) => {
     begin: dateReducer.start,
     end: dateReducer.end,
     description: eventForms.description,
+    //lat and long is hardcoded untill maps is deployed
     lat: 123456,
     long: 78910,
     // group id is currently hardcoded
@@ -82,7 +84,7 @@ export default connect(mapStateToProps)(function EventForm ({form, dispatch}) {
                   'Accept': 'application/json',
                   'Content-Type': 'application/json'
                 },
-                url: 'http://192.168.1.163:8000/api/events/',
+                url: `${URL_CONFIG}/api/events/`,
                 data: JSON.stringify(form)
               }).then(() => Actions.loading())
               .catch(err => console.log('err', err));

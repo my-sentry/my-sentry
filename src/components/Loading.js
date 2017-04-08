@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import {AsyncStorage } from 'react-native';
 import axios from 'axios';
 import { Container, Content, Spinner, Body } from 'native-base';
+import URL_CONFIG from '../../config/config';
 
 const styles = {
   centering: {
@@ -22,7 +23,7 @@ const styles = {
 
 export default connect()(function Loading({dispatch}) {
   AsyncStorage.getItem('AUTHENTICATION').then(res=> res !== 'null' 
-  ? axios('http://192.168.1.163:8000/api/events')
+  ? axios(`${URL_CONFIG}/api/events`)
     .then(res => dispatch({type: 'UPDATE_FEED', data: res.data}))
     .catch(err => console.log('ERR', err))
     .then(() => Actions.menu())

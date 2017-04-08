@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import {AsyncStorage} from 'react-native';
 import { Container, Title, Left, Right, Content, Label, Form, Button, Text, Item, Icon, Spinner, Body, Input, H1, Grid, Row } from 'native-base';
 import axios from 'axios';
+import URL_CONFIG from '../../../config/config';
 
 
 const styles = {
@@ -18,8 +19,6 @@ const styles = {
   form: {
   }
 };
-
-
 
 
 const mapStateToProps = ({login}) => { 
@@ -56,7 +55,7 @@ export default connect(mapStateToProps)(function Login ({login, dispatch}) {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           },
-          url: 'http://192.168.1.127:8000/api/users/login',
+          url: `${URL_CONFIG}/api/users/login`,
           data: JSON.stringify(login)
         }).then(res => {
           setTimeout(() => Actions.loading());

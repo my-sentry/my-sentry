@@ -4,6 +4,7 @@ import Header from './authHeader';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { Container, Title, Content, Label, Form, Button, Item, Text, Icon, Left, Right, Body, Input, H1, Grid, Row } from 'native-base';
+import URL_CONFIG from '../../../config/config';
 
 const styles = {
   centering: {
@@ -80,7 +81,7 @@ export default connect(mapStateToProps)(function Login ({signup, dispatch}) {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           },
-          url: 'http://192.168.1.127:8000/api/users/signup',
+          url: `${URL_CONFIG}/api/users/signup`,
           data: data
         }).then(res => {
           dispatch({type: 'LOGIN', id: res.data.id});
