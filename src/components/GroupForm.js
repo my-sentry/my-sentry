@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import { Text, View} from 'react-native';
 import { connect } from 'react-redux';
+import {Actions} from 'react-native-router-flux';
 import Header from './Header';
 import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, List, ListItem, InputGroup, Picker, Label, Item, Input, Form, style} from 'native-base';
 import axios from 'axios';
+import URL_CONFIG from '../../config/config';
 
 const mapStateToProps = ({groups}) => {
   return {
@@ -40,7 +42,6 @@ export default connect(mapStateToProps)(function GroupForm ({users, members, gro
             }} key={user.id} onPress={() => {
               dispatch({type: 'ADD_MEMBER', id: user.id});
             }}>
-              {members.includes(user.id) ? console.log('green') : console.log('none')}
               <Text>{`${user.first_name} ${user.last_name}`}</Text>
             </ListItem>
           }>
@@ -62,10 +63,9 @@ export default connect(mapStateToProps)(function GroupForm ({users, members, gro
               'Accept': 'application/json',
               'Content-Type': 'application/json'
             },
-            url: 'http://192.168.1.127:8000/api/groups',
+            url: `${URL_CONFIG}/api/groups`,
             data: data
-          }).then(res => console.log(res))
-          //.then(() => dispatch({type: 'ADD_GROUP', item: {name: groupName}}))
+          }).then(Actions.groups)
           .catch(err => console.log(err));
         }}>
         <Text>Create Group</Text>
