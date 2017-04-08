@@ -33,7 +33,6 @@ export default connect()(function SideMenu ({dispatch}) {
       .then(res => dispatch({type: 'UPDATE_GROUPS', data: res.data}))
         .catch(err => console.log('err', err))
         .then(() => Actions.groups());
-
       setTimeout(() =>Actions.refresh({key: 'menu', open: value => !value }));
       
     }}>Groups</H1>

@@ -3,18 +3,19 @@ import {Actions} from 'react-native-router-flux';
 import Header from './authHeader';
 import { connect } from 'react-redux';
 import {AsyncStorage} from 'react-native';
-import { Container, Title, Content, Label, Form, Button, Text, Item, Icon, Spinner, Right, Body, Input, H1, Grid, Row } from 'native-base';
+import { Container, Title, Left, Right, Content, Label, Form, Button, Text, Item, Icon, Spinner, Body, Input, H1, Grid, Row } from 'native-base';
 import axios from 'axios';
 
 
 const styles = {
   container: {
     flex: 1,
-    backgroundColor: '#d0d0da'
   },
   item: {
     backgroundColor: '#a0a',
     flex: 1
+  },
+  form: {
   }
 };
 
@@ -31,7 +32,7 @@ export default connect(mapStateToProps)(function Login ({login, dispatch}) {
     <Grid style={{flex: 1}}>
     <Row >
     <Content>
-    <Form >
+    <Form style={styles.form} >
         <Item stackedLabel >
           <Label>Username</Label>
           <Input value={login.username} onChangeText={text => dispatch({type: 'USERNAME', text: text})}/>
@@ -44,8 +45,10 @@ export default connect(mapStateToProps)(function Login ({login, dispatch}) {
     </Content>
     </Row>
     <Row style={{flex: 0}}>
-      <Button block onPress={Actions.signup} ><Text> SIGNUP</Text></Button>
-      <Button onPress={()=> {
+    <Left>
+      <Button block outline bordered onPress={Actions.signup} ><Text> SIGNUP</Text></Button></Left>
+      <Right>
+      <Button block onPress={()=> {
         axios({
           method: 'post',
           credentials: 'include',
@@ -66,7 +69,7 @@ export default connect(mapStateToProps)(function Login ({login, dispatch}) {
           alert('LOGIN FAILED');
         });
       }}><Text> LOGIN </Text>
-      </Button>
+      </Button></Right>
     </Row>
   </Grid>
   </Container>

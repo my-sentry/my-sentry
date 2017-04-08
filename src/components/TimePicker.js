@@ -25,8 +25,7 @@ export default connect(mapStateToProps)(function TimePicker (state) {
         cancelBtnText="Cancel"
         minuteInterval={10}
         showIcon={false}
-        onDateChange={(time) => { state.dispatch({type: state.type, time: time}); }}
+        onDateChange={time => state.dispatch({type: state.type, time: time})}
       />
-  );
-  
+  );  
 });

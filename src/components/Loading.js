@@ -36,6 +36,4 @@ export default connect()(function Loading({dispatch}) {
   </Content>
   </Container>
   );
-
-
 });
