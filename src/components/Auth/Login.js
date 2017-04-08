@@ -49,11 +49,11 @@ export default connect(mapStateToProps)(function Login ({login, dispatch}) {
         axios({
           method: 'post',
           credentials: 'include',
-          headers: { 
+          headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           },
-          url: 'http://192.168.1.163:8000/api/users/login',
+          url: 'http://192.168.1.127:8000/api/users/login',
           data: JSON.stringify(login)
         }).then(res => {
           setTimeout(() => Actions.loading());
