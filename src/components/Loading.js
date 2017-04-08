@@ -23,8 +23,10 @@ const styles = {
 
 export default connect()(function Loading({dispatch}) {
   AsyncStorage.getItem('AUTHENTICATION').then(res=> res !== 'null' 
-  ? axios(`${URL_CONFIG}/api/events`)
-    .then(res => dispatch({type: 'UPDATE_FEED', data: res.data}))
+  ? axios.get(`${URL_CONFIG}/api/events/`)
+    .then(result => {
+      dispatch({type: 'UPDATE_FEED', data: result.data});
+    })
     .catch(err => console.log('ERR', err))
     .then(() => Actions.menu())
   : Actions.login());

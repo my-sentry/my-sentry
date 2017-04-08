@@ -65,8 +65,11 @@ export default connect(mapStateToProps)(function GroupForm ({users, members, gro
             },
             url: `${URL_CONFIG}/api/groups`,
             data: data
-          }).then(Actions.groups)
-          .catch(err => console.log(err));
+          }).then(() => {
+            axios(`${URL_CONFIG}/api/groups`)
+              .then(res => dispatch({type: 'UPDATE_GROUPS', data: res.data}))
+              .then(() => Actions.groups());
+          }).catch(err => console.log(err));
         }}>
         <Text>Create Group</Text>
       </Button>
