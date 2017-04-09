@@ -4,8 +4,8 @@ import Header from './authHeader';
 import { connect } from 'react-redux';
 import {AsyncStorage} from 'react-native';
 import { Container, Title, Left, Right, Content, Label, Form, Button, Text, Item, Icon, Spinner, Body, Input, H1, Grid, Row } from 'native-base';
-import axios from 'axios';
-import URL_CONFIG from '../../../config/config';
+import { loginCtrl } from '../../actions/axiosController';
+
 
 
 const styles = {
@@ -22,10 +22,10 @@ const styles = {
 
 
 const mapStateToProps = ({login}) => { 
-  return { login: {username: login.username, password: login.pw}};
+  return { form: {username: login.username, password: login.pw}};
 };
 
-export default connect(mapStateToProps)(function Login ({login, dispatch}) {
+export default connect(mapStateToProps)(function Login ({form, dispatch}) {
   return (
    <Container style={styles.container}>
     <Grid style={{flex: 1}}>
@@ -34,11 +34,11 @@ export default connect(mapStateToProps)(function Login ({login, dispatch}) {
     <Form style={styles.form} >
         <Item stackedLabel >
           <Label>Username</Label>
-          <Input value={login.username} onChangeText={text => dispatch({type: 'USERNAME', text: text})}/>
+          <Input value={form.username} onChangeText={text => dispatch({type: 'USERNAME', text: text})}/>
         </Item>
         <Item stackedLabel last >
           <Label>Password</Label>
-          <Input value={login.password} secureTextEntry={true} onChangeText={text => dispatch({type: 'PASSWORD', text: text})}/>
+          <Input value={form.password} secureTextEntry={true} onChangeText={text => dispatch({type: 'PASSWORD', text: text})}/>
         </Item>
     </Form>
     </Content>
@@ -47,27 +47,7 @@ export default connect(mapStateToProps)(function Login ({login, dispatch}) {
     <Left>
       <Button block outline bordered onPress={Actions.signup} ><Text> SIGNUP</Text></Button></Left>
       <Right>
-      <Button block onPress={()=> {
-        axios({
-          method: 'post',
-          credentials: 'include',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          url: `${URL_CONFIG}/api/users/login`,
-          data: JSON.stringify(login)
-        }).then(res => {
-          setTimeout(() => Actions.loading());
-          dispatch({type: 'LOGIN', id: res.data.id});
-          dispatch({type: 'CLEAR_LOGIN'});
-
-        }).catch(err => {
-          console.log('ERR', err);
-          dispatch({type: 'CLEAR_LOGIN'});
-          alert('LOGIN FAILED');
-        });
-      }}><Text> LOGIN </Text>
+      <Button block onPress={()=> loginCtrl(form, dispatch)}><Text> LOGIN </Text>
       </Button></Right>
     </Row>
   </Grid>

@@ -2,9 +2,8 @@ import React, {Component} from 'react';
 import {Actions} from 'react-native-router-flux';
 import Header from './authHeader';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import { Container, Title, Content, Label, Form, Button, Item, Text, Icon, Left, Right, Body, Input, H1, Grid, Row } from 'native-base';
-import URL_CONFIG from '../../../config/config';
+import { signupCtrl } from '../../actions/axiosController';
 
 const styles = {
   centering: {
@@ -66,32 +65,15 @@ export default connect(mapStateToProps)(function Login ({signup, dispatch}) {
         </Left>
       <Right>
       <Button block onPress={() => {
-
-        let data = JSON.stringify({
+        let data = {
           firstName: signup.firstName,
           lastName: signup.lastName,
           username: signup.username,
           password: signup.password
-        });
-
+        };
         signup.confirm === signup.password
-        ? axios({
-          method: 'post',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          url: `${URL_CONFIG}/api/users/signup`,
-          data: data
-        }).then(res => {
-          dispatch({type: 'LOGIN', id: res.data.id});
-          dispatch({type: 'CLEAR_SIGNUP'});
-        }).catch(err => {
-          setTimeout(() => alert('invalid submission'));
-          dispatch({type: 'CLEAR_SIGNUP'});
-        }).then(() => Actions.loading())
-        : alert('passwords dont match');
-
+        ? signupCtrl(data, dispatch)
+        : null;
       }}>
         <Text> Create Account</Text>
       </Button>

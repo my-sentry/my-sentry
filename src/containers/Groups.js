@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 import Header from '../components/Header';
 import {Actions} from 'react-native-router-flux';
 import ActionButton from 'react-native-action-button';
-import axios from 'axios';
-import URL_CONFIG from '../../config/config';
+import { getUsers } from '../actions/axiosController';
 
 
 
@@ -34,15 +33,7 @@ export default connect(({groups}) => groups)(function Groups ({groups, dispatch}
       </Container>
       <ActionButton
           buttonColor='rgba(231,76,60,1)'
-          onPress={() => {
-            axios(`${URL_CONFIG}/api/users`)
-              .then(res => {
-                dispatch({type: 'RECEIVE_USERS', users: res.data})
-                Actions.groupForm()
-              })
-              .catch(err => console.log(err))
-          }}/>
-
+          onPress={() => getUsers(dispatch) }/>
       </Container>
   );
 });

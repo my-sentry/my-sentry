@@ -5,8 +5,8 @@ import Header from './Header';
 import {Actions} from 'react-native-router-flux';
 import Datepicker from './Datepicker';
 import TimePicker from './TimePicker';
-import axios from 'axios';
-import URL_CONFIG from '../../config/config';
+import { postEvent } from '../actions/axiosController';
+
 
 import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, List, ListItem, InputGroup, Picker, Label, Item, Input, Form} from 'native-base';
 
@@ -77,18 +77,7 @@ export default connect(mapStateToProps)(function EventForm ({form, dispatch}) {
               </InputGroup>
             </Item>
             </Content>
-            <Button style={styles.button} onPress={() => {
-              axios({
-                method: 'post',
-                headers: {
-                  'Accept': 'application/json',
-                  'Content-Type': 'application/json'
-                },
-                url: `${URL_CONFIG}/api/events/`,
-                data: JSON.stringify(form)
-              }).then(() => Actions.loading())
-              .catch(err => console.log('err', err));
-            }}>
+            <Button style={styles.button} onPress={() => postEvent(form)}>
               <Text>Create Event</Text>
             </Button>
       

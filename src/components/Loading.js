@@ -2,9 +2,9 @@ import React from 'react';
 import {Actions} from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import {AsyncStorage } from 'react-native';
-import axios from 'axios';
 import { Container, Content, Spinner, Body } from 'native-base';
-import URL_CONFIG from '../../config/config';
+import {getEvents} from '../actions/axiosController';
+
 
 const styles = {
   centering: {
@@ -23,12 +23,7 @@ const styles = {
 
 export default connect()(function Loading({dispatch}) {
   AsyncStorage.getItem('AUTHENTICATION').then(res=> res !== 'null' 
-  ? axios.get(`${URL_CONFIG}/api/events/`)
-    .then(result => {
-      dispatch({type: 'UPDATE_FEED', data: result.data});
-    })
-    .catch(err => console.log('ERR', err))
-    .then(() => Actions.menu())
+  ? getEvents(dispatch)
   : Actions.login());
   return (
   <Container style = {styles.centering} >

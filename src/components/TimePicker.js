@@ -10,10 +10,11 @@ const mapStateToProps = ({dateReducer}) => {
 };
 
 export default connect(mapStateToProps)(function TimePicker (state) {
+  const {type, dispatch} = state;
   return (
       <DatePicker
         style={{width: 100}}
-        date={state[state.type]}
+        date={state[type]}
         mode="time"
         customStyles={{
           dateInput: {
@@ -25,7 +26,7 @@ export default connect(mapStateToProps)(function TimePicker (state) {
         cancelBtnText="Cancel"
         minuteInterval={10}
         showIcon={false}
-        onDateChange={time => state.dispatch({type: state.type, time: time})}
+        onDateChange={time => dispatch({type: type, time: time})}
       />
   );  
 });
