@@ -38,7 +38,7 @@ export default connect()(function SideMenu ({dispatch}) {
 
         <Content style={styles.content}>
           <Icon name='user-circle' size={100} />
-          <Text style={styles.username}>Jonathan{'\n'}Granstaff</Text>
+          <Text style={styles.username}>user{'\n'}name</Text>
         </Content>
 
         <List style={styles.list}>
@@ -52,7 +52,7 @@ export default connect()(function SideMenu ({dispatch}) {
 
           <ListItem onPress={() => {
             setTimeout(() =>Actions.refresh({key: 'menu', open: value => !value }));
-            getGroups(dispatch);
+            getGroups(dispatch).then(()=> Actions.groups());
 
           }}>
             <Icon name='users' size={20} style={{ color: '#2891ee' }}/>

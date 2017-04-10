@@ -10,12 +10,12 @@ import { getUsers, getGroupById } from '../actions/axiosController';
 
 import { Container, Title, Content, List, ListItem, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, H3 } from 'native-base';
 const mapStateToProps = ({groups, auth}) => {
-  console.log('MAPSTATE',groups, auth)
   return {
-    groups: groups.groups
+    groups: groups.groups,
+    userId: auth.id
   }
 }
-export default connect(mapStateToProps)(function Groups ({groups, dispatch}) {
+export default connect(mapStateToProps)(function Groups ({groups, userId, dispatch}) {
   return (
       <Container>
       <Header />
@@ -23,10 +23,10 @@ export default connect(mapStateToProps)(function Groups ({groups, dispatch}) {
        <List dataArray={groups}
         renderRow={item =>
             <ListItem onPress={() => {
-              AsyncStorage.getItem('AUTHENTICATION').then(res=> {
-              getGroupById(item.id, dispatch)
-              dispatch({type: 'CURRENT_GROUP', id: {...item, userId: res} } );
-              }).then(()=> Actions.groupView({title: item.name}));
+              getGroupById(item.id, dispatch).then(() => {
+                dispatch({type: 'CURRENT_GROUP', id: {...item, userId: userId}});
+                Actions.groupView({title: item.name});
+              })
             }}>
                 <Body>
                   <Text>{item.name}</Text>
