@@ -24,7 +24,6 @@ const mapStateToProps = ({groups, auth}) => {
 };
 
 export default connect(mapStateToProps)(function GroupView ({users, isAdmin, dispatch}) {
-  console.log('groupview',users)
   return isAdmin 
   ? (
     <Container>
@@ -36,7 +35,9 @@ export default connect(mapStateToProps)(function GroupView ({users, isAdmin, dis
             <Body>
                 <Text>{item.username}</Text>
                 </Body>
-                <Right><Icon name='ios-trash-outline' style={{color: 'red'}}/>
+                <Right><Button small bordered danger onPress={() => console.log('trash')}><Icon 
+                name='ios-trash-outline' style={{color: 'red'}}
+                /></Button>
                 </Right>
             </ListItem>
         }>

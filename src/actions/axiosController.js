@@ -25,9 +25,7 @@ export var getGroups = function(dispatch) {
 
 export var getGroupById = function(id, dispatch) {
   return axios(`${URL_CONFIG}/api/groups/${id}`)
-  .then(res => {
-    dispatch({type: 'RECEIVE_USERS', users: res.data.users});
-  })
+  .then(res => dispatch({type: 'RECEIVE_USERS', users: res.data.users}))
   .catch(err => console.log('ERR', err));
 
 };

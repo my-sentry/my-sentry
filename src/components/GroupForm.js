@@ -37,11 +37,8 @@ export default connect(mapStateToProps)(function GroupForm ({users, userId, memb
 
         <List dataArray={users}
           renderRow={user =>
-            <ListItem style={{
-              backgroundColor: members.includes(user.id) ? 'green' : null
-            }} key={user.id} onPress={() => {
-              dispatch({type: 'ADD_MEMBER', id: user.id});
-            }}>
+            <ListItem key={user.id} 
+            onPress={() => dispatch({type: 'ADD_MEMBER', id: user.id}) }>
               <Text>{`${user.first_name} ${user.last_name}`}</Text>
             </ListItem>
           }>

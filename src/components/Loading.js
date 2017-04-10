@@ -23,7 +23,10 @@ const styles = {
 
 export default connect()(function Loading({dispatch}) {
   AsyncStorage.getItem('AUTHENTICATION').then(res=> res !== 'null' 
-  ? getGroups(dispatch).then(getEvents(dispatch).then(()=> Actions.menu()))
+  ? getGroups(dispatch).then(getEvents(dispatch).then(()=> {
+    dispatch({type: 'SET_ID', id: res});
+    setTimeout(() =>Actions.menu());
+  }))
   : Actions.login());
   return (
   <Container style = {styles.centering} >

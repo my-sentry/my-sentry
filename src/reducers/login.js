@@ -15,6 +15,10 @@ export var auth = (state = {id: null}, action) => {
     return { ...state,  
       id: null,
     };
+  case 'SET_ID' :
+    return {...state,
+      id: JSON.parse(action.id)
+    };
 
   default:
     return state;

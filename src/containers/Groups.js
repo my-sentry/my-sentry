@@ -9,8 +9,13 @@ import { getUsers, getGroupById } from '../actions/axiosController';
 
 
 import { Container, Title, Content, List, ListItem, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, H3 } from 'native-base';
-
-export default connect(({groups}) => groups)(function Groups ({groups, dispatch}) {
+const mapStateToProps = ({groups, auth}) => {
+  console.log('MAPSTATE',groups, auth)
+  return {
+    groups: groups.groups
+  }
+}
+export default connect(mapStateToProps)(function Groups ({groups, dispatch}) {
   return (
       <Container>
       <Header />
