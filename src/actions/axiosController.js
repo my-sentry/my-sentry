@@ -62,12 +62,12 @@ export var loginCtrl = function(data, dispatch) {
     data: JSON.stringify(data)
   }).then(({data}) => {
     dispatch({
-      type: 'LOGIN', 
-      id: data.id, 
+      type: 'LOGIN',
+      id: data.id,
       name: {
         firstName: data.first_name,
         lastName: data.last_name
-      } 
+      }
     });
     dispatch({type: 'CLEAR_LOGIN'});
     Actions.loading();
@@ -103,12 +103,12 @@ export var signupCtrl = function(data, dispatch) {
     data: data
   }).then(({data}) => {
     dispatch({
-      type: 'LOGIN', 
-      id: data.id, 
+      type: 'LOGIN',
+      id: data.id,
       name: {
         firstName: data.first_name,
         lastName: data.last_name
-      } 
+      }
     });
     dispatch({type: 'CLEAR_SIGNUP'});
     Actions.loading();

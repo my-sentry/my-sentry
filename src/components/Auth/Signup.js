@@ -22,13 +22,14 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({signup}) => {
+const mapStateToProps = ({signup, token}) => {
   return { signup: {
     firstName: signup.firstName,
     lastName: signup.lastName,
     username: signup.userName,
     password: signup.password,
-    confirm: signup.confirm
+    confirm: signup.confirm,
+    token: token
   }};
 };
 
@@ -75,14 +76,15 @@ export default connect(mapStateToProps)(function Login ({signup, dispatch}) {
         <Button outline bordered onPress={Actions.login}>
           <Icon name='arrow-back'/>
         </Button>
-        </Left>
+      </Left>
       <Right>
       <Button block onPress={() => {
         let data = {
           firstName: signup.firstName,
           lastName: signup.lastName,
           username: signup.username,
-          password: signup.password
+          password: signup.password,
+          token: signup.token
         };
         signup.confirm === signup.password && passwordRegex
         ? signupCtrl(data, dispatch)
