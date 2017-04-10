@@ -34,9 +34,7 @@ export default connect(mapStateToProps)(class Dashboard extends Component {
           <Header />
           <Container style={styles.container}>
           <H1>No Groups</H1>
-          <Button block primary onPress={() => {
-            getUsers(this.props.dispatch);
-          }} >
+          <Button block primary onPress={() => getUsers(this.props.dispatch) } >
             <Text>Create Group</Text>
           </Button>
           </Container>
