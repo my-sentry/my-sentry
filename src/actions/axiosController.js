@@ -17,7 +17,7 @@ export var postGroup = function(data) {
   });
 };
 
-export var getGroups = function(data, dispatch) {
+export var getGroups = function(dispatch) {
   return axios(`${URL_CONFIG}/api/groups`)
   .then(res => dispatch({type: 'UPDATE_GROUPS', data: res.data}))
   .catch(err => console.log('ERR', err))
@@ -81,7 +81,7 @@ export var logoutCtrl = function(dispatch) {
   });
 };
 
-export var signupCtrl = function(data,dispatch) {
+export var signupCtrl = function(data, dispatch) {
   axios({
     method: 'post',
     headers: {

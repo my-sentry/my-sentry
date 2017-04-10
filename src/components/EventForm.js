@@ -5,7 +5,7 @@ import Header from './Header';
 import {Actions} from 'react-native-router-flux';
 import Datepicker from './Datepicker';
 import TimePicker from './TimePicker';
-import { postEvent } from '../actions/axiosController';
+import { postEvent, getGroups } from '../actions/axiosController';
 
 
 import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, List, ListItem, InputGroup, Picker, Label, Item, Input, Form} from 'native-base';
@@ -21,9 +21,8 @@ const mapStateToProps = ({eventForms, dateReducer, groups}) => {
     //lat and long is hardcoded untill maps is deployed
     lat: 123456,
     long: 78910,
-    // group id is currently hardcoded
-    groupId: 3
-  }
+    groupId: groups.id
+  }, groups: groups.groups
   };
 };
 
@@ -37,7 +36,8 @@ const styles = {
 };
 
 
-export default connect(mapStateToProps)(function EventForm ({form, dispatch}) {
+export default connect(mapStateToProps)(function EventForm ({form, groups, dispatch}) {
+  var grouplist = groups.map(group => <Item label={group.name} value={group.id} key={group.id}/> );
   return (
     <Container>
       <Header />
@@ -66,10 +66,14 @@ export default connect(mapStateToProps)(function EventForm ({form, dispatch}) {
         </InputGroup>
         </Item>
         
-        <Picker style= {{width: 100}}>
-           
+        <Picker 
+        mode='dropdown'
+        style={{width: 300}}
+        iosHeader="Select one"
+        selectedValue={form.groupId} 
+        onValueChange={id => dispatch({type: 'CURRENT_GROUP', id: id})}>
+        {grouplist}           
         </Picker>
-            
             <Item stackedLabel>
               <Label>Event Description</Label>
               <InputGroup regular>

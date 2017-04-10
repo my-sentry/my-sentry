@@ -29,11 +29,14 @@ const header = (state = {title: 'DASHBOARD'}, action) => {
     return state;
   }
 };
+
+
 const groups = (state = {id: null, groups: [], users: [], groupName: null, members: []}, action) => {
   switch(action.type) {
   case 'CURRENT_GROUP':
+  console.log(action.id)
     return{...state,
-      id: action.item
+      id: action.id
   }
   case 'UPDATE_GROUPS':
     return{...state,
