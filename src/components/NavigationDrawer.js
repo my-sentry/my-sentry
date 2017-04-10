@@ -4,11 +4,11 @@ import SideMenu from './SideMenu';
 import {Actions, ActionConst, DefaultRenderer} from 'react-native-router-flux';
 
 const drawerStyles = {
-  drawer: { 
+  drawer: {
     backgroundColor: '#cccccc',
     height: 100,
     shadowColor: '#000000',
-    opacity: 0.9,
+    opacity: .95,
     shadowRadius: 3,
     overflow: 'hidden'
   },
@@ -26,7 +26,7 @@ export default class NavigationDrawer extends Component {
             type="overlay"
             content={<SideMenu />}
             tapToClose={true}
-            openDrawerOffset={0.6}
+            openDrawerOffset={.3}
             side={'right'}
             panCloseMask={0.2}
             acceptPan={true}
