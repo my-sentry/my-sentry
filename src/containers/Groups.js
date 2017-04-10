@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Header from '../components/Header';
 import {Actions} from 'react-native-router-flux';
 import ActionButton from 'react-native-action-button';
-import { getUsers } from '../actions/axiosController';
+import { getUsers, getGroupById } from '../actions/axiosController';
 
 
 
@@ -19,6 +19,7 @@ export default connect(({groups}) => groups)(function Groups ({groups, dispatch}
         renderRow={item =>
             <ListItem onPress={() => {
               AsyncStorage.getItem('AUTHENTICATION').then(res=> {
+              getGroupById(item.id, dispatch)
               dispatch({type: 'CURRENT_GROUP', id: {...item, userId: res} } );
               }).then(()=> Actions.groupView({title: item.name}));
             }}>

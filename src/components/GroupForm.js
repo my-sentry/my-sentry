@@ -6,15 +6,16 @@ import Header from './Header';
 import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, List, ListItem, InputGroup, Picker, Label, Item, Input, Form, style} from 'native-base';
 import {postGroup, getGroups } from '../actions/axiosController';
 
-const mapStateToProps = ({groups}) => {
+const mapStateToProps = ({groups, auth}) => {
   return {
+    userId: auth.id,
     groupName: groups.groupName,
     users: groups.users,
     members: groups.members
   };
 };
 
-export default connect(mapStateToProps)(function GroupForm ({users, members, groupName, dispatch}) {
+export default connect(mapStateToProps)(function GroupForm ({users, userId, members, groupName, dispatch}) {
   return (
     <Container>
 
@@ -53,7 +54,7 @@ export default connect(mapStateToProps)(function GroupForm ({users, members, gro
         onPress={()=> {
           let data = {
             name: groupName,
-            members: members
+            members: [...members, userId ]
           };
           postGroup(data).then(data => getGroups(dispatch).then(() => Actions.groups()));
         }}>

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Text, View} from 'react-native';
 import { connect } from 'react-redux';
 import Header from './Header';
-import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, Card, CardItem, Image } from 'native-base';
+import { Container, Title, List, ListItem, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, Card, CardItem, Image } from 'native-base';
 
 const styles = {
   text: {
@@ -16,18 +16,32 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({groups, auth}) => (
-  {
+const mapStateToProps = ({groups, auth}) => {
+  return {
     isAdmin: groups.id.admin_user === Number(groups.id.userId),
-    group: groups.id
-  });
+    users: groups.users
+  };
+};
 
-export default connect(mapStateToProps)(function EventView ({group, isAdmin, dispatch}) {
+export default connect(mapStateToProps)(function GroupView ({users, isAdmin, dispatch}) {
+  console.log('groupview',users)
   return isAdmin 
   ? (
     <Container>
       <Header />
-      <Text>ADMIN VIEW</Text>
+      <Container>
+       <List dataArray={users}
+        renderRow={item =>
+            <ListItem>
+            <Body>
+                <Text>{item.username}</Text>
+                </Body>
+                <Right><Icon name='ios-trash-outline' style={{color: 'red'}}/>
+                </Right>
+            </ListItem>
+        }>
+      </List>
+      </Container>
     </Container>
   )
   : (
