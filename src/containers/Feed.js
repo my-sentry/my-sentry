@@ -5,6 +5,7 @@ import {Actions} from 'react-native-router-flux';
 import ActionButton from 'react-native-action-button';
 import Header from '../components/Header';
 import axios from 'axios';
+import { getGroups } from '../actions/axiosController';
 
 
 import { Container, Title, Content, Button, Left, Right, List, ListItem, Body, Fab, Icon, H1, H2, H3 } from 'native-base';
@@ -30,7 +31,7 @@ export default connect(({feed}) => feed)(class Feed extends Component {
       </Container>
           <ActionButton
           buttonColor='rgba(231,76,60,1)'
-          onPress={() => Actions.eventForm()}/>  
+          onPress={() => getGroups(this.props.dispatch).then(() => Actions.eventForm()) }/>  
     
       </Container>
     );

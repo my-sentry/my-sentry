@@ -19,9 +19,8 @@ export default connect(({groups}) => groups)(function Groups ({groups, dispatch}
         renderRow={item =>
             <ListItem onPress={() => {
               AsyncStorage.getItem('AUTHENTICATION').then(res=> {
-              dispatch({type: 'CURRENT_GROUP', item: {...item, userId: res} } );
-              })
-              .then(()=> Actions.groupView({title: item.name}));
+              dispatch({type: 'CURRENT_GROUP', id: {...item, userId: res} } );
+              }).then(()=> Actions.groupView({title: item.name}));
             }}>
                 <Body>
                   <Text>{item.name}</Text>
