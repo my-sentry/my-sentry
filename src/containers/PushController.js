@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Platform } from 'react-native';
 import { connect } from 'react-redux';
 import Routes from './Routes';
+import { updateUserToken } from '../actions/axiosController';
 import FCM, {
   FCMEvent,
   RemoteNotificationResult,
@@ -9,7 +10,8 @@ import FCM, {
   NotificationType
 } from 'react-native-fcm';
 
-export default connect()(class PushController extends Component {
+// map state to props will add id to this.props
+export default connect(({auth}) => auth)(class PushController extends Component {
 
   componentDidMount() {
     FCM.requestPermissions();
@@ -60,6 +62,9 @@ export default connect()(class PushController extends Component {
     this.refreshTokenListenter = FCM.on(FCMEvent.RefreshToken, token => {
       console.log('TOKEN (refreshUnsubscribe)', token);
       this.props.dispatch({ type: 'UPDATE_TOKEN', token});
+      if (this.props.id) {
+        updateUserToken(this.props.id, token);
+      }
     });
   }
 
@@ -80,6 +85,7 @@ export default connect()(class PushController extends Component {
   }
 
   render() {
+    console.log('Logged in user', this.props.id);
     return <Routes />;
   }
 

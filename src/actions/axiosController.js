@@ -130,3 +130,21 @@ export var getUsers = function(dispatch) {
 export var verifyLogin = function() {
   return axios(`${URL_CONFIG}/api/users`);
 };
+
+export var updateUserToken = function(id, token) {
+  return axios({
+    method: 'put',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    url: `${URL_CONFIG}/api/users/${id}`,
+    data: JSON.stringify({ token })
+  }).then(() => {
+    console.log(`Token for user ${id} updated.`);
+  })
+  .catch(err => {
+    console.log(`There was a problem updating the token for user ${id}`);
+    console.log(err);
+  });
+};
