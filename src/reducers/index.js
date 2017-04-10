@@ -2,7 +2,7 @@ import {combineReducers} from 'redux';
 import {AsyncStorage} from 'react-native'
 import {Reducer} from 'react-native-router-flux';
 import { ActionConst } from 'react-native-router-flux';
-import {auth, login, signup}from "./login";
+import {auth, login, signup, token}from "./login";
 import {feed, events, dateReducer, eventForms} from './events';
 
 
@@ -76,6 +76,7 @@ export default combineReducers({
   dateReducer,
   login,
   signup,
+  token,
   feed,
   eventForms,
   // more reducers

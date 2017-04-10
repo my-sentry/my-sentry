@@ -4,6 +4,7 @@ import Dashboard from './containers/Dashboard';
 import NavigationDrawer from './components/NavigationDrawer';
 import Feed from './containers/Feed';
 import Groups from './containers/Groups';
+import PushController from './containers/PushController';
 import GroupForm from './components/GroupForm';
 import GroupView from './components/GroupView';
 import EventForm from './components/EventForm';
@@ -31,7 +32,7 @@ const RouterWithRedux = connect()(Router);
 const scenes = Actions.create(
   <Scene key='modal' component={Modal} >
   <Scene key='root' tabs={true} hideNavBar >
-    
+
     <Scene key="loading" hideNavBar initial={true} component={Loading} />
     <Scene key='menu' hideNavBar component={NavigationDrawer} open={false}>
       <Scene key='dashboard' hideNavBar tabs={true} component={Dashboard} />
@@ -54,6 +55,7 @@ const scenes = Actions.create(
 export default function MySentry () {
   return (
     <Provider store = {store} >
+      <PushController />
       <RouterWithRedux createReducer={routerReducer} scenes={scenes} />
     </Provider>
   );
