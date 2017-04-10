@@ -5,7 +5,7 @@ import Header from './Header';
 import {Actions} from 'react-native-router-flux';
 import Datepicker from './Datepicker';
 import TimePicker from './TimePicker';
-import { postEvent, getGroups } from '../actions/axiosController';
+import { postEvent } from '../actions/axiosController';
 
 
 import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, List, ListItem, InputGroup, Picker, Label, Item, Input, Form} from 'native-base';
