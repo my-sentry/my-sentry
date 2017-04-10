@@ -28,6 +28,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 require('./passport/init')(passport);
 
+app.use(morgan('dev'));
+
 // setup extra middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

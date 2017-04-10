@@ -13,7 +13,7 @@ export var postGroup = function(data) {
       'Content-Type': 'application/json'
     },
     url: `${URL_CONFIG}/api/groups`,
-    data: JSON.stringify(data), 
+    data: JSON.stringify(data),
   });
 };
 
@@ -80,7 +80,7 @@ export var loginCtrl = function(data, dispatch) {
 export var logoutCtrl = function(dispatch) {
   return axios({
     method: 'post',
-    headers: { 
+    headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
@@ -118,7 +118,7 @@ export var signupCtrl = function(data, dispatch) {
   });
 };
 
-export var getUsers = function(dispatch) { 
+export var getUsers = function(dispatch) {
   return axios(`${URL_CONFIG}/api/users`)
     .then(res => {
       dispatch({type: 'RECEIVE_USERS', users: res.data});

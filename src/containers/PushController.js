@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Platform } from 'react-native';
 import { connect } from 'react-redux';
+import Routes from './Routes';
 import FCM, {
   FCMEvent,
   RemoteNotificationResult,
@@ -79,7 +80,7 @@ export default connect()(class PushController extends Component {
   }
 
   render() {
-    return null;
+    return <Routes />;
   }
 
 });
