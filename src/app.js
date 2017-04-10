@@ -55,7 +55,6 @@ const scenes = Actions.create(
 export default function MySentry () {
   return (
     <Provider store = {store} >
-      <PushController />
       <RouterWithRedux createReducer={routerReducer} scenes={scenes} />
     </Provider>
   );

@@ -99,4 +99,5 @@ export var token = (state = "", action) => {
     return action.token;
   default:
     return state;
+  }
 }
