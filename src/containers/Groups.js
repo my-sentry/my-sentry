@@ -23,9 +23,7 @@ export default connect(mapStateToProps)(function Groups ({groups, userId, dispat
        <List dataArray={groups}
         renderRow={item =>
             <ListItem onPress={() => {
-              getGroupById(item.id, dispatch)
-              .then(() => {
-                console.log('USERID', userId)
+              getGroupById(item.id, dispatch).then(() => {
                 dispatch({type: 'CURRENT_GROUP', id: {...item, userId: userId}});
                 Actions.groupView({title: item.name});
               })
