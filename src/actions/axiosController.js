@@ -21,7 +21,7 @@ export var getGroups = function(dispatch) {
   return axios(`${URL_CONFIG}/api/groups`)
   .then(res => dispatch({type: 'UPDATE_GROUPS', data: res.data}))
   .catch(err => console.log('ERR', err))
-  .then(() => Actions.groups());
+  // .then(() => Actions.groups());
 };
 
 // EVENTS

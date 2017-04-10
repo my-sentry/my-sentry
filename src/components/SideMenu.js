@@ -21,7 +21,7 @@ export default connect()(function SideMenu ({dispatch}) {
 
     <H1 onPress={() => {
       setTimeout(() =>Actions.refresh({key: 'menu', open: value => !value }));
-      getGroups(dispatch);
+      getGroups(dispatch).then(()=> Actions.groups());
       
     }}>Groups</H1>
 
