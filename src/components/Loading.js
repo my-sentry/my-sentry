@@ -3,7 +3,7 @@ import {Actions} from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import {AsyncStorage } from 'react-native';
 import { Container, Content, Spinner, Body } from 'native-base';
-import {getEvents} from '../actions/axiosController';
+import {getEvents, getGroups} from '../actions/axiosController';
 
 
 const styles = {
@@ -23,7 +23,10 @@ const styles = {
 
 export default connect()(function Loading({dispatch}) {
   AsyncStorage.getItem('AUTHENTICATION').then(res=> res !== 'null' 
-  ? getEvents(dispatch)
+  ? getGroups(dispatch).then(getEvents(dispatch).then(()=> {
+    dispatch({type: 'SET_ID', id: res});
+    setTimeout(() =>Actions.menu());
+  }))
   : Actions.login());
   return (
   <Container style = {styles.centering} >

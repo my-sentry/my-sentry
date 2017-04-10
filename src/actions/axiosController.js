@@ -17,19 +17,24 @@ export var postGroup = function(data) {
   });
 };
 
-export var getGroups = function(data, dispatch) {
+export var getGroups = function(dispatch) {
   return axios(`${URL_CONFIG}/api/groups`)
   .then(res => dispatch({type: 'UPDATE_GROUPS', data: res.data}))
-  .catch(err => console.log('ERR', err))
-  .then(() => Actions.groups());
+  .catch(err => console.log('ERR', err));
+};
+
+export var getGroupById = function(id, dispatch) {
+  return axios(`${URL_CONFIG}/api/groups/${id}`)
+  .then(res => dispatch({type: 'RECEIVE_USERS', users: res.data.users}))
+  .catch(err => console.log('ERR', err));
+
 };
 
 // EVENTS
 export var getEvents = function(dispatch) {
   return axios(`${URL_CONFIG}/api/events/`)
   .then(res => dispatch({type: 'UPDATE_FEED', data: res.data}))
-  .catch(err => console.log('ERR', err))
-  .then(() => Actions.menu());
+  .catch(err => console.log('ERR', err));
 };
 
 export var postEvent = function(data) {
@@ -81,8 +86,8 @@ export var logoutCtrl = function(dispatch) {
   });
 };
 
-export var signupCtrl = function(data,dispatch) {
-  axios({
+export var signupCtrl = function(data, dispatch) {
+  return axios({
     method: 'post',
     headers: {
       'Accept': 'application/json',
@@ -101,7 +106,7 @@ export var signupCtrl = function(data,dispatch) {
 };
 
 export var getUsers = function(dispatch) { 
-  axios(`${URL_CONFIG}/api/users`)
+  return axios(`${URL_CONFIG}/api/users`)
     .then(res => {
       dispatch({type: 'RECEIVE_USERS', users: res.data});
       Actions.groupForm();

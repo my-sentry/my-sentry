@@ -15,16 +15,6 @@ const styles = {
     marginLeft: 20,
   }
 };
-
-
-   // const initialRegion = {
-   //    latitude: 37.78825,
-   //    longitude: -122.4324,
-   //    latitudeDelta: 0.0922,
-   //    longitudeDelta: 0.0421,
-   //  };
-  
-
 const mapStateToProps = ({events}) => { 
   return {
     name: events.id.name,
@@ -37,7 +27,7 @@ const mapStateToProps = ({events}) => {
 
 
 export default connect(mapStateToProps)(function EventView (state) {
-  var {active, isPersonal, name, begin, end, description, dispatch} = state;
+  const {active, isPersonal, name, begin, end, description, dispatch} = state;
   return (
     <Container>
 
@@ -67,8 +57,7 @@ export default connect(mapStateToProps)(function EventView (state) {
             </CardItem> 
           </Card>
         </Content>
-      <Container>
-      {active && isPersonal ? (
+      {!active && !isPersonal ? (
       <Container>
       <Button block style={styles.button}>
       <Text>Safe</Text>
@@ -83,7 +72,6 @@ export default connect(mapStateToProps)(function EventView (state) {
 			) : ( 
 				<Text>Map will go here</Text>
 			)}
-            </Container>
     </Container>
   );
 });

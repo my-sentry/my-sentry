@@ -6,15 +6,16 @@ import Header from './Header';
 import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, List, ListItem, InputGroup, Picker, Label, Item, Input, Form, style} from 'native-base';
 import {postGroup, getGroups } from '../actions/axiosController';
 
-const mapStateToProps = ({groups}) => {
+const mapStateToProps = ({groups, auth}) => {
   return {
+    userId: auth.id,
     groupName: groups.groupName,
     users: groups.users,
     members: groups.members
   };
 };
 
-export default connect(mapStateToProps)(function GroupForm ({users, members, groupName, dispatch}) {
+export default connect(mapStateToProps)(function GroupForm ({users, userId, members, groupName, dispatch}) {
   return (
     <Container>
 
@@ -36,11 +37,8 @@ export default connect(mapStateToProps)(function GroupForm ({users, members, gro
 
         <List dataArray={users}
           renderRow={user =>
-            <ListItem style={{
-              backgroundColor: members.includes(user.id) ? 'green' : null
-            }} key={user.id} onPress={() => {
-              dispatch({type: 'ADD_MEMBER', id: user.id});
-            }}>
+            <ListItem key={user.id} 
+            onPress={() => dispatch({type: 'ADD_MEMBER', id: user.id}) }>
               <Text>{`${user.first_name} ${user.last_name}`}</Text>
             </ListItem>
           }>
@@ -53,9 +51,9 @@ export default connect(mapStateToProps)(function GroupForm ({users, members, gro
         onPress={()=> {
           let data = {
             name: groupName,
-            members: members
+            members: [...members, userId ]
           };
-          postGroup(data).then(data => getGroups(data, dispatch));
+          postGroup(data).then(data => getGroups(dispatch).then(() => Actions.groups()));
         }}>
         <Text>Create Group</Text>
       </Button>

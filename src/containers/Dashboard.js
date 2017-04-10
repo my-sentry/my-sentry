@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import { Text, View} from 'react-native';
+import { Text, View, AsyncStorage} from 'react-native';
 import { connect } from 'react-redux';
 import {Actions} from 'react-native-router-flux';
 import ActionButton from 'react-native-action-button';
 import { Container, Title, Content, Button, Left, Right, Body, Icon, H1 } from 'native-base';
+import { getUsers } from '../actions/axiosController';
 
 
 import Feed from './Feed';
@@ -19,16 +20,34 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({groups}) => ({hasGroups: groups});
+const mapStateToProps = ({groups}) => groups;
 
 export default connect(mapStateToProps)(class Dashboard extends Component {
   render() {
+    const groups = this.props.groups;
+
+    console.log('GROUPS', groups.length);
     return (
       <Container>
-        <Feed />
+      {groups.length > 0 
+        ? <Feed />
+        : (
+        <Content>
+          <Header />
+          <Container style={styles.container}>
+          <H1>No Groups</H1>
+          <Button block primary onPress={() => getUsers(this.props.dispatch)} >
+            <Text>Create Group</Text>
+          </Button>
+          </Container>
+        </Content>
+          )
+      }
       </Container>
     );
   }
 });
+
+
 
 
