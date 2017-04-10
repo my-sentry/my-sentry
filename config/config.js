@@ -1,0 +1,1 @@
+export default URL_CONFIG = 'http://192.168.0.12:8000';

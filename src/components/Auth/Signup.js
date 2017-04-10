@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import {Actions} from 'react-native-router-flux';
 import Header from './authHeader';
 import { connect } from 'react-redux';
-import axios from 'axios';
-import { Container, Title, Content, Label, Form, Button, Item, Text, Icon, Right, Body, Input, H1, Grid, Row } from 'native-base';
+import { Container, Title, Content, Label, Form, Button, Item, Text, Icon, Left, Right, Body, Input, H1, Grid, Row } from 'native-base';
+import { signupCtrl } from '../../actions/axiosController';
 
 const styles = {
   centering: {
@@ -35,62 +35,49 @@ export default connect(mapStateToProps)(function Login ({signup, dispatch}) {
     <Content>
       <Form >
         <Item >
-          <Input placeholder='First Name' onChangeText={(text) => dispatch({type: 'FIRST_NAME', text: text})}/>
+          <Input placeholder='First Name' onChangeText={text => dispatch({type: 'FIRST_NAME', text: text})}/>
         </Item>
 
         <Item >
-          <Input placeholder='Last Name' onChangeText={(text) => dispatch({type: 'LAST_NAME', text: text})}/>
+          <Input placeholder='Last Name' onChangeText={text => dispatch({type: 'LAST_NAME', text: text})}/>
         </Item>
 
         <Item >
-          <Input placeholder='Username' onChangeText={(text) => dispatch({type: 'USERNAME_SIGNUP', text: text})}/>
+          <Input placeholder='Username' onChangeText={text => dispatch({type: 'USERNAME_SIGNUP', text: text})}/>
         </Item>
 
         <Item >
-          <Input placeholder='Password' secureTextEntry={true} onChangeText={(text) => dispatch({type: 'PASSWORD_SIGNUP', text: text})}/>
+          <Input placeholder='Password' secureTextEntry={true} onChangeText={text => dispatch({type: 'PASSWORD_SIGNUP', text: text})}/>
         </Item>
 
         <Item last >
-          <Input placeholder='Confirm Password' secureTextEntry={true} onChangeText={(text) => dispatch({type: 'CONFIRM_PASSWORD', text: text})}/>
+          <Input placeholder='Confirm Password' secureTextEntry={true} onChangeText={text => dispatch({type: 'CONFIRM_PASSWORD', text: text})}/>
           {signup.confirm === signup.password ? null : <Icon name='ios-close-circle' style={{color: 'red'}}/>}
         </Item>
       </Form>
     </Content>
       </Row>
       <Row style={{flex: 0}}>
-        <Button block onPress={Actions.login}>
+        <Left>
+        <Button outline bordered onPress={Actions.login}>
           <Icon name='arrow-back'/>
         </Button>
+        </Left>
+      <Right>
       <Button block onPress={() => {
-
-        let data = JSON.stringify({
+        let data = {
           firstName: signup.firstName,
           lastName: signup.lastName,
           username: signup.username,
           password: signup.password
-        });
-
+        };
         signup.confirm === signup.password
-        ? axios({
-          method: 'post',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          url: 'http://192.168.1.127:8000/api/users/signup',
-          data: data
-        }).then(res => {
-          setTimeout(() => Actions.loading());
-          dispatch({type: 'LOGIN'});
-          dispatch({type: 'CLEAR_SIGNUP'});
-        })
-          .catch(err => {
-            setTimeout(() => alert('invalid submission'));
-            dispatch({type: 'CLEAR_SIGNUP'});
-          })
-        : alert('passwords dont match');
-
-      }} ><Text> Create Account</Text></Button>
+        ? signupCtrl(data, dispatch)
+        : null;
+      }}>
+        <Text> Create Account</Text>
+      </Button>
+      </Right>
     </Row>
     </Grid>
   </Container>

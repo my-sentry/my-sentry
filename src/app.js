@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-
 import MasterReducer, {routerReducer} from './reducers/index.js';
 import Dashboard from './containers/Dashboard';
 import NavigationDrawer from './components/NavigationDrawer';

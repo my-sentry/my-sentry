@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import { Text, View} from 'react-native';
 import { connect } from 'react-redux';
+import {Actions} from 'react-native-router-flux';
 import Header from './Header';
 import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, List, ListItem, InputGroup, Picker, Label, Item, Input, Form, style} from 'native-base';
-import axios from 'axios';
+import {postGroup, getGroups } from '../actions/axiosController';
 
 const mapStateToProps = ({groups}) => {
   return {
@@ -40,7 +41,6 @@ export default connect(mapStateToProps)(function GroupForm ({users, members, gro
             }} key={user.id} onPress={() => {
               dispatch({type: 'ADD_MEMBER', id: user.id});
             }}>
-              {members.includes(user.id) ? console.log('green') : console.log('none')}
               <Text>{`${user.first_name} ${user.last_name}`}</Text>
             </ListItem>
           }>
@@ -51,22 +51,11 @@ export default connect(mapStateToProps)(function GroupForm ({users, members, gro
       <Button
         style={{ alignSelf: 'center', marginTop: 20, marginBottom: 20 }}
         onPress={()=> {
-          let data = JSON.stringify({
+          let data = {
             name: groupName,
             members: members
-          });
-
-          axios({
-            method: 'post',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
-            url: 'http://192.168.1.127:8000/api/groups',
-            data: data
-          }).then(res => console.log(res))
-          //.then(() => dispatch({type: 'ADD_GROUP', item: {name: groupName}}))
-          .catch(err => console.log(err));
+          };
+          postGroup(data).then(data => getGroups(data, dispatch));
         }}>
         <Text>Create Group</Text>
       </Button>

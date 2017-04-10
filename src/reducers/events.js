@@ -16,7 +16,7 @@ export var feed = (state = {}, action) => {
   }
 }
 
-export var events =(state = {id: null, active: false, isPersonal: false}, action) => {
+export var events = (state = {id: null, active: false, isPersonal: false}, action) => {
   switch(action.type) {
   case 'CURRENT_ITEM': 
     return {...state,
@@ -41,7 +41,7 @@ export var events =(state = {id: null, active: false, isPersonal: false}, action
   }
 }
 
-export var dateReducer =(state = {date: new Date(), start: new Date(), end: new Date()}, action) => {
+export var dateReducer = (state = {date: new Date(), start: new Date(), end: new Date()}, action) => {
   switch(action.type) {
   case 'DATE_CHANGE':
     return {...state,
@@ -68,7 +68,7 @@ export var dateReducer =(state = {date: new Date(), start: new Date(), end: new 
   }
 }
 
-export var eventForms =(state = {id: null, name: null, location: null, description: null}, action) => {
+export var eventForms = (state = {id: null, name: null, location: null, description: null}, action) => {
   switch(action.type) {
   case 'EVENT_NAME': 
     return {...state,

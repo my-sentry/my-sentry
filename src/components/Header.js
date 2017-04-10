@@ -7,12 +7,14 @@ import { Container, Header, Title, Content, Button, Left, Right, Body, Icon, H1 
 
 const styles = {
   header: {
+    backgroundColor: '#d0d0da'
+  },
+  body: {
     flex: 0,
     justifyContent: 'center'
   },
   menu: {
-    fontSize: 20, 
-    color: 'black'
+    backgroundColor: '#d0d0da',
   }
 };
 
@@ -23,10 +25,10 @@ const mapStateToProps = ({header}) => ({title: header.title});
 
 export default connect(mapStateToProps)(function MyHeader ({title}) { 
   return (
-    <Header > 
+    <Header style={styles.header} > 
     <Left> 
     {title !== 'DASHBOARD' ? (
-      <Button onPress={()=> Actions.dashboard()}>
+      <Button style={styles.menu} onPress={()=> Actions.dashboard()}>
         <Icon 
           name='arrow-back' 
           style={styles.menu}          
@@ -36,16 +38,15 @@ export default connect(mapStateToProps)(function MyHeader ({title}) {
   }
     </Left>
 
-      <Body style={styles.header}>
+      <Body style={styles.body}>
         <Text>{title}</Text>
       </Body>      
          
     <Right>
-      <Button onPress={()=> Actions.refresh({key: 'menu', open: value => !value })}>
+      <Button style={styles.menu} onPress={()=> Actions.refresh({key: 'menu', open: value => !value })}>
         <Icon 
         ios='ios-menu' 
         android="md-menu" 
-        style={styles.menu}
         />
       </Button>
     </Right>

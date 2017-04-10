@@ -1,16 +1,12 @@
-import React, { Component } from 'react'
-import DatePicker from 'react-native-datepicker'
-import {connect} from 'react-redux'
+import React, { Component } from 'react';
+import DatePicker from 'react-native-datepicker';
+import {connect} from 'react-redux';
 
-const mapStateToProps = ({dateReducer}) => {
-  return {
-    date: dateReducer.date
-  }
-}
+const mapStateToProps = ({dateReducer}) => ({date: dateReducer.date});
 
 export default connect(mapStateToProps)(class MyDatePicker extends Component {
  
-  render(){
+  render() {
     return (
       <DatePicker
         style={{width: 200}}
@@ -35,8 +31,8 @@ export default connect(mapStateToProps)(class MyDatePicker extends Component {
             marginLeft: 36
           }
         }}
-        onDateChange={(date) => {this.props.dispatch({type: 'DATE_CHANGE', date: date})}}
+        onDateChange={date => this.props.dispatch({type: 'DATE_CHANGE', date: date})}
       />
-    )
+    );
   }
-})
+});

@@ -1,6 +1,4 @@
-import {combineReducers} from 'redux';
 import {AsyncStorage} from 'react-native';
-import { ActionConst } from 'react-native-router-flux';
 
 
 
