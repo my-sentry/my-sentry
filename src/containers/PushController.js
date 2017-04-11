@@ -86,7 +86,6 @@ export default connect(({auth}) => auth)(class PushController extends Component 
   }
 
   render() {
-    console.log('Logged in user', this.props.id);
     return <Routes />;
   }
 
