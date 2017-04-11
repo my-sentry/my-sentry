@@ -22,14 +22,8 @@ export var events = (state = {id: null, active: null, isPersonal: null}, action)
   case 'CURRENT_ITEM': 
     return {...state,
       id: action.item,
-    }
-  case 'ACTIVE' :
-    return {...state,
-      active: action.check,
-    }
-  case 'PERSONAL' :
-    return {...state, 
-      isPersonal: action.check
+      active: action.active,
+      isPersonal: action.personal
     }
   default:
     return state;

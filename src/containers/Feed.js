@@ -23,9 +23,12 @@ export default connect(mapStateToProps)(function Feed ({feed, personal, dispatch
         return ( <ListItem 
           style={{marginLeft: 0}}
           onPress={() => {
-            dispatch({type: 'PERSONAL', check: personalCheck});
-            dispatch({type: 'ACTIVE', check: activeCheck});
-            dispatch({type: 'CURRENT_ITEM', item: item});
+            dispatch({
+              type: 'CURRENT_ITEM', 
+              item: item, 
+              active: activeCheck, 
+              personal: personalCheck
+            });
             setTimeout(()=> Actions.eventView({title: item.name}));
           }}>
         <Body>
