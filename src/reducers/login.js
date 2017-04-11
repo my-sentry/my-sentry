@@ -34,12 +34,7 @@ export var auth = (state = {id: null, name: ''}, action) => {
 
 export var login = (state = {username: null, pw: null, ID: null}, action) => {
   switch(action.type) {
-<<<<<<< HEAD
-
   case 'PASSWORD' :
-=======
-  case 'PASSWORD' :
->>>>>>> added PushController
     return {...state,
       pw: action.text
     }
