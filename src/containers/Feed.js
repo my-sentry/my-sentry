@@ -18,7 +18,7 @@ export default connect(mapStateToProps)(function Feed ({feed, personal, dispatch
      dataArray={feed.data}
       renderRow={item => {
         let personalCheck = personal === item.user_id;
-        let activeCheck = new Date(item.begin).getTime() - Date.now() < 0;      
+        let activeCheck = new Date(item.begin).getTime() - Date.now() < 0; 
         return ( <ListItem 
           style={{marginLeft: 0}}
           onPress={() => {

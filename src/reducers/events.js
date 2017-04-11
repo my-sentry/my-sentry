@@ -19,7 +19,8 @@ export var feed = (state = {}, action) => {
 
 export var events = (state = {id: null, active: null, isPersonal: null}, action) => {
   switch(action.type) {
-  case 'CURRENT_ITEM': 
+  case 'CURRENT_ITEM':
+  console.log(action) 
     return {...state,
       id: action.item,
       active: action.active,
@@ -38,31 +39,23 @@ export var dateReducer = (state = {date: new Date(), start: new Date(), end: new
       date: action.date
     }
   case 'START':
-  let startTime = action.time.split(':')
-  let startSet = new Date()
-  startSet.setHours(startTime[0])
-  startSet.setMinutes(startTime[1])
+    let startTime = action.time.split(':')
+    let startSet = new Date(state.date)
+    startSet.setHours(startTime[0])
+    startSet.setMinutes(startTime[1])
     return {...state,
       start: startSet
     }
   case 'END':
-  let endTime = action.time.split(':')
-  let endSet = new Date()
-  endSet.setHours(endTime[0])
-  endSet.setMinutes(endTime[1])
-      return {...state,
+    let endTime = action.time.split(':')
+    let endSet = new Date(state.date)
+    endSet.setHours(endTime[0])
+    endSet.setMinutes(endTime[1])
+    return {...state,
       end: endSet
     }  
-  case 'NEW_DATE':
-    return {...state,
-      date: new Date()
-    }
-  case 'NEW_TIME':
-    return {...state,
-      time: new Date()
-    }
-    default:
-    return state;
+  default:
+  return state;
   }
 }
 

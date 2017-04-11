@@ -29,10 +29,9 @@ const mapStateToProps = ({events}) => {
 
 
 export default connect(mapStateToProps)(function EventView (state) {
-  const {active, isPersonal, name, begin, end, description, dispatch} = state;
+  const {active, isPersonal, name, begin, end, description} = state;
   return (
     <Container>
-
       <Header title={name}/>
         <Content>
           <Card>
