@@ -21,8 +21,12 @@ const styles = {
 };
 
 
-const mapStateToProps = ({login}) => { 
-  return { form: {username: login.username, password: login.pw}};
+const mapStateToProps = ({login, token}) => {
+  return { form: {
+    username: login.username,
+    password: login.pw,
+    token: token
+  }};
 };
 
 export default connect(mapStateToProps)(function Login ({form, dispatch}) {

@@ -38,7 +38,15 @@ module.exports = function(passport) {
     '/signup',
     passport.authenticate('signup'),
     (req, res, next) => {
-      res.json(_.pick(req.user, ['id', 'username', 'first_name', 'last_name']));
+
+      users.updateUserToken(req.user.id, req.body.token)
+        .then(() => {
+          res.json(_.pick(req.user, ['id', 'username', 'first_name', 'last_name']));
+        })
+        .catch(err => {
+          console.log(err);
+          next(err);
+        });
     }
   );
 
@@ -46,7 +54,15 @@ module.exports = function(passport) {
     '/login',
     passport.authenticate('login'),
     (req, res, next) => {
-      res.json(_.pick(req.user, ['id', 'username', 'first_name', 'last_name']));
+
+      users.updateUserToken(req.user.id, req.body.token)
+        .then(() => {
+          res.json(_.pick(req.user, ['id', 'username', 'first_name', 'last_name']));
+        })
+        .catch(err => {
+          console.log(err);
+          next(err);
+        });
     }
   );
 
@@ -56,7 +72,10 @@ module.exports = function(passport) {
   });
 
   router.put('/:id', (req, res, next) => {
-    users.updateUserById(req.params.id)
+
+    var update = _.pick(req.body, ['first_name', 'last_name', 'username', 'token']);
+
+    users.updateUserById(req.params.id, update)
       .then(result => res.json(result))
       .catch(err => {
         console.log(err);

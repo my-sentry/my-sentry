@@ -16,7 +16,7 @@ export var auth = (state = {id: null, name: ''}, action) => {
   case 'LOGOUT' :
     AsyncStorage.setItem('AUTHENTICATION', 'null')
     AsyncStorage.setItem('NAME', '{}')
-    return { ...state,  
+    return { ...state,
       id: null,
       name: ''
     };
@@ -34,20 +34,19 @@ export var auth = (state = {id: null, name: ''}, action) => {
 
 export var login = (state = {username: null, pw: null, ID: null}, action) => {
   switch(action.type) {
-
-  case 'PASSWORD' : 
+  case 'PASSWORD' :
     return {...state,
       pw: action.text
-    }  
-  case 'USERNAME' : 
+    }
+  case 'USERNAME' :
     return {...state,
       username: action.text
-    } 
-  case 'CLEAR_LOGIN' : 
+    }
+  case 'CLEAR_LOGIN' :
     return {...state,
       username: null,
       pw: null
-    } 
+    }
     default:
     return state;
   }
@@ -66,7 +65,7 @@ export var signup = (state = {firstName:'', lastName: '', userName:'', password:
   case 'USERNAME_SIGNUP':
   return {...state,
     userName: action.text
-  } 
+  }
   case 'PASSWORD_SIGNUP':
   return {...state,
     password: action.text
@@ -85,6 +84,15 @@ export var signup = (state = {firstName:'', lastName: '', userName:'', password:
     confirm: action.text
   }
   default:
-    return state;      
+    return state;
+  }
+}
+
+export var token = (state = "", action) => {
+  switch(action.type) {
+  case 'UPDATE_TOKEN':
+    return action.token;
+  default:
+    return state;
   }
 }

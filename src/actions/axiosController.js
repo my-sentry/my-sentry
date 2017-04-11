@@ -13,7 +13,7 @@ export var postGroup = function(data) {
       'Content-Type': 'application/json'
     },
     url: `${URL_CONFIG}/api/groups`,
-    data: JSON.stringify(data), 
+    data: JSON.stringify(data),
   });
 };
 
@@ -62,12 +62,12 @@ export var loginCtrl = function(data, dispatch) {
     data: JSON.stringify(data)
   }).then(({data}) => {
     dispatch({
-      type: 'LOGIN', 
-      id: data.id, 
+      type: 'LOGIN',
+      id: data.id,
       name: {
         firstName: data.first_name,
         lastName: data.last_name
-      } 
+      }
     });
     dispatch({type: 'CLEAR_LOGIN'});
     Actions.loading();
@@ -80,7 +80,7 @@ export var loginCtrl = function(data, dispatch) {
 export var logoutCtrl = function(dispatch) {
   return axios({
     method: 'post',
-    headers: { 
+    headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
@@ -103,12 +103,12 @@ export var signupCtrl = function(data, dispatch) {
     data: data
   }).then(({data}) => {
     dispatch({
-      type: 'LOGIN', 
-      id: data.id, 
+      type: 'LOGIN',
+      id: data.id,
       name: {
         firstName: data.first_name,
         lastName: data.last_name
-      } 
+      }
     });
     dispatch({type: 'CLEAR_SIGNUP'});
     Actions.loading();
@@ -118,7 +118,7 @@ export var signupCtrl = function(data, dispatch) {
   });
 };
 
-export var getUsers = function(dispatch) { 
+export var getUsers = function(dispatch) {
   return axios(`${URL_CONFIG}/api/users`)
     .then(res => {
       dispatch({type: 'RECEIVE_USERS', users: res.data});
@@ -129,4 +129,22 @@ export var getUsers = function(dispatch) {
 
 export var verifyLogin = function() {
   return axios(`${URL_CONFIG}/api/users`);
+};
+
+export var updateUserToken = function(id, token) {
+  return axios({
+    method: 'put',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    url: `${URL_CONFIG}/api/users/${id}`,
+    data: JSON.stringify({ token })
+  }).then(() => {
+    console.log(`Token for user ${id} updated.`);
+  })
+  .catch(err => {
+    console.log(`There was a problem updating the token for user ${id}`);
+    console.log(err);
+  });
 };

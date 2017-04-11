@@ -2,7 +2,7 @@ var knex = require('../db.js');
 var bcrypt = require('bcrypt-nodejs');
 var _ = require('lodash');
 
-//Hash Password
+// hash Password
 var hashPassword = function (password) {
   return new Promise((fulfill, reject) => {
     bcrypt.hash(password, null, null, (err, hash) => {
@@ -14,7 +14,7 @@ var hashPassword = function (password) {
   });
 };
 
-//Compare Passwords
+// compare Passwords
 exports.comparePassword = function (attempted, correct) {
   return new Promise((fulfill, reject) => {
     bcrypt.compare(attempted, correct, (err, res) => {
@@ -27,7 +27,7 @@ exports.comparePassword = function (attempted, correct) {
   });
 };
 
-//Add user
+// add user
 exports.addUser = function (firstName, lastName, username, password) {
   return hashPassword(password)
     .then(hash => {
@@ -43,7 +43,7 @@ exports.addUser = function (firstName, lastName, username, password) {
     });
 };
 
-//Get user
+// get user
 exports.getUser = function (username) {
   return knex('users')
     .where('username', username)
@@ -60,7 +60,7 @@ exports.getUserById = function (id) {
     });
 };
 
-//Get users
+// get users
 exports.getUsers = function () {
   return knex.select()
     .from('users')
@@ -71,18 +71,23 @@ exports.getUsers = function () {
     });
 };
 
-//Update user
-exports.updateUserById = function(id) {
+// update user
+exports.updateUserById = function(id, update) {
   return knex('users')
     .where('id', id)
-    .then(result => {
-      return _.pick(result[0], ['id', 'first_name', 'last_name', 'username']);
-    });
+    .update(update);
 };
 
-//Delete user
+// delete user
 exports.deleteUserById = function(id) {
   return knex('users')
     .where('id', id)
     .del();
+};
+
+// update user pushie token
+exports.updateUserToken = function(userId, token) {
+  return knex('users')
+    .where('id', userId)
+    .update({ token: token });
 };

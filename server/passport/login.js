@@ -6,6 +6,7 @@ module.exports = function(passport) {
     passReqToCallback: true
   },
   function(req, username, password, done) {
+    console.log('Req body: ', req.body);
     users.getUser(username)
       .then(user => {
         if (!user) {
