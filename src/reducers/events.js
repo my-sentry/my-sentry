@@ -48,12 +48,20 @@ export var dateReducer = (state = {date: new Date(), start: new Date(), end: new
       date: action.date
     }
   case 'START':
+  let startTime = action.time.split(':')
+  let startSet = new Date()
+  startSet.setHours(startTime[0])
+  startSet.setMinutes(startTime[1])
     return {...state,
-      start: action.time
+      start: startSet
     }
   case 'END':
+  let endTime = action.time.split(':')
+  let endSet = new Date()
+  endSet.setHours(endTime[0])
+  endSet.setMinutes(endTime[1])
       return {...state,
-      end: action.time
+      end: endSet
     }  
   case 'NEW_DATE':
     return {...state,

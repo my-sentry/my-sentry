@@ -15,18 +15,28 @@ export default connect(({feed}) => feed)(class Feed extends Component {
   render() {
     return (
       <Container><Header /><Container>
-       <List dataArray={this.props.data}
-        renderRow={item =>
-            <ListItem onPress={() => {
+       <List style={{marginLeft: 0}}
+       dataArray={this.props.data}
+        renderRow={item => {
+
+        
+          return ( <ListItem style={{marginLeft: 0}} 
+
+
+            onPress={() => {
               this.props.dispatch({type: 'CURRENT_ITEM', item: item});
               setTimeout(()=> Actions.eventView({title: item.name}));
             }}>
-            <Body>
-                <Text>{item.name}</Text>
-                <Text>{item.description}</Text>
-                </Body>
-            </ListItem>
-        }>
+          <Body>
+              <Text>{item.name}</Text>
+              <Text>{item.description}</Text>
+              </Body>
+          { new Date(item.begin).getTime() - Date.now() > 0 
+              ? <Right><Icon name='alarm' style={{color: 'red'}} /></Right>
+              : null
+            }
+          </ListItem> );
+        }}>
       </List>
       </Container>
           <ActionButton
