@@ -67,7 +67,6 @@ const groups = (state = {id: null, groups: [], users: [], groupName: null, membe
   case 'REMOVE_MEMBER' :
     var userId = action.id;
     var updatedMembers = state.users.filter(user => user.id !== userId);
-
     return {...state,
       users: [...updatedMembers]
     }

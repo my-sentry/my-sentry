@@ -30,6 +30,19 @@ export var getGroupById = function(id, dispatch) {
 
 };
 
+export var removeUserFromGroup = function(groupId, userId) {
+  return axios({
+    method: 'put',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    url: `${URL_CONFIG}/api/groups/${groupId}?delete=true`,
+    data: JSON.stringify({userId: userId})
+  })
+  .catch(err => console.log(err));
+};
+
 // EVENTS
 export var getEvents = function(dispatch) {
   return axios(`${URL_CONFIG}/api/events/`)
