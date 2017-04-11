@@ -34,7 +34,6 @@ const header = (state = {title: 'DASHBOARD'}, action) => {
 const groups = (state = {id: null, groups: [], users: [], groupName: null, members: []}, action) => {
   switch(action.type) {
   case 'CURRENT_GROUP':
-  console.log(action.id)
     return{...state,
       id: action.id
   }
@@ -43,8 +42,6 @@ const groups = (state = {id: null, groups: [], users: [], groupName: null, membe
       groups: action.data
   }
   case 'ADD_GROUP' :
-    let store = JSON.stringify(action.id)
-    AsyncStorage.setItem('GROUP', store)
     return {...state,
       groups: [...state.groups, action.item],
       hasGroups: true,
@@ -63,12 +60,10 @@ const groups = (state = {id: null, groups: [], users: [], groupName: null, membe
   }
   case 'ADD_MEMBER' :
     if (state.members.includes(action.id)) {
-      var idx = state.members.indexOf(action.id);
-      var updated = state.members.filter(id => id !== action.id);
+      var updated = [...state.members].filter(id => id !== action.id);
       console.log('remove members ---->', updated);
-
       return {...state,
-        members: [...updated]
+        members: updated
       }
     } else {
       console.log('added id ---->', action.id);

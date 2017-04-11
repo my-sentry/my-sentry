@@ -18,8 +18,7 @@ export default connect(mapStateToProps)(function Feed ({feed, personal, dispatch
      dataArray={feed.data}
       renderRow={item => {
         let personalCheck = personal === item.user_id;
-        let activeCheck = new Date(item.begin).getTime() - Date.now() < 0;
-      
+        let activeCheck = new Date(item.begin).getTime() - Date.now() < 0;      
         return ( <ListItem 
           style={{marginLeft: 0}}
           onPress={() => {
@@ -35,8 +34,7 @@ export default connect(mapStateToProps)(function Feed ({feed, personal, dispatch
           <Text>{item.name}</Text>
           <Text>{item.description}</Text>
         </Body>
-        { activeCheck 
-          ? <Right><Icon name='alarm' style={{color: 'red'}} /></Right>
+        { activeCheck ? <Right><Icon name='alarm' style={{color: 'red'}} /></Right>
           : null
         }
         </ListItem> );
