@@ -12,6 +12,7 @@ import Login from '../components/Auth/Login';
 import Signup from '../components/Auth/Signup';
 import Loading from '../components/Loading';
 import Datepicker from '../components/Datepicker';
+import SignupModal from '../components/SignupModal';
 
 import { connect } from 'react-redux';
 
@@ -39,6 +40,7 @@ const scenes = Actions.create(
       <Scene key='login' tabs={true} component={Login} />
     </Scene>
   </Scene>
+  <Scene key='signupError' component={SignupModal} />
   </Scene>
 );
 

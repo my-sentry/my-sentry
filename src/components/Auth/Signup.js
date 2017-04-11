@@ -88,7 +88,7 @@ export default connect(mapStateToProps)(function Login ({signup, dispatch}) {
         };
         signup.confirm === signup.password && passwordRegex
         ? signupCtrl(data, dispatch)
-        : null;
+        : Actions.signupError({error: data, hide: false});
       }}>
         <Text> Create Account</Text>
       </Button>
