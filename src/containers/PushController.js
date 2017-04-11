@@ -69,6 +69,7 @@ export default connect(({auth}) => auth)(class PushController extends Component 
   }
 
   showLocalNotification(notif) {
+    console.log('SHOW_LOCAL_NOTIFICATION');
     FCM.presentLocalNotification({
       'title': notif.title,
       'body': notif.body,
