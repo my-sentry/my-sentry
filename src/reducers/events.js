@@ -17,24 +17,19 @@ export var feed = (state = {}, action) => {
   }
 }
 
-export var events = (state = {id: null, active: false, isPersonal: false}, action) => {
+export var events = (state = {id: null, active: null, isPersonal: null}, action) => {
   switch(action.type) {
   case 'CURRENT_ITEM': 
     return {...state,
       id: action.item,
     }
-
   case 'ACTIVE' :
     return {...state,
-      active: true,
-    }
-  case 'INACTIVE' :
-    return {...state, 
-      active: false
+      active: action.check,
     }
   case 'PERSONAL' :
     return {...state, 
-      isPersonal: true
+      isPersonal: action.check
     }
   default:
     return state;

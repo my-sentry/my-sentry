@@ -17,6 +17,8 @@ const styles = {
 };
 const mapStateToProps = ({events}) => { 
   return {
+    isPersonal: events.isPersonal,
+    active: events.active,
     name: events.id.name,
     begin: events.id.begin,
     end: events.id.end,
@@ -57,7 +59,7 @@ export default connect(mapStateToProps)(function EventView (state) {
             </CardItem> 
           </Card>
         </Content>
-      {!active && !isPersonal ? (
+      {active && isPersonal ? (
       <Container>
       <Button block style={styles.button}>
       <Text>Safe</Text>
