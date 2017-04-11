@@ -26,7 +26,8 @@ export default connect(mapStateToProps)(function Groups ({groups, userId, dispat
               getGroupById(item.id, dispatch).then(() => {
                 dispatch({type: 'CURRENT_GROUP', id: {...item, userId: userId}});
                 Actions.groupView({title: item.name});
-              })
+              });
+              getUsers(dispatch);
             }}>
                 <Body>
                   <Text>{item.name}</Text>
