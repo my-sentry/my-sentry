@@ -5,7 +5,7 @@ import {View, TouchableHighlight, Dimensions, BackAndroid} from 'react-native';
 import { Container, Title, Text, Content, Button, Body, List, ListItem, H1 } from 'native-base';
 
 
-export default class SignupModal extends Component { 
+export default connect()(class SignupModal extends Component { 
   constructor(props) {
     super(props);
     this.state = {
@@ -34,16 +34,19 @@ export default class SignupModal extends Component {
       : (
         <Button 
         transparent
-        onPress={Actions.pop}
+        onPress={() => {
+          this.props.dispatch({type: 'TOGGLE_BUTTON'});
+          Actions.pop();
+        }}
         style={{
           position: 'absolute',
           alignSelf: 'center',
-          top: height / 2,
+          top: height / 3,
           height: 225,
           width: 250,
           borderRadius: 10,
           opacity: .8,
-          backgroundColor: 'rgba(155,155,155,0.3)',          
+          backgroundColor: 'rgba(155,155,155,0.8)',          
           justifyContent: 'center',
           borderStyle: 'solid',
           borderColor: '#cccccc',
@@ -53,6 +56,6 @@ export default class SignupModal extends Component {
         </Button>
       );    
   }
-}
+});
 
 
