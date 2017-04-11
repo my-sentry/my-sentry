@@ -38,6 +38,9 @@ const styles = {
 
 export default connect(mapStateToProps)(function EventForm ({form, groups, dispatch}) {
   var grouplist = groups.map(group => <Item label={group.name} value={group.id} key={group.id}/> );
+  
+  //initializing the picker to grouplist[0]
+  // dispatch({type: 'CURRENT_GROUP', id: grouplist[0].id});
   return (
     <Container>
       <Header />
