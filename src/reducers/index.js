@@ -62,8 +62,15 @@ const groups = (state = {id: null, groups: [], users: [], groupName: null, membe
       console.log('added id ---->', action.id);
       return {...state,
         members: [...state.members, action.id]
+      }
     }
-  }
+  case 'REMOVE_MEMBER' :
+    var userId = action.id;
+    var updatedMembers = state.users.filter(user => user.id !== userId);
+
+    return {...state,
+      users: [...updatedMembers]
+    }
   default:
     return state;
   }
