@@ -38,19 +38,9 @@ const groups = (state = {id: null, groups: [], users: [], groupName: null, membe
       id: action.id
   }
   case 'UPDATE_GROUPS':
-    console.log('updategroups', action.data)
     return{...state,
       groups: action.data,
       id: action.data[0].id
-
-  }
-  case 'ADD_GROUP' :
-    return {...state,
-      groups: [...state.groups, action.item],
-      hasGroups: true,
-  }
-  case 'REMOVE_GROUP' :
-    return {...state,
 
   }
   case 'RECEIVE_USERS' :
