@@ -15,8 +15,6 @@ export var postGroup = function(data) {
     url: `${URL_CONFIG}/api/groups`,
     data: JSON.stringify(data), 
   });
-  // .catch(({response}) => response.status == 401 ? Actions.login() : null);
-
 };
 
 export var getGroups = function(dispatch) {
@@ -48,7 +46,6 @@ export var postEvent = function(data) {
 };
 
 export var loginCtrl = function(data, dispatch) {
-  console.log(data);
   return axios({
     method: 'post',
     credentials: 'include',
@@ -98,8 +95,15 @@ export var signupCtrl = function(data, dispatch) {
     },
     url: `${URL_CONFIG}/api/users/signup`,
     data: data
-  }).then(res => {
-    dispatch({type: 'LOGIN', id: res.data.id});
+  }).then(({data}) => {
+    dispatch({
+      type: 'LOGIN', 
+      id: data.id, 
+      name: {
+        firstName: data.first_name,
+        lastName: data.last_name
+      } 
+    });
     dispatch({type: 'CLEAR_SIGNUP'});
     Actions.loading();
   }).catch(err => {
@@ -114,4 +118,8 @@ export var getUsers = function(dispatch) {
       dispatch({type: 'RECEIVE_USERS', users: res.data});
       Actions.groupForm();
     });
+};
+
+export var verifyLogin = function() {
+  return axios(`${URL_CONFIG}/api/users`);
 };

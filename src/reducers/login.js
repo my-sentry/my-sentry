@@ -52,7 +52,7 @@ export var login = (state = {username: null, pw: null, ID: null}, action) => {
     return state;
   }
 }
-export var signup = (state = {firstName:null, lastName: null, userName:null, password:null, confirm: null}, action)=> {
+export var signup = (state = {firstName:'', lastName: '', userName:'', password:'', confirm: ''}, action)=> {
   switch(action.type) {
   case 'FIRST_NAME':
   return {...state,
@@ -74,11 +74,11 @@ export var signup = (state = {firstName:null, lastName: null, userName:null, pas
   }
   case 'CLEAR_SIGNUP' :
   return {
-    firstName: null,
-    lastName: null,
-    userName: null,
-    password: null,
-    confirm: null
+    firstName: '',
+    lastName: '',
+    userName: '',
+    password: '',
+    confirm: ''
   }
   case 'CONFIRM_PASSWORD':
   return {...state,

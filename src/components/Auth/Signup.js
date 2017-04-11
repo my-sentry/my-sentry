@@ -71,6 +71,9 @@ export default connect(mapStateToProps)(function Login ({signup, dispatch}) {
           username: signup.username,
           password: signup.password
         };
+        signup.password.match(/[A-Z]/g) === null 
+        ? alert('YOUR PASSWORD MUST CONTAIN 1 CAPITAL')
+        :
         signup.confirm === signup.password
         ? signupCtrl(data, dispatch)
         : null;

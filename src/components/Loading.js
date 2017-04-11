@@ -3,7 +3,7 @@ import {Actions} from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import {AsyncStorage } from 'react-native';
 import { Container, Content, Spinner, Body } from 'native-base';
-import {getEvents, getGroups} from '../actions/axiosController';
+import {getEvents, getGroups, verifyLogin} from '../actions/axiosController';
 
 
 const styles = {
@@ -23,8 +23,8 @@ const styles = {
 
 export default connect()(function Loading({dispatch}) {
   AsyncStorage.getItem('AUTHENTICATION')
-  .then(res=> res !== 'null' 
-  ? getGroups(dispatch)
+  .then(id=> id !== 'null' 
+  ? verifyLogin()
     .catch(({response}) => {
       if (response.status === 401) {
         dispatch({type: 'LOGOUT'});
@@ -33,16 +33,18 @@ export default connect()(function Loading({dispatch}) {
         console.log(response);
       }
     })
-    .then(() => AsyncStorage.getItem('NAME')
-      .then(name => dispatch({type: 'SET_VALUES', id: res, name: name}))
-    )
-    .then(getEvents(dispatch)
-      .then(() => setTimeout(()=> Actions.menu()) ) 
+    .then(getGroups(dispatch)
+      .then(() => AsyncStorage.getItem('NAME')
+        .then(name => dispatch({type: 'SET_VALUES', id: id, name: name}))
+      )
+      .then(getEvents(dispatch)
+        .then(() => setTimeout(()=> Actions.menu()) ) 
+      )
     )
   : Actions.login()
   );
   return (
-  <Container style = {styles.centering} >
+  <Container style={styles.centering} >
   <Content >
   <Body>
   <Spinner style={styles.spinner} color='black' />

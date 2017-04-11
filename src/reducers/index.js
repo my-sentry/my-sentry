@@ -40,7 +40,7 @@ const groups = (state = {id: null, groups: [], users: [], groupName: null, membe
   case 'UPDATE_GROUPS':
     return{...state,
       groups: action.data,
-      id: action.data[0].id
+      id: action.data.length > 0 ? action.data[0].id : 0
 
   }
   case 'RECEIVE_USERS' :
