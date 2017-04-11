@@ -31,7 +31,7 @@ export default connect(({feed}) => feed)(class Feed extends Component {
               <Text>{item.name}</Text>
               <Text>{item.description}</Text>
               </Body>
-          { new Date(item.begin).getTime() - Date.now() > 0 
+          { new Date(item.begin).getTime() - Date.now() < 0 
               ? <Right><Icon name='alarm' style={{color: 'red'}} /></Right>
               : null
             }

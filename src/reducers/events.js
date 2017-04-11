@@ -2,7 +2,8 @@ export var feed = (state = {}, action) => {
   switch(action.type) {
   case 'UPDATE_FEED': 
     return{...state,
-      data: action.data
+      data: [...action.data].sort((a,b) => 
+      new Date(a.begin).getTime() - new Date(b.begin).getTime())
     }
   case 'ADD_ITEM':
     return {...state,
