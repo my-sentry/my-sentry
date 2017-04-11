@@ -34,7 +34,6 @@ const mapStateToProps = ({signup}) => {
 
 export default connect(mapStateToProps)(function Login ({signup, dispatch}) {
   const passwordRegex = /^(?=.*\d)([0-9a-zA-Z \W]{8,})$/g.test(signup.password);
-  console.log(passwordRegex)
   return (
    <Container >
       <Grid style={{flex: 1}}>
