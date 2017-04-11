@@ -20,21 +20,21 @@ export var postGroup = function(data) {
 export var getGroups = function(dispatch) {
   return axios(`${URL_CONFIG}/api/groups`)
   .then(res => dispatch({type: 'UPDATE_GROUPS', data: res.data}))
-  .catch(err => console.log('ERR', err));
+  .catch(err => console.log(err));
 };
 
 export var getGroupById = function(id, dispatch) {
   return axios(`${URL_CONFIG}/api/groups/${id}`)
   .then(res => dispatch({type: 'RECEIVE_USERS', users: res.data.users}))
-  .catch(err => console.log('ERR', err));
+    .catch(err => console.log(err));
 
 };
 
 // EVENTS
 export var getEvents = function(dispatch) {
   return axios(`${URL_CONFIG}/api/events/`)
-  .then(res => dispatch({type: 'UPDATE_FEED', data: res.data}))
-  .catch(err => console.log('ERR', err));
+    .then(res => dispatch({type: 'UPDATE_FEED', data: res.data}))
+    .catch(err => console.log(err));
 };
 
 export var postEvent = function(data) {
@@ -47,10 +47,8 @@ export var postEvent = function(data) {
     url: `${URL_CONFIG}/api/events/`,
     data: JSON.stringify(data)
   }).then(() => Actions.loading())
-  .catch(err => console.log('ERR', err));
+    .catch(err => console.log(err));
 };
-
-
 
 export var loginCtrl = function(data, dispatch) {
   return axios({
@@ -62,8 +60,15 @@ export var loginCtrl = function(data, dispatch) {
     },
     url: `${URL_CONFIG}/api/users/login`,
     data: JSON.stringify(data)
-  }).then(res => {
-    dispatch({type: 'LOGIN', id: res.data.id});
+  }).then(({data}) => {
+    dispatch({
+      type: 'LOGIN', 
+      id: data.id, 
+      name: {
+        firstName: data.first_name,
+        lastName: data.last_name
+      } 
+    });
     dispatch({type: 'CLEAR_LOGIN'});
     Actions.loading();
   }).catch(err => {
@@ -83,7 +88,8 @@ export var logoutCtrl = function(dispatch) {
   }).then(() => {
     dispatch({type: 'LOGOUT'});
     Actions.loading();
-  });
+  })
+    .catch(err => console.log(err));
 };
 
 export var signupCtrl = function(data, dispatch) {
@@ -95,8 +101,15 @@ export var signupCtrl = function(data, dispatch) {
     },
     url: `${URL_CONFIG}/api/users/signup`,
     data: data
-  }).then(res => {
-    dispatch({type: 'LOGIN', id: res.data.id});
+  }).then(({data}) => {
+    dispatch({
+      type: 'LOGIN', 
+      id: data.id, 
+      name: {
+        firstName: data.first_name,
+        lastName: data.last_name
+      } 
+    });
     dispatch({type: 'CLEAR_SIGNUP'});
     Actions.loading();
   }).catch(err => {
@@ -111,5 +124,9 @@ export var getUsers = function(dispatch) {
       dispatch({type: 'RECEIVE_USERS', users: res.data});
       Actions.groupForm();
     })
-    .catch(err => console.log('ERR', err));
+    .catch(err => console.log(err));
+};
+
+export var verifyLogin = function() {
+  return axios(`${URL_CONFIG}/api/users`);
 };

@@ -1,23 +1,29 @@
-import {AsyncStorage} from 'react-native';
+import { AsyncStorage } from 'react-native';
 
 
 
-export var auth = (state = {id: null}, action) => {
+export var auth = (state = {id: null, name: ''}, action) => {
   switch (action.type) {
   case 'LOGIN' :
     let store = JSON.stringify(action.id)
     AsyncStorage.setItem('AUTHENTICATION', store)
+    let name = JSON.stringify(action.name)
+    AsyncStorage.setItem('NAME', name)
     return {...state,
-      id: action.id
+      id: action.id,
+      name: action.name
     };
   case 'LOGOUT' :
     AsyncStorage.setItem('AUTHENTICATION', 'null')
+    AsyncStorage.setItem('NAME', '{}')
     return { ...state,  
       id: null,
+      name: ''
     };
-  case 'SET_ID' :
+  case 'SET_VALUES' :
     return {...state,
-      id: JSON.parse(action.id)
+      id: JSON.parse(action.id),
+      name: JSON.parse(action.name)
     };
 
   default:
@@ -28,6 +34,7 @@ export var auth = (state = {id: null}, action) => {
 
 export var login = (state = {username: null, pw: null, ID: null}, action) => {
   switch(action.type) {
+
   case 'PASSWORD' : 
     return {...state,
       pw: action.text
@@ -45,7 +52,7 @@ export var login = (state = {username: null, pw: null, ID: null}, action) => {
     return state;
   }
 }
-export var signup = (state = {firstName:null, lastName: null, userName:null, password:null, confirm: null}, action)=> {
+export var signup = (state = {firstName:'', lastName: '', userName:'', password:'', confirm: ''}, action)=> {
   switch(action.type) {
   case 'FIRST_NAME':
   return {...state,
@@ -67,11 +74,11 @@ export var signup = (state = {firstName:null, lastName: null, userName:null, pas
   }
   case 'CLEAR_SIGNUP' :
   return {
-    firstName: null,
-    lastName: null,
-    userName: null,
-    password: null,
-    confirm: null
+    firstName: '',
+    lastName: '',
+    userName: '',
+    password: '',
+    confirm: ''
   }
   case 'CONFIRM_PASSWORD':
   return {...state,

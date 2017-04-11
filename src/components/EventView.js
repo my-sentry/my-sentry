@@ -17,6 +17,8 @@ const styles = {
 };
 const mapStateToProps = ({events}) => { 
   return {
+    isPersonal: events.isPersonal,
+    active: events.active,
     name: events.id.name,
     begin: events.id.begin,
     end: events.id.end,
@@ -27,10 +29,9 @@ const mapStateToProps = ({events}) => {
 
 
 export default connect(mapStateToProps)(function EventView (state) {
-  const {active, isPersonal, name, begin, end, description, dispatch} = state;
+  const {active, isPersonal, name, begin, end, description} = state;
   return (
     <Container>
-
       <Header title={name}/>
         <Content>
           <Card>
@@ -57,7 +58,7 @@ export default connect(mapStateToProps)(function EventView (state) {
             </CardItem> 
           </Card>
         </Content>
-      {!active && !isPersonal ? (
+      {active && isPersonal ? (
       <Container>
       <Button block style={styles.button}>
       <Text>Safe</Text>

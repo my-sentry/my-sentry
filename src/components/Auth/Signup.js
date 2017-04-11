@@ -15,6 +15,11 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'flex-end',
   },
+  password: {
+    fontSize: 8, 
+    color: 'grey',
+    marginLeft: 8
+  }
 };
 
 const mapStateToProps = ({signup}) => {
@@ -28,6 +33,7 @@ const mapStateToProps = ({signup}) => {
 };
 
 export default connect(mapStateToProps)(function Login ({signup, dispatch}) {
+  const passwordRegex = /^(?=.*\d)([0-9a-zA-Z \W]{8,})$/g.test(signup.password);
   return (
    <Container >
       <Grid style={{flex: 1}}>
@@ -54,7 +60,14 @@ export default connect(mapStateToProps)(function Login ({signup, dispatch}) {
           <Input placeholder='Confirm Password' secureTextEntry={true} onChangeText={text => dispatch({type: 'CONFIRM_PASSWORD', text: text})}/>
           {signup.confirm === signup.password ? null : <Icon name='ios-close-circle' style={{color: 'red'}}/>}
         </Item>
+      {!passwordRegex && signup.password.length
+        ? <Text style={styles.password}
+        >password must be atleast 8 characters long and contain letters and numbers
+        </Text>
+        : null
+      }
       </Form>
+
     </Content>
       </Row>
       <Row style={{flex: 0}}>
@@ -71,7 +84,7 @@ export default connect(mapStateToProps)(function Login ({signup, dispatch}) {
           username: signup.username,
           password: signup.password
         };
-        signup.confirm === signup.password
+        signup.confirm === signup.password && passwordRegex
         ? signupCtrl(data, dispatch)
         : null;
       }}>

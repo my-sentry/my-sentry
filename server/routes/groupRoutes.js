@@ -3,7 +3,7 @@ var router = express.Router();
 var groups = require('../db/controllers/groupCtrl');
 var auth = require('../authHelper');
 
-router.get('/', (req, res, next) => {
+router.get('/', auth.isAuth, (req, res, next) => {
   groups.getGroups(req.user.username)
     .then(results => res.json(results))
     .catch(err => {

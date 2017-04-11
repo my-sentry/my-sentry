@@ -81,7 +81,7 @@ export default connect(mapStateToProps)(function EventForm ({form, groups, dispa
               </InputGroup>
             </Item>
             </Content>
-            <Button style={styles.button} onPress={() => postEvent(form)}>
+            <Button style={styles.button} onPress={() => postEvent(form).then(() => dispatch({type: 'RESET_DATE'}))}>
               <Text>Create Event</Text>
             </Button>
       
