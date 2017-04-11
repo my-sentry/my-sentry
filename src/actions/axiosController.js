@@ -15,26 +15,24 @@ export var postGroup = function(data) {
     url: `${URL_CONFIG}/api/groups`,
     data: JSON.stringify(data), 
   });
+  // .catch(({response}) => response.status == 401 ? Actions.login() : null);
+
 };
 
 export var getGroups = function(dispatch) {
   return axios(`${URL_CONFIG}/api/groups`)
-  .then(res => dispatch({type: 'UPDATE_GROUPS', data: res.data}))
-  .catch(err => console.log('ERR', err));
+  .then(res => dispatch({type: 'UPDATE_GROUPS', data: res.data}));
 };
 
 export var getGroupById = function(id, dispatch) {
   return axios(`${URL_CONFIG}/api/groups/${id}`)
-  .then(res => dispatch({type: 'RECEIVE_USERS', users: res.data.users}))
-  .catch(err => console.log('ERR', err));
-
+  .then(res => dispatch({type: 'RECEIVE_USERS', users: res.data.users}));
 };
 
 // EVENTS
 export var getEvents = function(dispatch) {
   return axios(`${URL_CONFIG}/api/events/`)
-  .then(res => dispatch({type: 'UPDATE_FEED', data: res.data}))
-  .catch(err => console.log('ERR', err));
+    .then(res => dispatch({type: 'UPDATE_FEED', data: res.data}));
 };
 
 export var postEvent = function(data) {
@@ -46,13 +44,11 @@ export var postEvent = function(data) {
     },
     url: `${URL_CONFIG}/api/events/`,
     data: JSON.stringify(data)
-  }).then(() => Actions.loading())
-  .catch(err => console.log('ERR', err));
+  }).then(() => Actions.loading());
 };
 
-
-
 export var loginCtrl = function(data, dispatch) {
+  console.log(data);
   return axios({
     method: 'post',
     credentials: 'include',
@@ -62,8 +58,15 @@ export var loginCtrl = function(data, dispatch) {
     },
     url: `${URL_CONFIG}/api/users/login`,
     data: JSON.stringify(data)
-  }).then(res => {
-    dispatch({type: 'LOGIN', id: res.data.id});
+  }).then(({data}) => {
+    dispatch({
+      type: 'LOGIN', 
+      id: data.id, 
+      name: {
+        firstName: data.first_name,
+        lastName: data.last_name
+      } 
+    });
     dispatch({type: 'CLEAR_LOGIN'});
     Actions.loading();
   }).catch(err => {
@@ -110,6 +113,5 @@ export var getUsers = function(dispatch) {
     .then(res => {
       dispatch({type: 'RECEIVE_USERS', users: res.data});
       Actions.groupForm();
-    })
-    .catch(err => console.log('ERR', err));
+    });
 };

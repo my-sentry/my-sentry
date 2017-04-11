@@ -54,9 +54,12 @@ export var dateReducer = (state = {date: new Date(), start: new Date(), end: new
     return {...state,
       end: endSet
     }  
+  case 'RESET_DATE': 
+    return { date: new Date(), start: new Date(), end: new Date }
   default:
   return state;
   }
+
 }
 
 export var eventForms = (state = {id: null, name: null, location: null, description: null}, action) => {

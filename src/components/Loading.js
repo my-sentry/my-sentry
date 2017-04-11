@@ -22,12 +22,25 @@ const styles = {
 };
 
 export default connect()(function Loading({dispatch}) {
-  AsyncStorage.getItem('AUTHENTICATION').then(res=> res !== 'null' 
-  ? getGroups(dispatch).then(getEvents(dispatch).then(()=> {
-    dispatch({type: 'SET_ID', id: res});
-    setTimeout(() =>Actions.menu());
-  }))
-  : Actions.login());
+  AsyncStorage.getItem('AUTHENTICATION')
+  .then(res=> res !== 'null' 
+  ? getGroups(dispatch)
+    .catch(({response}) => {
+      if (response.status === 401) {
+        dispatch({type: 'LOGOUT'});
+        Actions.login();
+      } else {
+        console.log(response);
+      }
+    })
+    .then(() => AsyncStorage.getItem('NAME')
+      .then(name => dispatch({type: 'SET_VALUES', id: res, name: name}))
+    )
+    .then(getEvents(dispatch)
+      .then(() => setTimeout(()=> Actions.menu()) ) 
+    )
+  : Actions.login()
+  );
   return (
   <Container style = {styles.centering} >
   <Content >

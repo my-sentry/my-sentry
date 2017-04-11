@@ -26,19 +26,17 @@ const styles = {
   }
 };
 
-/*  to remove the hacky settimeouts,
-this all has to be reformatted to THUNK. aka async redux promises
-it needs to do the actions asynchrounously, else the first function blocks.
-*/
-export default connect()(function SideMenu ({dispatch}) {
+
+
+// const mapStateToProps = ;
+
+export default connect(({auth}) => auth)(function SideMenu ({ name, dispatch }) {
   return (
     <Container>
-
       <Content>
-
         <Content style={styles.content}>
           <Icon name='user-circle' size={100} />
-          <Text style={styles.username}>user{'\n'}name</Text>
+          <Text style={styles.username}>{`${name.firstName}\n${name.lastName}`}</Text>
         </Content>
 
         <List style={styles.list}>
@@ -64,7 +62,7 @@ export default connect()(function SideMenu ({dispatch}) {
             Actions.dashboard();
           }}>
             <Icon name='calendar' size={20} style={{ color: '#2891ee' }}/>
-            <Text>    Events</Text>
+            <Text>   Events</Text>
           </ListItem>
         </List>
       </Content>

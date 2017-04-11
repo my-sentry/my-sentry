@@ -1,23 +1,29 @@
-import {AsyncStorage} from 'react-native';
+import { AsyncStorage } from 'react-native';
 
 
 
-export var auth = (state = {id: null}, action) => {
+export var auth = (state = {id: null, name: ''}, action) => {
   switch (action.type) {
   case 'LOGIN' :
     let store = JSON.stringify(action.id)
     AsyncStorage.setItem('AUTHENTICATION', store)
+    let name = JSON.stringify(action.name)
+    AsyncStorage.setItem('NAME', name)
     return {...state,
-      id: action.id
+      id: action.id,
+      name: action.name
     };
   case 'LOGOUT' :
     AsyncStorage.setItem('AUTHENTICATION', 'null')
+    AsyncStorage.setItem('NAME', '{}')
     return { ...state,  
       id: null,
+      name: ''
     };
-  case 'SET_ID' :
+  case 'SET_VALUES' :
     return {...state,
-      id: JSON.parse(action.id)
+      id: JSON.parse(action.id),
+      name: JSON.parse(action.name)
     };
 
   default:
@@ -28,6 +34,7 @@ export var auth = (state = {id: null}, action) => {
 
 export var login = (state = {username: null, pw: null, ID: null}, action) => {
   switch(action.type) {
+
   case 'PASSWORD' : 
     return {...state,
       pw: action.text
