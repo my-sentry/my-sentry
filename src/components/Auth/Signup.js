@@ -22,7 +22,7 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({signup, token}) => {
+const mapStateToProps = ({signup, popup, token}) => {
   return { signup: {
     firstName: signup.firstName,
     lastName: signup.lastName,
@@ -31,12 +31,13 @@ const mapStateToProps = ({signup, token}) => {
     confirm: signup.confirm,
     token: token
   },
-    disabled: signup.disabled
+    disabled: popup.disabled
   };
 };
 
 export default connect(mapStateToProps)(function Login ({signup, disabled, dispatch}) {
   const passwordRegex = /^(?=.*\d)([0-9a-zA-Z \W]{8,})$/g.test(signup.password);
+  console.log(disabled)
   return (
    <Container style={{backgroundColor: disabled ? '#cccccc' : '#ffffff'}}>
       <Grid style={{flex: 1}}>
