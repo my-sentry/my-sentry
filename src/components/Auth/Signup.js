@@ -29,16 +29,14 @@ const mapStateToProps = ({signup, popup, token}) => {
     password: signup.password,
     confirm: signup.confirm,
     token: token
-  },
-    disabled: popup.disabled
+  }
   };
 };
 
-export default connect(mapStateToProps)(function Login ({signup, disabled, dispatch}) {
+export default connect(mapStateToProps)(function Login ({signup, dispatch}) {
   const passwordRegex = /^(?=.*\d)([0-9a-zA-Z \W]{8,})$/g.test(signup.password);
-  console.log(disabled)
   return (
-   <Container style={{backgroundColor: disabled ? '#cccccc' : '#ffffff'}}>
+   <Container >
       <Grid style={{flex: 1}}>
       <Row >
     <Content>
@@ -75,12 +73,15 @@ export default connect(mapStateToProps)(function Login ({signup, disabled, dispa
       </Row>
       <Row style={{flex: 0}}>
         <Left>
-        <Button outline disabled={disabled} bordered onPress={Actions.login}>
+        <Button outline bordered 
+        onPress={() => {
+          Actions.login();
+        }}>
           <Icon name='arrow-back'/>
         </Button>
       </Left>
       <Right>
-      <Button block disabled={disabled} onPress={() => {
+      <Button block onPress={() => {
         let data = {
           firstName: signup.firstName,
           lastName: signup.lastName,
@@ -88,11 +89,14 @@ export default connect(mapStateToProps)(function Login ({signup, disabled, dispa
           password: signup.password,
           token: signup.token
         };
-        if (signup.confirm === signup.password && passwordRegex) {
+
+        if (signup.confirm === signup.password && passwordRegex && signup.username.length) {
           signupCtrl(data, dispatch);
         } else {
-          dispatch({type: 'TOGGLE_POPUP'});
-          Actions.signupError({error: data, hide: false});
+          var errorcode = signup.confirm !== signup.password ? 'Passwords don\'t match' : null;
+          errorcode = !passwordRegex ? 'Password is invalid' : errorcode;
+          errorcode = !signup.username.length ? 'Username is required' : errorcode;
+          Actions.signupError({error: errorcode, hide: false});
         }
       }}>
         <Text> Create Account</Text>
