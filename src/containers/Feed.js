@@ -11,6 +11,7 @@ import { getGroups } from '../actions/axiosController';
 import { Container, Title, Content, Button, Left, Right, List, ListItem, Body, Fab, Icon, H1, H2, H3 } from 'native-base';
 
 const mapStateToProps = ({feed, auth}) => ({feed, personal: auth.id });
+
 export default connect(mapStateToProps)(function Feed ({feed, personal, dispatch}) {
   return (
     <Container><Header /><Container>
@@ -28,7 +29,7 @@ export default connect(mapStateToProps)(function Feed ({feed, personal, dispatch
               active: activeCheck, 
               personal: personalCheck
             });
-            setTimeout(()=> Actions.eventView({title: item.name}));
+            setTimeout(()=> Actions.eventView({prev: 'dashboard', title: item.name}));
           }}>
         <Body>
           <Text>{item.name}</Text>

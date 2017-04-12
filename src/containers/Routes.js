@@ -28,7 +28,7 @@ const scenes = Actions.create(
     <Scene key="loading" hideNavBar initial={true} component={Loading} />
     
     <Scene key='menu' hideNavBar component={NavigationDrawer} open={false}>
-      <Scene key='dashboard' hideNavBar tabs={true} component={Dashboard} />
+      <Scene key='events' hideNavBar tabs={true} component={Dashboard} />
 
       <Scene key='groups' tabs={true} component={Groups} />
       <Scene key='groupForm' tabs={true} component={GroupForm} />
@@ -38,11 +38,13 @@ const scenes = Actions.create(
       <Scene key='eventForm' tabs={true} component={EventForm} />
       <Scene key='eventView' tabs={true} component={EventView} />
 
-      <Scene key='signup' component={Signup} />
-      <Scene key='login' tabs={true} component={Login} />
-  <Scene key='logout' duration={1} component={Logout} />
     </Scene>
+
+    <Scene key='signup' hideNavBar component={Signup} />
+    <Scene key='login' hideNavBar tabs={true} component={Login} />
+
   </Scene>
+  <Scene key='logout' duration={1} component={Logout} />
 
   <Scene key='signupError' component={SignupModal} />
 

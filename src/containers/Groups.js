@@ -13,8 +13,8 @@ const mapStateToProps = ({groups, auth}) => {
   return {
     groups: groups.groups,
     userId: auth.id
-  }
-}
+  };
+};
 export default connect(mapStateToProps)(function Groups ({groups, userId, dispatch}) {
   return (
       <Container>
@@ -30,9 +30,9 @@ export default connect(mapStateToProps)(function Groups ({groups, userId, dispat
                 .then(() => {
                   return getUsers(dispatch).then((res) => {
                     dispatch({type: 'RECEIVE_SEARCH_DATA', users: res.data});
-                    Actions.groupView({title: item.name});
-                  })
-                })
+                    Actions.groupView({ title: item.name });
+                  });
+                });
             }}>
                 <Body>
                   <Text>{item.name}</Text>

@@ -5,7 +5,7 @@ import {View, TouchableHighlight, Dimensions, BackAndroid} from 'react-native';
 import { Container, Title, Text, Content, Button, Body, List, ListItem, H1 } from 'native-base';
 
 
-export default connect()(class SignupModal extends Component { 
+export default class SignupModal extends Component { 
   constructor(props) {
     super(props);
     this.state = {
@@ -33,25 +33,23 @@ export default connect()(class SignupModal extends Component {
         <Button 
         transparent
         onPress={() => {
-          this.props.dispatch({type: 'TOGGLE_POPUP'});
           Actions.pop();
         }}
         style={{
           position: 'absolute',
           alignSelf: 'center',
-          top: height / 3,
-          height: 145,
-          width: 250,
+          height: height,
+          width: width,
           borderRadius: -1,
-          backgroundColor: 'rgba(240,240,240,0.95)',          
+          backgroundColor: 'rgba(155,55,55,0.6)',          
           justifyContent: 'center',
           borderWidth: .2,
           borderColor: 'black'
         }}>
-          <Text style={{alignSelf: 'center'}}>PLEASE ENTER VALID INFORMATION</Text>
+          <Text style={{alignSelf: 'center'}}>{this.state.message}</Text>
         </Button>
       );    
   }
-});
+};
 
 

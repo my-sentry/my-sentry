@@ -28,31 +28,26 @@ const styles = {
 
 
 
-const mapStateToProps = ({auth,popup}) => ({auth, popup})
+const mapStateToProps = ({auth}) => auth;
 
-export default connect(mapStateToProps)(function SideMenu ({ auth, popup, dispatch }) {
-  console.log(popup)
+export default connect(mapStateToProps)(function SideMenu ({ name, dispatch }) {
   return (
     <Container>
       <Content>
         <Content style={styles.content}>
           <Icon name='user-circle' size={100} />
-          <Text style={styles.username}>{`${auth.name.firstName}\n${auth.name.lastName}`}</Text>
+          <Text style={styles.username}>{`${name.firstName}\n${name.lastName}`}</Text>
         </Content>
 
         <List style={styles.list}>
-          <ListItem onPress={popup.disabled ? () => true : () => {
-            setTimeout(() => Actions.refresh({key: 'menu', open: value => !value }));
-
-            dispatch({type: 'TOGGLE_POPUP'})
-             Actions.logout({hide: false}) 
-            // logoutCtrl(dispatch);
+          <ListItem onPress={() => {
+            Actions.logout({hide: false});
           }}>
             <Icon name='arrow-left' size={20} style={{ color: '#EF4841' }}/>
             <Text>    Logout</Text>
           </ListItem>
 
-          <ListItem onPress={popup.disabled ? () => true  : () => {
+          <ListItem onPress={() => {
             setTimeout(() =>Actions.refresh({key: 'menu', open: value => !value }));
             getGroups(dispatch).then(()=> Actions.groups());
 
@@ -61,9 +56,9 @@ export default connect(mapStateToProps)(function SideMenu ({ auth, popup, dispat
             <Text>   Groups</Text>
           </ListItem>
 
-          <ListItem onPress={popup.disabled ? () => true  : () => {
+          <ListItem onPress={() => {
             setTimeout(() =>Actions.refresh({key: 'menu', open: value => !value }));
-            Actions.dashboard();
+            Actions.events();
           }}>
             <Icon name='calendar' size={20} style={{ color: '#2891ee' }}/>
             <Text>   Events</Text>

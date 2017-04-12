@@ -6,7 +6,7 @@ import { Container, Title, Text, Grid, Row, Form, Content, Button, Left, Right, 
 import { logoutCtrl } from '../../actions/axiosController';
 
 
-export default connect()(class SignupModal extends Component { 
+export default class SignupModal extends Component { 
   constructor(props) {
     super(props);
     this.state = {
@@ -36,38 +36,50 @@ export default connect()(class SignupModal extends Component {
       <Container style={{
         position: 'absolute',
         alignSelf: 'center',
-        top: height / 3,
-        height: 105,
-        width: 250,
+        height: height,
+        width: width,
         opacity: .8,
-        backgroundColor: 'rgba(155,155,155,0.8)',          
+        backgroundColor: 'rgba(155,55,55,0.5)',          
         borderStyle: 'solid',
         borderColor: '#cccccc',
         borderWidth: 1,
       }}>
+    <Container style={{
+      position: 'absolute',
+      alignSelf: 'center',
+      top: height / 3,
+      height: 150,
+      width: 200,
+      backgroundColor: 'rgb(155,155,155)',          
+      borderStyle: 'solid',
+      borderColor: '#cccccc',
+      borderWidth: 1,
+    }}>
     <Grid style={{flex: 1}}>
     <Row >
-    <Text> Are you sure</Text>
+    <Text style={{alignSelf: 'center'}}> Are you sure you want to logout?</Text>
     </Row>
     <Row style={{flex: 0}}>
     <Left>
       <Button block bordered 
       onPress={() =>{
-        this.dismissModal()
+        this.dismissModal();
+        Actions.pop();
       }} ><Text> NO</Text></Button>
     </Left>
     <Right>
       <Button block onPress={()=> {
-        this.dismissModal()
-        logoutCtrl(this.props.dispatch)
+        this.dismissModal();
+        logoutCtrl(this.props.dispatch);
       }}><Text> Yes </Text>
       </Button>
     </Right>
     </Row>
   </Grid>
   </Container>
+  </Container>
   );    
   }
-});
+}
 
 

@@ -47,7 +47,7 @@ router.post('/', auth.isAuth, (req, res, next) => {
     req.body.description
   ).then(id => {
     client.sendEvent({ id: id, end: req.body.end });
-    res.status(201).json(result);
+    res.status(201).json(id);
   })
   .catch(err => {
     console.log(err);

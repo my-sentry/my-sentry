@@ -38,7 +38,7 @@ export default connect()(function Loading({dispatch}) {
         .then(name => dispatch({type: 'SET_VALUES', id: id, name: name}))
       )
       .then(getEvents(dispatch)
-        .then(() => setTimeout(()=> Actions.menu()) ) 
+        .then(() => setTimeout(()=> Actions.menu({title: 'events'})) ) 
       )
     )
   : Actions.login()

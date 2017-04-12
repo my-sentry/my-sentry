@@ -125,18 +125,20 @@ export var signupCtrl = function(data, dispatch) {
     });
     dispatch({type: 'CLEAR_SIGNUP'});
     Actions.loading();
-  }).catch(err => {
-    dispatch({type: 'CLEAR_SIGNUP'});
-    alert('invalid submission');
+  }).catch(({response}) => {
+    dispatch({type: 'TOGGLE_POPUP'});
+    Actions.signupError({
+      error: response.status === 401 
+      ? 'Username is already in use\nplease choose a different username'
+      : 'Unknown error please try again!',
+      hide: false});
+
   });
 };
 
-export var getUsers = function(dispatch) {
+export var getUsers = function() {
   return axios(`${URL_CONFIG}/api/users`)
-    .then(res => {
-      return res;
-    })
-    .catch(err => console.log(err));
+  .catch(err => console.log(err));
 };
 
 export var verifyLogin = function() {
