@@ -62,40 +62,46 @@ export default connect(mapStateToProps)(function EventForm ({form, groups, dispa
           <Label>Location</Label>
           <Input onChangeText={text => dispatch({type: 'LOCATION', text: text})}/>
         </Item>
-        
-        <Item>
-          <InputGroup>
-            <Datepicker />
-          </InputGroup>
-        </Item>
 
-        <Item>
-          <InputGroup>
+        {form.location.length > 0
+          ? (
+            <Text>Something Here</Text>
+          ) : (
+            <Container>
+              <Item>
+                <InputGroup>
+                  <Datepicker />
+                </InputGroup>
+              </Item>
 
-            <Icon name="ios-alarm"/>
-            <TimePicker type={'START'} />
+              <Item>
+                <InputGroup>
 
-            <Icon name="ios-alarm"/>
-            <TimePicker type={'END'} />
+                  <Icon name="ios-alarm"/>
+                  <TimePicker type={'START'} />
 
-          </InputGroup>
-        </Item>
+                  <Icon name="ios-alarm"/>
+                  <TimePicker type={'END'} />
 
-        <Picker
-          mode='dropdown'
-          style={{width: 300}}
-          iosHeader="Select one"
-          selectedValue={form.groupId}
-          onValueChange={id => dispatch({type: 'CURRENT_GROUP', id: id})}
-        >{grouplist}</Picker>
+                </InputGroup>
+              </Item>
 
-        <Item stackedLabel>
-          <Label>Event Description</Label>
-          <InputGroup regular>
-            <Input onChangeText={text => dispatch({type: 'EVENT_DESC', text: text})}/>
-          </InputGroup>
-        </Item>
+              <Picker
+                mode='dropdown'
+                style={{width: 300}}
+                iosHeader="Select one"
+                selectedValue={form.groupId}
+                onValueChange={id => dispatch({type: 'CURRENT_GROUP', id: id})}
+              >{grouplist}</Picker>
 
+              <Item stackedLabel>
+                <Label>Event Description</Label>
+                <InputGroup regular>
+                  <Input onChangeText={text => dispatch({type: 'EVENT_DESC', text: text})}/>
+                </InputGroup>
+              </Item>
+            </Container>
+          )}
       </Content>
 
       <Button style={styles.button} onPress={() => postEvent(form).then(() => dispatch({type: 'RESET_DATE'}))}>
