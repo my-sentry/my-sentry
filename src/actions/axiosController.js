@@ -30,18 +30,35 @@ export var getGroupById = function(id, dispatch) {
 
 };
 
-export var removeUserFromGroup = function(groupId, userId) {
+//Pass true in the third argument to add a user to the group
+//Pass false to remove a user from a group
+export var addOrRemoveUser = function(groupId, userId, add) {
+  var url = add ? `${URL_CONFIG}/api/groups/${groupId}` : `${URL_CONFIG}/api/groups/${groupId}?delete=true`;
+
   return axios({
     method: 'put',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    url: `${URL_CONFIG}/api/groups/${groupId}?delete=true`,
+    url: url,
     data: JSON.stringify({userId: userId})
   })
   .catch(err => console.log(err));
 };
+
+// export var removeUserFromGroup = function(groupId, userId) {
+//   return axios({
+//     method: 'put',
+//     headers: {
+//       'Accept': 'application/json',
+//       'Content-Type': 'application/json'
+//     },
+//     url: `${URL_CONFIG}/api/groups/${groupId}?delete=true`,
+//     data: JSON.stringify({userId: userId})
+//   })
+//   .catch(err => console.log(err));
+// };
 
 // EVENTS
 export var getEvents = function(dispatch) {

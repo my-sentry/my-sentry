@@ -41,7 +41,7 @@ const searchBar = (state = {users: [], results: []}, action) => {
   case 'SEARCH_NAME' :
     var searchResults = [];
 
-    function search(text) {
+    var search = function (text) {
       if (text === '' || text === ' ') {
         searchResults = [];
       } else {
@@ -49,7 +49,7 @@ const searchBar = (state = {users: [], results: []}, action) => {
           return user.username.toLowerCase().includes(text.toLowerCase());
         });
       }
-    }
+    };
 
     search(action.text);
 
@@ -61,6 +61,17 @@ const searchBar = (state = {users: [], results: []}, action) => {
       users: action.users
     };
   default :
+    return state;
+  }
+};
+
+const popup = (state = {disabled: false}, action) => {
+  switch (action.type) {
+  case 'TOGGLE_POPUP' :
+    return {...state,
+      disabled: !state.disabled
+    };
+  default:
     return state;
   }
 };

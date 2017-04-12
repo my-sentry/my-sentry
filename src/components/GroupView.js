@@ -3,7 +3,7 @@ import { Text, View} from 'react-native';
 import { connect } from 'react-redux';
 import Header from './Header';
 import { Container, Item, Input, Title, List, ListItem, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, Card, CardItem, Image } from 'native-base';
-import { removeUserFromGroup } from '../actions/axiosController';
+import { addOrRemoveUser } from '../actions/axiosController';
 
 const styles = {
   text: {
@@ -48,7 +48,7 @@ export default connect(mapStateToProps)(function GroupView ({id, users, isAdmin,
             </Body>
               <Right>
                 <Button small bordered danger onPress={() => {
-                  removeUserFromGroup(id, item.id);
+                  addOrRemoveUser(id, item.id, false);
                   dispatch({type: 'REMOVE_MEMBER', id: item.id});
                 }}>
                   <Icon name='ios-trash-outline' style={{color: 'red'}} />
@@ -62,7 +62,7 @@ export default connect(mapStateToProps)(function GroupView ({id, users, isAdmin,
           <Input onChangeText={text => dispatch({type: 'SEARCH_NAME', text: text})} placeholder='Add a Member'/>
           <List dataArray={searchResults}
             renderRow={user =>
-              <ListItem onPress={() => dispatch({type: 'ADD_MEMBER', id: user.id})}>
+              <ListItem onPress={() => dispatch({type: 'ADD_A_MEMBER', id: user.id})}>
                 <Text>{user.username}</Text>
               </ListItem>
             }>

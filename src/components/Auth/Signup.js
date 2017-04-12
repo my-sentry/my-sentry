@@ -15,7 +15,7 @@ const styles = {
     justifyContent: 'flex-end',
   },
   password: {
-    fontSize: 8, 
+    fontSize: 8,
     color: 'grey',
     marginLeft: 8
   }
