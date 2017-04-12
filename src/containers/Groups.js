@@ -30,7 +30,7 @@ export default connect(mapStateToProps)(function Groups ({groups, userId, dispat
                 .then(() => {
                   return getUsers(dispatch).then((res) => {
                     dispatch({type: 'RECEIVE_SEARCH_DATA', users: res.data});
-                    Actions.groupView({title: ['GROUPS', item.name]});
+                    Actions.groupView({ title: item.name });
                   });
                 });
             }}>

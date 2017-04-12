@@ -28,7 +28,7 @@ const scenes = Actions.create(
     <Scene key="loading" hideNavBar initial={true} component={Loading} />
     
     <Scene key='menu' hideNavBar component={NavigationDrawer} open={false}>
-      <Scene key='dashboard' hideNavBar tabs={true} component={Dashboard} />
+      <Scene key='events' hideNavBar tabs={true} component={Dashboard} />
 
       <Scene key='groups' tabs={true} component={Groups} />
       <Scene key='groupForm' tabs={true} component={GroupForm} />

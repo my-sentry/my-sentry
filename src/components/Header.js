@@ -19,18 +19,16 @@ const styles = {
 };
 
 
-const mapStateToProps = ({header}) => ({title: header.title});
+const mapStateToProps = ({header}) => ({prev: header.prev, title: header.title});
 
 // this has to be called MyHeader instead of Header because i am importing Header
 
-export default connect(mapStateToProps)(function MyHeader ({title}) { 
-  console.log(title);
-
+export default connect(mapStateToProps)(function MyHeader ({prev, title}) { 
   return (
     <Header style={styles.header} > 
     <Left> 
-    {title !== 'EVENTS' ? (
-      <Button style={styles.menu} onPress={()=> Actions.dashboard()}>
+    {title !== 'events' ? (
+      <Button style={styles.menu} onPress={()=> Actions[prev]()}>
         <Icon 
           name='arrow-back' 
           style={styles.menu}          
@@ -41,7 +39,7 @@ export default connect(mapStateToProps)(function MyHeader ({title}) {
     </Left>
 
       <Body style={styles.body}>
-        <Text>{title[1]}</Text>
+        <Text>{title}</Text>
       </Body>      
          
     <Right>

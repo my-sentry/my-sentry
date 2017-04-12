@@ -15,19 +15,21 @@ export var routerReducer = (params) => {
   };
 };
 // changes name of header when scene changes
-const header = (state = {title: ['EVENTS', '']}, action) => {
+const header = (state = {title: 'events', prev: null}, action) => {
   switch (action.type) {
   case ActionConst.JUMP :
     return { ...state,
-      title: action.title ? action.title : action.key.toUpperCase()
+      title: action.title ? action.title : action.key,
+      prev: action.prev ? action.prev : null
     };
   case ActionConst.PUSH :
     return { ...state,
-      title: action.title ? action.title : action.key.toUpperCase()
+      title: action.title ? action.title : action.key,
+      prev: action.key === 'groups' ? 'events' : state.title
     };
   case ActionConst.BACK_ACTION :
     return {...state,
-      title: state.title[0]
+      title: state.prev,
     };
   default:
     return state;
