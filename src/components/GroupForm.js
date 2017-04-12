@@ -6,16 +6,17 @@ import Header from './Header';
 import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, List, ListItem, InputGroup, Picker, Label, Item, Input, Form, style} from 'native-base';
 import {postGroup, getGroups } from '../actions/axiosController';
 
-const mapStateToProps = ({groups, auth}) => {
+const mapStateToProps = ({groups, auth, searchBar}) => {
   return {
     userId: auth.id,
     groupName: groups.groupName,
     users: groups.users,
-    members: groups.members
+    members: groups.members,
+    searchResults: searchBar.results
   };
 };
 
-export default connect(mapStateToProps)(function GroupForm ({users, userId, members, groupName, dispatch}) {
+export default connect(mapStateToProps)(function GroupForm ({users, userId, members, groupName, searchResults, dispatch}) {
   return (
     <Container>
 
@@ -29,20 +30,16 @@ export default connect(mapStateToProps)(function GroupForm ({users, userId, memb
           </Item>
         </Form>
 
-        <Form>
-            <Item>
-              <Input placeholder='Search Users'/>
-            </Item>
-        </Form>
-
-        <List dataArray={users}
-          renderRow={user =>
-            <ListItem key={user.id} 
-            onPress={() => dispatch({type: 'ADD_MEMBER', id: user.id}) }>
-              <Text>{`${user.first_name} ${user.last_name}`}</Text>
-            </ListItem>
-          }>
-        </List>
+        <Item>
+          <Input onChangeText={text => dispatch({type: 'SEARCH_NAME', text: text})} placeholder='Add a Member'/>
+          <List dataArray={searchResults}
+            renderRow={user =>
+              <ListItem onPress={() => dispatch({type: 'ADD_MEMBER', id: user.id})}>
+                <Text>{user.username}</Text>
+              </ListItem>
+            }>
+          </List>
+        </Item>
 
       </Content>
 
