@@ -23,10 +23,16 @@ export default connect(mapStateToProps)(function Groups ({groups, userId, dispat
        <List dataArray={groups}
         renderRow={item =>
             <ListItem onPress={() => {
-              getGroupById(item.id, dispatch).then(() => {
-                dispatch({type: 'CURRENT_GROUP', id: {...item, userId: userId}});
-                Actions.groupView({title: item.name});
-              })
+              getGroupById(item.id, dispatch)
+                .then(() => {
+                  dispatch({type: 'CURRENT_GROUP', id: {...item, userId: userId}});
+                })
+                .then(() => {
+                  return getUsers(dispatch).then((res) => {
+                    dispatch({type: 'RECEIVE_SEARCH_DATA', users: res.data});
+                    Actions.groupView({title: item.name});
+                  })
+                })
             }}>
                 <Body>
                   <Text>{item.name}</Text>
@@ -38,7 +44,12 @@ export default connect(mapStateToProps)(function Groups ({groups, userId, dispat
       </Container>
       <ActionButton
           buttonColor='rgba(231,76,60,1)'
-          onPress={() => getUsers(dispatch) }/>
+          onPress={() =>
+            getUsers(dispatch)
+              .then((res) => {
+                dispatch({type: 'RECEIVE_USERS', users: res.data});
+              })
+              .then(() => Actions.groupForm()) }/>
       </Container>
   );
 });
