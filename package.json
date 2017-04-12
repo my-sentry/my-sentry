@@ -16,7 +16,6 @@
     "body-parser": "^1.17.1",
     "chai": "^3.5.0",
     "enzyme": "^2.8.0",
-    "eslint-config-hackreactor": "github:reactorcore/eslint-config-hackreactor",
     "express": "^4.15.2",
     "express-session": "^1.15.2",
     "knex": "^0.12.9",
@@ -44,8 +43,11 @@
     "sinon": "^2.1.0"
   },
   "devDependencies": {
+    "babel-eslint": "^7.2.2",
     "babel-jest": "19.0.0",
     "babel-preset-react-native": "1.9.1",
+    "eslint": "^3.19.0",
+    "eslint-plugin-react": "^6.10.3",
     "jest": "19.0.2",
     "nodemon": "^1.11.0",
     "react-test-renderer": "15.4.2"
