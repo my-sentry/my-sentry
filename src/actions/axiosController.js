@@ -134,9 +134,7 @@ export var signupCtrl = function(data, dispatch) {
 export var getUsers = function(dispatch) {
   return axios(`${URL_CONFIG}/api/users`)
     .then(res => {
-      dispatch({type: 'RECEIVE_USERS', users: res.data});
-      dispatch({type: 'RECEIVE_SEARCH_DATA', users: res.data});
-      Actions.groupForm();
+      return res;
     })
     .catch(err => console.log(err));
 };
