@@ -8,6 +8,7 @@ import GroupForm from '../components/GroupForm';
 import GroupView from '../components/GroupView';
 import EventForm from '../components/EventForm';
 import EventView from '../components/EventView';
+import LocationSearch from '../components/LocationSearch';
 import Login from '../components/Auth/Login';
 import Signup from '../components/Auth/Signup';
 import Loading from '../components/Loading';
@@ -26,7 +27,7 @@ const scenes = Actions.create(
   <Scene key='root' tabs={true} hideNavBar >
 
     <Scene key="loading" hideNavBar initial={true} component={Loading} />
-    
+
     <Scene key='menu' hideNavBar component={NavigationDrawer} open={false}>
       <Scene key='events' hideNavBar tabs={true} component={Dashboard} />
 
@@ -36,6 +37,7 @@ const scenes = Actions.create(
 
       <Scene key='feed' tabs={true} component={Feed}/>
       <Scene key='eventForm' tabs={true} component={EventForm} />
+      <Scene key='locationSearch' tabs={true} component={LocationSearch} />
       <Scene key='eventView' tabs={true} component={EventView} />
 
     </Scene>

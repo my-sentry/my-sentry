@@ -58,50 +58,58 @@ export default connect(mapStateToProps)(function EventForm ({form, groups, dispa
           <Input onChangeText={text => dispatch({type: 'EVENT_NAME', text: text})}/>
         </Item>
 
-        <Item stackedLabel>
+        {/* <Item stackedLabel>
           <Label>Location</Label>
           <Input onChangeText={text => dispatch({type: 'LOCATION', text: text})}/>
+        </Item> */}
+
+        <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}>
+          <View style={{ flexDirection: 'row' }}>
+
+            <Text style={{ flex: 0.8 }}>Location: {form.location}</Text>
+
+            <View style={{ flex: 0.2 }}>
+              <Button info onPress={() => Actions.locationSearch()}>
+                <Text>Search</Text>
+              </Button>
+            </View>
+
+          </View>
+        </View>
+
+        <Item>
+          <InputGroup>
+            <Datepicker />
+          </InputGroup>
         </Item>
 
-        {form.location.length > 0
-          ? (
-            <Text>Something Here</Text>
-          ) : (
-            <Container>
-              <Item>
-                <InputGroup>
-                  <Datepicker />
-                </InputGroup>
-              </Item>
+        <Item>
+          <InputGroup>
 
-              <Item>
-                <InputGroup>
+            <Icon name="ios-alarm"/>
+            <TimePicker type={'START'} />
 
-                  <Icon name="ios-alarm"/>
-                  <TimePicker type={'START'} />
+            <Icon name="ios-alarm"/>
+            <TimePicker type={'END'} />
 
-                  <Icon name="ios-alarm"/>
-                  <TimePicker type={'END'} />
+          </InputGroup>
+        </Item>
 
-                </InputGroup>
-              </Item>
+        <Picker
+          mode='dropdown'
+          style={{width: 300}}
+          iosHeader="Select one"
+          selectedValue={form.groupId}
+          onValueChange={id => dispatch({type: 'CURRENT_GROUP', id: id})}
+        >{grouplist}</Picker>
 
-              <Picker
-                mode='dropdown'
-                style={{width: 300}}
-                iosHeader="Select one"
-                selectedValue={form.groupId}
-                onValueChange={id => dispatch({type: 'CURRENT_GROUP', id: id})}
-              >{grouplist}</Picker>
+        <Item stackedLabel>
+          <Label>Event Description</Label>
+          <InputGroup regular>
+            <Input onChangeText={text => dispatch({type: 'EVENT_DESC', text: text})}/>
+          </InputGroup>
+        </Item>
 
-              <Item stackedLabel>
-                <Label>Event Description</Label>
-                <InputGroup regular>
-                  <Input onChangeText={text => dispatch({type: 'EVENT_DESC', text: text})}/>
-                </InputGroup>
-              </Item>
-            </Container>
-          )}
       </Content>
 
       <Button style={styles.button} onPress={() => postEvent(form).then(() => dispatch({type: 'RESET_DATE'}))}>

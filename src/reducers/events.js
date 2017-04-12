@@ -1,8 +1,8 @@
 export var feed = (state = {}, action) => {
   switch (action.type) {
-  case 'UPDATE_FEED': 
+  case 'UPDATE_FEED':
     return {...state,
-      data: [...action.data].sort((a, b) => 
+      data: [...action.data].sort((a, b) =>
       new Date(a.begin).getTime() - new Date(b.begin).getTime())
     };
   case 'ADD_ITEM':
@@ -12,7 +12,7 @@ export var feed = (state = {}, action) => {
   case 'REMOVE_ITEM':
     return {...state,
     };
-  default: 
+  default:
     return state;
   }
 };
@@ -53,7 +53,7 @@ export var dateReducer = (state = {date: new Date(), start: new Date(), end: new
     return {...state,
       end: endSet
     };
-  case 'RESET_DATE': 
+  case 'RESET_DATE':
     return { date: new Date(), start: new Date(), end: new Date };
   default:
     return state;
@@ -61,9 +61,9 @@ export var dateReducer = (state = {date: new Date(), start: new Date(), end: new
 
 };
 
-export var eventForms = (state = {id: null, name: null, location: null, description: null}, action) => {
+export var eventForms = (state = {id: null, name: '', location: '', description: ''}, action) => {
   switch (action.type) {
-  case 'EVENT_NAME': 
+  case 'EVENT_NAME':
     return {...state,
       name: action.text,
     };
@@ -72,7 +72,7 @@ export var eventForms = (state = {id: null, name: null, location: null, descript
       location: action.text,
     };
   case 'EVENT_DESC' :
-    return {...state, 
+    return {...state,
       description: action.text,
     };
   default:
