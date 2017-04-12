@@ -15,7 +15,7 @@ ipc.serve(() => {
 
   ipc.server.on('event', (data, socket) => {
     var event = JSON.parse(data);
-    createTimers(event).then(ids => {
+    createTimers(event.id, event.end).then(ids => {
       console.log('Created timers: ', ids);
     });
   });

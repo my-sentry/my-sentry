@@ -1,6 +1,6 @@
 var timers = require('../../server/db/controllers/timersCtrl');
 var { sendNotification } = require('./fcmClient');
-var { WARNING_10, WARING_2, DANGER } = require('./constants');
+var { WARNING_10, WARNING_2, DANGER } = require('./constants');
 
 module.exports = function (timer) {
 
@@ -10,7 +10,7 @@ module.exports = function (timer) {
     sendNotification(timer.token, 'Ten Minute Warning', 'Mark yourself safe soon.');
     break;
 
-  case WARNIG_2:
+  case WARNING_2:
     sendNotification(timer.token, 'Two Minute Warning', 'Mark yourself safe soon.');
     break;
 

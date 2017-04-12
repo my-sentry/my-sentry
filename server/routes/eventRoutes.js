@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 var events = require('../db/controllers/eventCtrl');
 var auth = require('../authHelper');
+var client = require('../../timer/client');
+
+client.initialize();
 
 //Get all events
 router.get('/', auth.isAuth, (req, res, next) => {
@@ -42,7 +45,10 @@ router.post('/', auth.isAuth, (req, res, next) => {
     req.body.lat,
     req.body.long,
     req.body.description
-  ).then(result => res.status(201).json(result))
+  ).then(id => {
+    client.sendEvent({ id: id, end: req.body.end });
+    res.status(201).json(result);
+  })
   .catch(err => {
     console.log(err);
     next(err);
