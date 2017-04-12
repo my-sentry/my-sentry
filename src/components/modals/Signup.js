@@ -12,7 +12,6 @@ export default connect()(class SignupModal extends Component {
       message: props.error,
       hide: props.hide,
     };
-    // bind functions
     this.dismissModal = this.dismissModal.bind(this);
   }
   componentWillMount() {
@@ -23,7 +22,6 @@ export default connect()(class SignupModal extends Component {
     this.setState({hide: true});
   }
 
-  // show or hide Modal based on 'hide' prop
   render() {
     var {height, width} = Dimensions.get('window');
     return this.state.hide
@@ -35,22 +33,20 @@ export default connect()(class SignupModal extends Component {
         <Button 
         transparent
         onPress={() => {
-          this.props.dispatch({type: 'TOGGLE_BUTTON'});
+          this.props.dispatch({type: 'TOGGLE_POPUP'});
           Actions.pop();
         }}
         style={{
           position: 'absolute',
           alignSelf: 'center',
           top: height / 3,
-          height: 225,
+          height: 145,
           width: 250,
-          borderRadius: 10,
-          opacity: .8,
-          backgroundColor: 'rgba(155,155,155,0.8)',          
+          borderRadius: -1,
+          backgroundColor: 'rgba(240,240,240,0.95)',          
           justifyContent: 'center',
-          borderStyle: 'solid',
-          borderColor: '#cccccc',
-          borderWidth: 1,
+          borderWidth: .2,
+          borderColor: 'black'
         }}>
           <Text style={{alignSelf: 'center'}}>PLEASE ENTER VALID INFORMATION</Text>
         </Button>

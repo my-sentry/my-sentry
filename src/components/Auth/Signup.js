@@ -35,10 +35,10 @@ const mapStateToProps = ({signup, token}) => {
   };
 };
 
-export default connect(mapStateToProps)(function Login ({signup,disabled, dispatch}) {
+export default connect(mapStateToProps)(function Login ({signup, disabled, dispatch}) {
   const passwordRegex = /^(?=.*\d)([0-9a-zA-Z \W]{8,})$/g.test(signup.password);
   return (
-   <Container >
+   <Container style={{backgroundColor: disabled ? '#cccccc' : '#ffffff'}}>
       <Grid style={{flex: 1}}>
       <Row >
     <Content>
@@ -91,7 +91,7 @@ export default connect(mapStateToProps)(function Login ({signup,disabled, dispat
         if (signup.confirm === signup.password && passwordRegex) {
           signupCtrl(data, dispatch);
         } else {
-          dispatch({type: 'TOGGLE_BUTTON'});
+          dispatch({type: 'TOGGLE_POPUP'});
           Actions.signupError({error: data, hide: false});
         }
       }}>

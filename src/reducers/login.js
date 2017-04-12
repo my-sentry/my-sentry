@@ -51,7 +51,7 @@ export var login = (state = {username: null, pw: null, ID: null}, action) => {
     return state;
   }
 }
-export var signup = (state = {firstName:'', lastName: '', userName:'', password:'', confirm: '',disabled: false}, action)=> {
+export var signup = (state = {firstName:'', lastName: '', userName:'', password:'', confirm: ''}, action)=> {
   switch(action.type) {
   case 'FIRST_NAME':
   return {...state,
@@ -83,10 +83,7 @@ export var signup = (state = {firstName:'', lastName: '', userName:'', password:
   return {...state,
     confirm: action.text
   }
-  case 'TOGGLE_BUTTON' :
-  return {...state,
-    disabled: !state.disabled
-  }
+
   default:
     return state;
   }

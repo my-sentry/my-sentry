@@ -90,7 +90,7 @@ export default connect(({auth}) => auth)(class PushController extends Component 
   }
 
   render() {
-    return <Routes />;
+    return <Routes style={{backgroundColor: '#cccccc'}} />;
   }
 
 });
