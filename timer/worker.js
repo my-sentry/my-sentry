@@ -10,6 +10,7 @@ var getMillisecondsToEnd = function(end) {
 };
 
 var startTimer = function(timer) {
+  console.log('Timer: ', timer);
   var callback = notify.bind(null, timer);
   var ms = getMillisecondsToEnd(timer.time);
   activeTimers[timer.id] = setTimeout(callback, ms);
