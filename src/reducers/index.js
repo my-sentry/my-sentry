@@ -64,16 +64,6 @@ const searchBar = (state = {users: [], results: []}, action) => {
     return state;
   }
 };
-// const popup = (state = {disabled: false}, action) => {
-//   switch (action.type) {
-//   case 'TOGGLE_POPUP' :  
-//     return {...state,
-//       disabled: !state.disabled
-//     };
-//   default:
-//     return state;
-//   }
-// };
 
 const groups = (state = {id: null, groups: [], users: [], groupName: null, members: []}, action) => {
   switch (action.type) {
@@ -139,6 +129,5 @@ export default combineReducers({
   token,
   feed,
   eventForms,
-  // popup,
   // more reducers
 });
