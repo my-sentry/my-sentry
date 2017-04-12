@@ -47,19 +47,6 @@ export var addOrRemoveUser = function(groupId, userId, add) {
   .catch(err => console.log(err));
 };
 
-// export var removeUserFromGroup = function(groupId, userId) {
-//   return axios({
-//     method: 'put',
-//     headers: {
-//       'Accept': 'application/json',
-//       'Content-Type': 'application/json'
-//     },
-//     url: `${URL_CONFIG}/api/groups/${groupId}?delete=true`,
-//     data: JSON.stringify({userId: userId})
-//   })
-//   .catch(err => console.log(err));
-// };
-
 // EVENTS
 export var getEvents = function(dispatch) {
   return axios(`${URL_CONFIG}/api/events/`)

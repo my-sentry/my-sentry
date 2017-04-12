@@ -12,11 +12,12 @@ const mapStateToProps = ({groups, auth, searchBar}) => {
     groupName: groups.groupName,
     users: groups.users,
     members: groups.members,
-    searchResults: searchBar.results
+    searchResults: searchBar.results,
+    tempList: []
   };
 };
 
-export default connect(mapStateToProps)(function GroupForm ({users, userId, members, groupName, searchResults, dispatch}) {
+export default connect(mapStateToProps)(function GroupForm ({users, userId, members, groupName, searchResults, tempList, dispatch}) {
   return (
     <Container>
 
@@ -31,10 +32,22 @@ export default connect(mapStateToProps)(function GroupForm ({users, userId, memb
         </Form>
 
         <Item>
+          <List dataArray={tempList}
+            renderRow={user =>
+              <ListItem>
+                <Text>{user}</Text>
+              </ListItem>
+            }>
+          </List>
+        </Item>
+
+        <Item>
           <Input onChangeText={text => dispatch({type: 'SEARCH_NAME', text: text})} placeholder='Add a Member'/>
           <List dataArray={searchResults}
             renderRow={user =>
-              <ListItem onPress={() => dispatch({type: 'ADD_MEMBER', id: user.id})}>
+              <ListItem onPress={() => {
+                dispatch({type: 'ADD_MEMBER', id: user.id});
+              }}>
                 <Text>{user.username}</Text>
               </ListItem>
             }>
@@ -45,12 +58,16 @@ export default connect(mapStateToProps)(function GroupForm ({users, userId, memb
 
       <Button
         style={{ alignSelf: 'center', marginTop: 20, marginBottom: 20 }}
-        onPress={()=> {
+        onPress={() => {
           let data = {
             name: groupName,
             members: [...members, userId ]
           };
-          postGroup(data).then(data => getGroups(dispatch).then(() => Actions.groups()));
+          postGroup(data)
+            .then(data => {
+              getGroups(dispatch);
+              Actions.groups();
+            });
         }}>
         <Text>Create Group</Text>
       </Button>

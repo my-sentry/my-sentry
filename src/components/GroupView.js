@@ -62,7 +62,7 @@ export default connect(mapStateToProps)(function GroupView ({id, users, isAdmin,
           <Input onChangeText={text => dispatch({type: 'SEARCH_NAME', text: text})} placeholder='Add a Member'/>
           <List dataArray={searchResults}
             renderRow={user =>
-              <ListItem onPress={() => dispatch({type: 'ADD_A_MEMBER', id: user.id})}>
+              <ListItem onPress={() => addOrRemoveUser(id, user.id, true)}>
                 <Text>{user.username}</Text>
               </ListItem>
             }>

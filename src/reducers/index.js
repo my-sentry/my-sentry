@@ -56,6 +56,8 @@ const searchBar = (state = {users: [], results: []}, action) => {
     return {...state,
       results: searchResults
     };
+  case 'ADD_TO_MEMBERS' :
+    addOrRemoveUser(action.groupId, action.userId, true);
   case 'RECEIVE_SEARCH_DATA' :
     return {...state,
       users: action.users
