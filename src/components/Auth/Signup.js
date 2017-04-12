@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Actions} from 'react-native-router-flux';
-import Header from './authHeader';
 import { connect } from 'react-redux';
 import { Container, Title, Content, Label, Form, Button, Item, Text, Icon, Left, Right, Body, Input, H1, Grid, Row } from 'native-base';
 import { signupCtrl } from '../../actions/axiosController';
@@ -19,7 +18,7 @@ const styles = {
     fontSize: 8, 
     color: 'grey',
     marginLeft: 8
-  }
+  };
 };
 
 const mapStateToProps = ({signup, popup, token}) => {
