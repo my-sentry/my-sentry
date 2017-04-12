@@ -28,7 +28,7 @@ export default connect(mapStateToProps)(function Feed ({feed, personal, dispatch
               active: activeCheck, 
               personal: personalCheck
             });
-            setTimeout(()=> Actions.eventView({title: item.name}));
+            setTimeout(()=> Actions.eventView({title: ['EVENTS', item.name]}));
           }}>
         <Body>
           <Text>{item.name}</Text>

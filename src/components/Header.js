@@ -24,10 +24,12 @@ const mapStateToProps = ({header}) => ({title: header.title});
 // this has to be called MyHeader instead of Header because i am importing Header
 
 export default connect(mapStateToProps)(function MyHeader ({title}) { 
+  console.log(title);
+
   return (
     <Header style={styles.header} > 
     <Left> 
-    {title !== 'DASHBOARD' ? (
+    {title !== 'EVENTS' ? (
       <Button style={styles.menu} onPress={()=> Actions.dashboard()}>
         <Icon 
           name='arrow-back' 
@@ -39,7 +41,7 @@ export default connect(mapStateToProps)(function MyHeader ({title}) {
     </Left>
 
       <Body style={styles.body}>
-        <Text>{title}</Text>
+        <Text>{title[1]}</Text>
       </Body>      
          
     <Right>

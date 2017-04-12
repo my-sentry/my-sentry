@@ -18,7 +18,7 @@ const styles = {
     fontSize: 8, 
     color: 'grey',
     marginLeft: 8
-  };
+  }
 };
 
 const mapStateToProps = ({signup, popup, token}) => {
