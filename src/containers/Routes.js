@@ -12,6 +12,8 @@ import Login from '../components/Auth/Login';
 import Signup from '../components/Auth/Signup';
 import Loading from '../components/Loading';
 import Datepicker from '../components/Datepicker';
+import SignupModal from '../components/modals/Signup';
+import Logout from '../components/modals/Logout';
 
 import { connect } from 'react-redux';
 
@@ -24,6 +26,7 @@ const scenes = Actions.create(
   <Scene key='root' tabs={true} hideNavBar >
 
     <Scene key="loading" hideNavBar initial={true} component={Loading} />
+    
     <Scene key='menu' hideNavBar component={NavigationDrawer} open={false}>
       <Scene key='dashboard' hideNavBar tabs={true} component={Dashboard} />
 
@@ -37,8 +40,12 @@ const scenes = Actions.create(
 
       <Scene key='signup' component={Signup} />
       <Scene key='login' tabs={true} component={Login} />
+  <Scene key='logout' duration={1} component={Logout} />
     </Scene>
   </Scene>
+
+  <Scene key='signupError' component={SignupModal} />
+
   </Scene>
 );
 

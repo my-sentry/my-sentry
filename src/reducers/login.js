@@ -83,9 +83,11 @@ export var signup = (state = {firstName:'', lastName: '', userName:'', password:
   return {...state,
     confirm: action.text
   }
+
   default:
     return state;
   }
+
 }
 
 export var token = (state = "", action) => {

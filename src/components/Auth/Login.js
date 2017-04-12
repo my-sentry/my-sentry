@@ -49,7 +49,7 @@ export default connect(mapStateToProps)(function Login ({form, dispatch}) {
     </Row>
     <Row style={{flex: 0}}>
     <Left>
-      <Button block outline bordered onPress={Actions.signup} ><Text> SIGNUP</Text></Button></Left>
+      <Button block bordered onPress={Actions.signup} ><Text> SIGNUP</Text></Button></Left>
       <Right>
       <Button block onPress={()=> loginCtrl(form, dispatch)}><Text> LOGIN </Text>
       </Button></Right>

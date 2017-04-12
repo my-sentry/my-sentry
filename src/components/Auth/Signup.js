@@ -22,7 +22,7 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({signup, token}) => {
+const mapStateToProps = ({signup, popup, token}) => {
   return { signup: {
     firstName: signup.firstName,
     lastName: signup.lastName,
@@ -30,13 +30,16 @@ const mapStateToProps = ({signup, token}) => {
     password: signup.password,
     confirm: signup.confirm,
     token: token
-  }};
+  },
+    disabled: popup.disabled
+  };
 };
 
-export default connect(mapStateToProps)(function Login ({signup, dispatch}) {
+export default connect(mapStateToProps)(function Login ({signup, disabled, dispatch}) {
   const passwordRegex = /^(?=.*\d)([0-9a-zA-Z \W]{8,})$/g.test(signup.password);
+  console.log(disabled)
   return (
-   <Container >
+   <Container style={{backgroundColor: disabled ? '#cccccc' : '#ffffff'}}>
       <Grid style={{flex: 1}}>
       <Row >
     <Content>
@@ -73,12 +76,12 @@ export default connect(mapStateToProps)(function Login ({signup, dispatch}) {
       </Row>
       <Row style={{flex: 0}}>
         <Left>
-        <Button outline bordered onPress={Actions.login}>
+        <Button outline disabled={disabled} bordered onPress={Actions.login}>
           <Icon name='arrow-back'/>
         </Button>
       </Left>
       <Right>
-      <Button block onPress={() => {
+      <Button block disabled={disabled} onPress={() => {
         let data = {
           firstName: signup.firstName,
           lastName: signup.lastName,
@@ -86,9 +89,12 @@ export default connect(mapStateToProps)(function Login ({signup, dispatch}) {
           password: signup.password,
           token: signup.token
         };
-        signup.confirm === signup.password && passwordRegex
-        ? signupCtrl(data, dispatch)
-        : null;
+        if (signup.confirm === signup.password && passwordRegex) {
+          signupCtrl(data, dispatch);
+        } else {
+          dispatch({type: 'TOGGLE_POPUP'});
+          Actions.signupError({error: data, hide: false});
+        }
       }}>
         <Text> Create Account</Text>
       </Button>
