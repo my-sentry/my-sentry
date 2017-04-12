@@ -13,9 +13,15 @@ export default connect()(function LocationSearch() {
 
       <Content>
         <Form>
+
           <Item>
-            <Input placeholder="Search Locations"/>
+            <Input placeholder="Search Locations" onChangeText={text => null}/>
           </Item>
+
+          <List dataArray={['List 1', 'List 2', 'List 3']} renderRow={loc => (
+            <ListItem><Text>{loc}</Text></ListItem>
+          )}></List>
+
         </Form>
       </Content>
 
