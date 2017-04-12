@@ -6,7 +6,7 @@ import { Container, Title, Text, Grid, Row, Form, Content, Button, Left, Right, 
 import { logoutCtrl } from '../../actions/axiosController';
 
 
-export default connect()(class SignupModal extends Component { 
+export default class SignupModal extends Component { 
   constructor(props) {
     super(props);
     this.state = {
@@ -80,6 +80,6 @@ export default connect()(class SignupModal extends Component {
   </Container>
   );    
   }
-});
+}
 
 

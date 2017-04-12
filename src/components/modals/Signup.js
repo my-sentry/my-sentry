@@ -5,7 +5,7 @@ import {View, TouchableHighlight, Dimensions, BackAndroid} from 'react-native';
 import { Container, Title, Text, Content, Button, Body, List, ListItem, H1 } from 'native-base';
 
 
-export default connect()(class SignupModal extends Component { 
+export default class SignupModal extends Component { 
   constructor(props) {
     super(props);
     this.state = {
@@ -50,6 +50,6 @@ export default connect()(class SignupModal extends Component {
         </Button>
       );    
   }
-});
+};
 
 
