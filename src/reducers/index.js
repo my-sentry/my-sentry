@@ -67,17 +67,6 @@ const searchBar = (state = {users: [], results: []}, action) => {
   }
 };
 
-const popup = (state = {disabled: false}, action) => {
-  switch (action.type) {
-  case 'TOGGLE_POPUP' :
-    return {...state,
-      disabled: !state.disabled
-    };
-  default:
-    return state;
-  }
-};
-
 const groups = (state = {id: null, groups: [], users: [], groupName: null, members: []}, action) => {
   switch (action.type) {
   case 'CURRENT_GROUP':
