@@ -4,11 +4,11 @@ import {Actions, ActionConst} from 'react-native-router-flux';
 import {View, TouchableHighlight, Dimensions, BackAndroid} from 'react-native';
 import { Container, Title, Text, Grid, Row, Form, Content, Button, Left, Right, Body, List, ListItem, H1 } from 'native-base';
 import { logoutCtrl } from '../../actions/axiosController';
-import { removeUserFromGroup } from '../../actions/axiosController';
+import { removeUserFromGroup, getGroupById } from '../../actions/axiosController';
 
 
 
-export default class SignupModal extends Component { 
+export default connect()(class SignupModal extends Component { 
   constructor(props) {
     super(props);
     this.state = {
@@ -66,13 +66,15 @@ export default class SignupModal extends Component {
       <Button block bordered 
       onPress={() =>{
         this.dismissModal();
-        Actions.pop();
+        Actions.pop({title: groupName});
       }} ><Text> NO</Text></Button>
     </Left>
     <Right>
       <Button block onPress={()=> {
         this.dismissModal();
-        removeUserFromGroup(groupId, userId).then(() => Actions.pop());
+        removeUserFromGroup(groupId, userId)
+        .then(getGroupById(groupId, this.props.dispatch)
+          .then(() => Actions.pop({title: groupName})));
       }}><Text> Yes </Text>
       </Button>
     </Right>
@@ -82,6 +84,6 @@ export default class SignupModal extends Component {
   </Container>
   );    
   }
-}
+});
 
 

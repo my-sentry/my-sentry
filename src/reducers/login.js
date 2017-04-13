@@ -72,10 +72,7 @@ export var signup = (state = {firstName: '', lastName: '', userName: '', passwor
 
     };
   case 'CLEAR_SIGNUP' :
-    return {
-      firstName: '',
-      lastName: '',
-      userName: '',
+    return {...state,
       password: '',
       confirm: ''
     };

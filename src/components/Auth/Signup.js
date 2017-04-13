@@ -21,7 +21,7 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({signup, popup, token}) => {
+const mapStateToProps = ({signup, token}) => {
   return { signup: {
     firstName: signup.firstName,
     lastName: signup.lastName,
@@ -33,77 +33,104 @@ const mapStateToProps = ({signup, popup, token}) => {
   };
 };
 
-export default connect(mapStateToProps)(function Login ({signup, dispatch}) {
-  const passwordRegex = /^(?=.*\d)([0-9a-zA-Z \W]{8,})$/g.test(signup.password);
-  return (
-   <Container >
-      <Grid style={{flex: 1}}>
-      <Row >
-    <Content>
-      <Form >
-        <Item >
-          <Input placeholder='First Name' onChangeText={text => dispatch({type: 'FIRST_NAME', text: text})}/>
-        </Item>
+export default connect(mapStateToProps)(class Login extends Component {
+  render() {
+    const {dispatch, signup } = this.props;
+    const passwordRegex = /^(?=.*\d)([0-9a-zA-Z \W]{8,})$/g.test(signup.password);
+    
+    return (
+     <Container >
+        <Grid style={{flex: 1}}>
+        <Row >
+      <Content>
+        <Form >
+          <Item >
+            <Input 
+            placeholder='First Name' 
+            value={signup.firstName} 
+            onChangeText={text => dispatch({type: 'FIRST_NAME', text: text})}/>
+          </Item>
 
-        <Item >
-          <Input placeholder='Last Name' onChangeText={text => dispatch({type: 'LAST_NAME', text: text})}/>
-        </Item>
+          <Item >
+            <Input 
+            placeholder='Last Name' 
+            value={signup.lastName} 
+            onChangeText={text => dispatch({type: 'LAST_NAME', text: text})}/>
+          </Item>
 
-        <Item >
-          <Input placeholder='Username' onChangeText={text => dispatch({type: 'USERNAME_SIGNUP', text: text})}/>
-        </Item>
+          <Item >
+            <Input placeholder='Username' 
+            value={signup.username} 
+            onChangeText={text => dispatch({type: 'USERNAME_SIGNUP', text: text})}/>
+          </Item>
 
-        <Item >
-          <Input placeholder='Password' secureTextEntry={true} onChangeText={text => dispatch({type: 'PASSWORD_SIGNUP', text: text})}/>
-        </Item>
+          <Item >
+            <Input 
+            placeholder='Password' 
+            value={signup.password} 
+            secureTextEntry={true} 
+            onChangeText={text => dispatch({type: 'PASSWORD_SIGNUP', text: text})}/>
+          </Item>
 
-        <Item last >
-          <Input placeholder='Confirm Password' secureTextEntry={true} onChangeText={text => dispatch({type: 'CONFIRM_PASSWORD', text: text})}/>
-          {signup.confirm === signup.password ? null : <Icon name='ios-close-circle' style={{color: 'red'}}/>}
-        </Item>
-      {!passwordRegex && signup.password.length
-        ? <Text style={styles.password}
-        >password must be atleast 8 characters long and contain letters and numbers
-        </Text>
-        : null
-      }
-      </Form>
+          <Item last >
+            <Input 
+            placeholder='Confirm Password' 
+            value={signup.confirm} 
+            secureTextEntry={true} 
+            onChangeText={text => dispatch({type: 'CONFIRM_PASSWORD', text: text})}/>
 
-    </Content>
-      </Row>
-      <Row style={{flex: 0}}>
-        <Left>
-        <Button outline bordered 
-        onPress={() => {
-          Actions.login();
-        }}>
-          <Icon name='arrow-back'/>
-        </Button>
-      </Left>
-      <Right>
-      <Button block onPress={() => {
-        let data = {
-          firstName: signup.firstName,
-          lastName: signup.lastName,
-          username: signup.username,
-          password: signup.password,
-          token: signup.token
-        };
-
-        if (signup.confirm === signup.password && passwordRegex && signup.username.length) {
-          signupCtrl(data, dispatch);
-        } else {
-          var errorcode = signup.confirm !== signup.password ? 'Passwords don\'t match' : null;
-          errorcode = !passwordRegex ? 'Password is invalid' : errorcode;
-          errorcode = !signup.username.length ? 'Username is required' : errorcode;
-          Actions.signupError({error: errorcode, hide: false});
+            {signup.confirm === signup.password ? null : <Icon name='ios-close-circle' style={{color: 'red'}}/>}
+          </Item>
+        {!passwordRegex && signup.password.length
+          ? <Text style={styles.password}
+          >password must be atleast 8 characters long and contain letters and numbers
+          </Text>
+          : null
         }
-      }}>
-        <Text> Create Account</Text>
-      </Button>
-      </Right>
-    </Row>
-    </Grid>
-  </Container>
-  );
+        </Form>
+
+      </Content>
+        </Row>
+        <Row style={{flex: 0}}>
+          <Left>
+          <Button outline bordered 
+          onPress={() => {
+            dispatch({type: 'CLEAR_SIGNUP'});
+            Actions.login();
+          }}>
+            <Icon name='arrow-back'/>
+          </Button>
+        </Left>
+        <Right>
+        <Button block onPress={() => {
+          let data = {
+            firstName: signup.firstName,
+            lastName: signup.lastName,
+            username: signup.username,
+            password: signup.password,
+            token: signup.token
+          };
+
+          if (signup.confirm === signup.password && passwordRegex && signup.username.length) {
+            signupCtrl(data, dispatch);
+          } else {
+            var errorcode = signup.confirm !== signup.password ? 'Passwords don\'t match' : null;
+            errorcode = !passwordRegex ? 'Password is invalid' : errorcode;
+            errorcode = !signup.username.length ? 'Username is required' : errorcode;
+            Actions.errorModal({
+              source: 'signup',
+              dispatch: dispatch,
+              error: errorcode, 
+              hide: false
+            });
+          }
+        }}>
+          <Text> Create Account</Text>
+        </Button>
+        </Right>
+      </Row>
+      </Grid>
+    </Container>
+    );
+  }
 });

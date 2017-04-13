@@ -22,30 +22,27 @@ const styles = {
 
 const mapStateToProps = ({groups}) => groups;
 
-export default connect(mapStateToProps)(class Dashboard extends Component {
-  render() {
-    const groups = this.props.groups;
-    return (
-      <Container>
-      {groups.length > 0 
-        ? <Feed />
-        : (
-        <Content>
-          <Header />
-          <Container style={styles.container}>
-          <H1>No Groups</H1>
-          <Button block primary onPress={() => getUsers()
-            .then(res => this.props.dispatch({type: 'RECEIVE_USERS', users: res.data}))
-            .then(() =>Actions.groupForm()) } >
-            <Text>Create Group</Text>
-          </Button>
-          </Container>
-        </Content>
-          )
-      }
-      </Container>
-    );
-  }
+export default connect(mapStateToProps)(function Dashboard({dispatch, groups}) {
+  return (
+    <Container>
+    {groups.length > 0 
+      ? <Feed />
+      : (
+      <Content>
+        <Header />
+        <Container style={styles.container}>
+        <H1>No Groups</H1>
+        <Button block primary onPress={() => getUsers()
+          .then(res => dispatch({type: 'RECEIVE_USERS', users: res.data}))
+          .then(() =>Actions.groupForm()) } >
+          <Text>Create Group</Text>
+        </Button>
+        </Container>
+      </Content>
+        )
+    }
+    </Container>
+  );
 });
 
 
