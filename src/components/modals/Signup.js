@@ -15,7 +15,10 @@ export default class SignupModal extends Component {
     this.dismissModal = this.dismissModal.bind(this);
   }
   componentWillMount() {
-    BackAndroid.addEventListener('hardwareBackPress', () => true );
+    BackAndroid.addEventListener('hardwareBackPress', () => {
+      this.dismissModal();
+      Actions.pop();
+    });
   }
 
   dismissModal() {
@@ -50,6 +53,6 @@ export default class SignupModal extends Component {
         </Button>
       );    
   }
-};
+}
 
 
