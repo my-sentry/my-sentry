@@ -24,7 +24,12 @@ const header = (state = {title: 'events', prev: null}, action) => {
     };
   case ActionConst.PUSH :
     switch (action.key) {
-    case 'groups' :
+    // case 'eventForm' :
+    //   return {...state,
+    //     title: action.title ? action.title : action.key,
+    //     prev: 'events'
+    //   };
+    case 'groups' || 'eventForm' :
       return { ...state,
         title: action.title ? action.title : action.key,
         prev: 'events'
