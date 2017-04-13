@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import URL_CONFIG from '../../config/config';
+import { URL_CONFIG, PLACES_API_KEY } from '../../config/config';
 import {Actions} from 'react-native-router-flux';
 
 
@@ -163,6 +163,36 @@ export var updateUserToken = function(id, token) {
   })
   .catch(err => {
     console.log(`There was a problem updating the token for user ${id}`);
+    console.log(err);
+  });
+};
+
+export var getPlaces = function(input) {
+  return axios({
+    method: 'GET',
+    url: 'https://maps.googleapis.com/maps/api/place/autocomplete/json',
+    params: {
+      key: PLACES_API_KEY,
+      input: encodeURIComponent(input)
+    }
+  })
+  .catch(err => {
+    console.log('There was an error accessing the Google Places API');
+    console.log(err);
+  });
+};
+
+export var getPlaceDetails = function(placeId) {
+  return axios({
+    method: 'GET',
+    url: 'https://maps.googleapis.com/maps/api/place/details/json',
+    params: {
+      key: PLACES_API_KEY,
+      placeid: placeId
+    }
+  })
+  .catch(err => {
+    console.log('There was an error accessing the Google Places API');
     console.log(err);
   });
 };

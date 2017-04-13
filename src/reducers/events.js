@@ -79,3 +79,18 @@ export var eventForms = (state = {id: null, name: '', location: '', description:
     return state;
   }
 };
+
+export var searchLocation = (state = { input: '', predictions: [] }, action) => {
+  switch (action.type) {
+  case 'UPDATE_LOC_INPUT':
+    return { ...state,
+      input: action.input
+    };
+  case 'UPDATE_LOC_PREDICTIONS':
+    return { ...state,
+      predictions: action.predictions
+    };
+  default:
+    return state;
+  }
+};
