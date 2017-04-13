@@ -12,32 +12,34 @@ import { Container, Title, Content, List, ListItem, Footer, FooterTab, Button, L
 const mapStateToProps = ({groups, auth}) => {
   return {
     groups: groups.groups,
+    isAdmin: groups.id.admin_user === Number(groups.id.userId),
     userId: auth.id
   };
 };
-export default connect(mapStateToProps)(function Groups ({groups, userId, dispatch}) {
+export default connect(mapStateToProps)(function Groups ({groups, userId, isAdmin, dispatch}) {
   return (
       <Container>
       <Header />
       <Container>
        <List dataArray={groups}
-        renderRow={item =>
+        renderRow={group =>
             <ListItem onPress={() => {
-              getGroupById(item.id, dispatch)
+              getGroupById(group.id, dispatch)
                 .then(() => {
-                  dispatch({type: 'CURRENT_GROUP', id: {...item, userId: userId}});
+                  dispatch({type: 'CURRENT_GROUP', id: {...group, userId: userId}});
                 })
                 .then(() => {
                   return getUsers(dispatch).then((res) => {
                     dispatch({type: 'RECEIVE_SEARCH_DATA', users: res.data});
-                    Actions.groupView({ title: item.name });
+                    Actions.groupView({ title: group.name });
                   });
                 });
             }}>
-                <Body>
-                  <Text>{item.name}</Text>
-                  <Text>{item.description}</Text>
-                </Body>
+
+              <Body>
+                <Text>{group.name}</Text>
+              </Body>
+
             </ListItem>
         }>
       </List>

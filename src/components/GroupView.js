@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Header from './Header';
 import {Actions} from 'react-native-router-flux';
 import { Container, Item, Input, Title, List, ListItem, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, Card, CardItem, Image } from 'native-base';
-import { addOrRemoveUser } from '../actions/axiosController';
+import { addUser, removeUser, deleteGroup, getGroups } from '../actions/axiosController';
 
 const styles = {
   text: {
@@ -43,15 +43,15 @@ export default connect(mapStateToProps)(function GroupView ({id, groupName, user
       <Container>
 
         <List dataArray={users}
-          renderRow={item =>
+          renderRow={user =>
             <ListItem>
             <Body>
-              <Text>{item.username}</Text>
+              <Text>{user.username}</Text>
             </Body>
               <Right>
                 <Button small bordered danger onPress={() => {
-                  addOrRemoveUser(id, item.id, false);
-                  dispatch({type: 'REMOVE_MEMBER', id: item.id});
+                  removeUser(id, [user.id], false);
+                  dispatch({type: 'REMOVE_MEMBER', id: user.id});
                 }}>
                   <Icon name='ios-trash-outline' style={{color: 'red'}} />
                 </Button>
@@ -64,12 +64,27 @@ export default connect(mapStateToProps)(function GroupView ({id, groupName, user
           <Input onChangeText={text => dispatch({type: 'SEARCH_NAME', text: text})} placeholder='Add a Member'/>
           <List dataArray={searchResults}
             renderRow={user =>
-              <ListItem onPress={() => addOrRemoveUser(id, user.id, true)}>
+              <ListItem onPress={() => addUser(id, user.id)}>
                 <Text>{user.username}</Text>
               </ListItem>
             }>
           </List>
         </Item>
+
+        <Button
+          style={{ alignSelf: 'center', marginTop: 20, marginBottom: 20, backgroundColor: '#EF4841' }}
+          onPress={() => {
+            removeUser(id, users)
+              .then(() => {
+                return deleteGroup(id)
+                  .then(() => {
+                    return getGroups(dispatch)
+                      .then(() => Actions.groups());
+                  });
+              });
+          }}>
+          <Text>Delete Group</Text>
+        </Button>
 
       </Container>
     </Container>
@@ -89,9 +104,3 @@ export default connect(mapStateToProps)(function GroupView ({id, groupName, user
     </Container>
   );
 });
-
-
-/////////Button
-// <Button style={styles.addButton} onPress={() => dispatch({type: 'TOGGLE_SEARCH'})}>
-//   <Text>Add Member</Text>
-// </Button>
