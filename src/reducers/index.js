@@ -41,7 +41,7 @@ const searchBar = (state = {users: [], results: []}, action) => {
   case 'SEARCH_NAME' :
     var searchResults = [];
 
-    function search(text) {
+    var search = function (text) {
       if (text === '' || text === ' ') {
         searchResults = [];
       } else {
@@ -49,13 +49,15 @@ const searchBar = (state = {users: [], results: []}, action) => {
           return user.username.toLowerCase().includes(text.toLowerCase());
         });
       }
-    }
+    };
 
     search(action.text);
 
     return {...state,
       results: searchResults
     };
+  case 'ADD_TO_MEMBERS' :
+    addOrRemoveUser(action.groupId, action.userId, true);
   case 'RECEIVE_SEARCH_DATA' :
     return {...state,
       users: action.users

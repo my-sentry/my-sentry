@@ -7,7 +7,8 @@ module.exports = {
     ecmaVersion: 7,
     ecmaFeatures: {
       'jsx': true
-    }
+    },
+    codeFrame: false
   },
   rules: {
     /* Indentation */

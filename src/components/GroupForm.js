@@ -6,16 +6,18 @@ import Header from './Header';
 import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, List, ListItem, InputGroup, Picker, Label, Item, Input, Form, style} from 'native-base';
 import {postGroup, getGroups } from '../actions/axiosController';
 
-const mapStateToProps = ({groups, auth}) => {
+const mapStateToProps = ({groups, auth, searchBar}) => {
   return {
     userId: auth.id,
     groupName: groups.groupName,
     users: groups.users,
-    members: groups.members
+    members: groups.members,
+    searchResults: searchBar.results,
+    tempList: []
   };
 };
 
-export default connect(mapStateToProps)(function GroupForm ({users, userId, members, groupName, dispatch}) {
+export default connect(mapStateToProps)(function GroupForm ({users, userId, members, groupName, searchResults, tempList, dispatch}) {
   return (
     <Container>
 
@@ -29,31 +31,43 @@ export default connect(mapStateToProps)(function GroupForm ({users, userId, memb
           </Item>
         </Form>
 
-        <Form>
-            <Item>
-              <Input placeholder='Search Users'/>
-            </Item>
-        </Form>
+        <Item>
+          <List dataArray={tempList}
+            renderRow={user =>
+              <ListItem>
+                <Text>{user}</Text>
+              </ListItem>
+            }>
+          </List>
+        </Item>
 
-        <List dataArray={users}
-          renderRow={user =>
-            <ListItem key={user.id} 
-            onPress={() => dispatch({type: 'ADD_MEMBER', id: user.id}) }>
-              <Text>{`${user.first_name} ${user.last_name}`}</Text>
-            </ListItem>
-          }>
-        </List>
+        <Item>
+          <Input onChangeText={text => dispatch({type: 'SEARCH_NAME', text: text})} placeholder='Add a Member'/>
+          <List dataArray={searchResults}
+            renderRow={user =>
+              <ListItem onPress={() => {
+                dispatch({type: 'ADD_MEMBER', id: user.id});
+              }}>
+                <Text>{user.username}</Text>
+              </ListItem>
+            }>
+          </List>
+        </Item>
 
       </Content>
 
       <Button
         style={{ alignSelf: 'center', marginTop: 20, marginBottom: 20 }}
-        onPress={()=> {
+        onPress={() => {
           let data = {
             name: groupName,
             members: [...members, userId ]
           };
-          postGroup(data).then(data => getGroups(dispatch).then(() => Actions.groups()));
+          postGroup(data)
+            .then(data => {
+              getGroups(dispatch)
+                .then(() => Actions.groups());
+            });
         }}>
         <Text>Create Group</Text>
       </Button>

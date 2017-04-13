@@ -45,9 +45,10 @@ export default connect(mapStateToProps)(function Groups ({groups, userId, dispat
       <ActionButton
           buttonColor='rgba(231,76,60,1)'
           onPress={() =>
-            getUsers(dispatch)
+            getUsers()
               .then((res) => {
                 dispatch({type: 'RECEIVE_USERS', users: res.data});
+                dispatch({type: 'RECEIVE_SEARCH_DATA', users: res.data});
               })
               .then(() => Actions.groupForm()) }/>
       </Container>
