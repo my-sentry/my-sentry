@@ -23,8 +23,9 @@ const mapStateToProps = ({eventForms, dateReducer, groups}) => {
       begin: dateReducer.start,
       end: dateReducer.end,
       description: eventForms.description,
-      lat: 123456,
-      long: 78910,
+      lat: eventForms.lat,
+      long: eventForms.long,
+      place_id: eventForms.place_id,
       groupId: groups.id
     },
     groups: groups.groups
@@ -57,11 +58,6 @@ export default connect(mapStateToProps)(function EventForm ({form, groups, dispa
           <Label>Event Name</Label>
           <Input onChangeText={text => dispatch({type: 'EVENT_NAME', text: text})}/>
         </Item>
-
-        {/* <Item stackedLabel>
-          <Label>Location</Label>
-          <Input onChangeText={text => dispatch({type: 'LOCATION', text: text})}/>
-        </Item> */}
 
         <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}>
           <View style={{ flexDirection: 'row' }}>

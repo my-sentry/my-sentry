@@ -2,9 +2,9 @@ var express = require('express');
 var router = express.Router();
 var events = require('../db/controllers/eventCtrl');
 var auth = require('../authHelper');
-var client = require('../../timer/client');
+var timerService = require('../../timer/client');
 
-client.initialize();
+timerService.initialize();
 
 //Get all events
 router.get('/', auth.isAuth, (req, res, next) => {
@@ -36,18 +36,12 @@ router.get('/:id', auth.isAuth, (req, res, next) => {
 });
 
 router.post('/', auth.isAuth, (req, res, next) => {
-  events.createEvent(
-    req.user.id,
-    req.body.groupId,
-    req.body.name,
-    req.body.begin,
-    req.body.end,
-    req.body.lat,
-    req.body.long,
-    req.body.description
-  ).then(id => {
-    client.sendEvent({ id: id, end: req.body.end });
-    res.status(201).json(id);
+
+  events.createEvent(req.user.id, req.body)
+  .then(id => {
+    // trigger creation of timers
+    timerService.sendEvent({ id: id, end: req.body.end });
+    res.status(201).json(result);
   })
   .catch(err => {
     console.log(err);
@@ -56,15 +50,8 @@ router.post('/', auth.isAuth, (req, res, next) => {
 });
 
 router.put('/:id', (req, res, next) => {
-  events.updateEventById(
-    req.params.id,
-    req.body.name,
-    req.body.begin,
-    req.body.end,
-    req.body.lat,
-    req.body.long,
-    req.body.description
-  ).then(result => res.json(result))
+  events.updateEventById(req.params.id, req.body)
+  .then(result => res.json(result))
   .catch(err => {
     console.log(err);
     next(err);

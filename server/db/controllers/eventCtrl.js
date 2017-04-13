@@ -1,17 +1,19 @@
 var knex = require('../db.js');
 
 // create event
-exports.createEvent = function (userId, groupId, name, begin, end, lat, long, description) {
+exports.createEvent = function (userId, event) {
   return knex('events')
     .insert({
       'user_id': userId,
-      'group_id': groupId,
-      'name': name,
-      'begin': begin,
-      'end': end,
-      'lat': lat,
-      'long': long,
-      'description': description
+      'group_id': event.groupId,
+      'name': event.name,
+      'begin': event.begin,
+      'end': event.end,
+      'lat': event.lat,
+      'long': event.long,
+      'description': event.description,
+      'place_id': event.place_id,
+      'place_name': event.location
     })
     .then(result => result[0]);
 };
@@ -58,16 +60,18 @@ exports.getUserEvents = function (username) {
 };
 
 // update event
-exports.updateEventById = function (id, name, begin, end, lat, long, description) {
+exports.updateEventById = function (id, event) {
   return knex('events')
     .where('id', id)
     .update({
-      'name': name,
-      'begin': begin,
-      'end': end,
-      'lat': lat,
-      'long': long,
-      'description': description
+      'name': event.name,
+      'begin': event.begin,
+      'end': event.end,
+      'lat': event.lat,
+      'long': event.long,
+      'description': event.description,
+      'place_id': event.place_id,
+      'place_name': event.location
     });
 };
 

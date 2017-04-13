@@ -61,15 +61,28 @@ export var dateReducer = (state = {date: new Date(), start: new Date(), end: new
 
 };
 
-export var eventForms = (state = {id: null, name: '', location: '', description: ''}, action) => {
+var defaultForm = {
+  id: null,
+  name: '',
+  location: '',
+  description: '',
+  lat: null,
+  long: null,
+  place_id: null
+};
+
+export var eventForms = (state = defaultForm, action) => {
   switch (action.type) {
   case 'EVENT_NAME':
     return {...state,
       name: action.text,
     };
-  case 'LOCATION':
+  case 'ADD_LOCATION':
     return {...state,
-      location: action.text,
+      location: action.location,
+      lat: action.lat,
+      long: action.long,
+      place_id: action.place_id
     };
   case 'EVENT_DESC' :
     return {...state,
@@ -90,6 +103,8 @@ export var searchLocation = (state = { input: '', predictions: [] }, action) => 
     return { ...state,
       predictions: action.predictions
     };
+  case 'CLEAR_LOC':
+    return { input: '', predictions: [] };
   default:
     return state;
   }
