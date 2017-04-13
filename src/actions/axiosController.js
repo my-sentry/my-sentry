@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import { URL_CONFIG, PLACES_API_KEY } from '../../config/config';
+import {URL_CONFIG, PLACES_API_KEY} from '../../config/config.js';
 import {Actions} from 'react-native-router-flux';
-
 
 // GROUPS
 export var postGroup = function(data) {
@@ -96,9 +95,13 @@ export var loginCtrl = function(data, dispatch) {
     });
     dispatch({type: 'CLEAR_LOGIN'});
     Actions.loading();
-  }).catch(err => {
-    dispatch({type: 'CLEAR_LOGIN'});
-    alert('LOGIN FAILED');
+  }).catch(({response}) => {
+    Actions.errorModal({
+      source: 'signup',
+      error: response.data,
+      hide: false
+    });
+
   });
 };
 

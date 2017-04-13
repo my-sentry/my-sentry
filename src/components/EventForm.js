@@ -47,13 +47,6 @@ const styles = {
   }
 };
 
-const submitForm = function(form, dispatch) {
-  postEvent(form)
-    .then(() => dispatch({type: 'RESET_DATE'}))
-    .then(() => dispatch({type: 'RESET_EVENT_FORM'}))
-    .then(() => setTimeout(() => Actions.dashboard()))
-    .catch(console.log);
-};
 
 
 export default connect(mapStateToProps)(function EventForm ({form, groups, dispatch}) {
@@ -122,7 +115,14 @@ export default connect(mapStateToProps)(function EventForm ({form, groups, dispa
 
       </Content>
 
-      <Button style={styles.button} onPress={() => submitForm(form, dispatch)}>
+      <Button 
+      style={styles.button} 
+      onPress={() => postEvent(form)
+        .then(() => {
+          dispatch({type: 'RESET_DATE'});
+          dispatch({type: 'RESET_EVENT_FORM'});
+        })
+      }>
         <Text>Create Event</Text>
       </Button>
 

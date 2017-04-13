@@ -3,7 +3,7 @@ import {Actions} from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import {AsyncStorage} from 'react-native';
 import { Container, Title, Left, Right, Content, Label, Form, Button, Text, Item, Icon, Spinner, Body, Input, H1, Grid, Row } from 'native-base';
-import { loginCtrl } from '../../actions/axiosController';
+import { loginCtrl } from '../../actions/axiosController.js';
 
 
 
