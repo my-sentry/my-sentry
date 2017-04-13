@@ -3,7 +3,7 @@ import {AsyncStorage} from 'react-native';
 import {Reducer} from 'react-native-router-flux';
 import { ActionConst } from 'react-native-router-flux';
 import {auth, login, signup, token} from './login';
-import {feed, events, dateReducer, eventForms} from './events';
+import {feed, events, dateReducer, eventForms, searchLocation } from './events';
 
 
 
@@ -63,6 +63,17 @@ const searchBar = (state = {users: [], results: []}, action) => {
       users: action.users
     };
   default :
+    return state;
+  }
+};
+
+const popup = (state = {disabled: false}, action) => {
+  switch (action.type) {
+  case 'TOGGLE_POPUP' :
+    return {...state,
+      disabled: !state.disabled
+    };
+  default:
     return state;
   }
 };
@@ -131,5 +142,7 @@ export default combineReducers({
   token,
   feed,
   eventForms,
+  popup,
+  searchLocation
   // more reducers
 });

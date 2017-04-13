@@ -1,8 +1,8 @@
 export var feed = (state = {}, action) => {
   switch (action.type) {
-  case 'UPDATE_FEED': 
+  case 'UPDATE_FEED':
     return {...state,
-      data: [...action.data].sort((a, b) => 
+      data: [...action.data].sort((a, b) =>
       new Date(a.begin).getTime() - new Date(b.begin).getTime())
     };
   case 'ADD_ITEM':
@@ -12,7 +12,7 @@ export var feed = (state = {}, action) => {
   case 'REMOVE_ITEM':
     return {...state,
     };
-  default: 
+  default:
     return state;
   }
 };
@@ -53,7 +53,7 @@ export var dateReducer = (state = {date: new Date(), start: new Date(), end: new
     return {...state,
       end: endSet
     };
-  case 'RESET_DATE': 
+  case 'RESET_DATE':
     return { date: new Date(), start: new Date(), end: new Date };
   default:
     return state;
@@ -61,20 +61,52 @@ export var dateReducer = (state = {date: new Date(), start: new Date(), end: new
 
 };
 
-export var eventForms = (state = {id: null, name: null, location: null, description: null}, action) => {
+var defaultForm = {
+  id: null,
+  name: '',
+  location: '',
+  description: '',
+  lat: null,
+  long: null,
+  place_id: null
+};
+
+export var eventForms = (state = defaultForm, action) => {
   switch (action.type) {
-  case 'EVENT_NAME': 
+  case 'EVENT_NAME':
     return {...state,
       name: action.text,
     };
-  case 'LOCATION':
+  case 'ADD_LOCATION':
     return {...state,
-      location: action.text,
+      location: action.location,
+      lat: action.lat,
+      long: action.long,
+      place_id: action.place_id
     };
   case 'EVENT_DESC' :
-    return {...state, 
+    return {...state,
       description: action.text,
     };
+  case 'RESET_EVENT_FORM':
+    return defaultForm;
+  default:
+    return state;
+  }
+};
+
+export var searchLocation = (state = { input: '', predictions: [] }, action) => {
+  switch (action.type) {
+  case 'UPDATE_LOC_INPUT':
+    return { ...state,
+      input: action.input
+    };
+  case 'UPDATE_LOC_PREDICTIONS':
+    return { ...state,
+      predictions: action.predictions
+    };
+  case 'CLEAR_LOC':
+    return { input: '', predictions: [] };
   default:
     return state;
   }
