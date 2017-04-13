@@ -88,6 +88,8 @@ export var eventForms = (state = defaultForm, action) => {
     return {...state,
       description: action.text,
     };
+  case 'RESET_EVENT_FORM':
+    return defaultForm;
   default:
     return state;
   }

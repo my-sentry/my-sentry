@@ -38,24 +38,24 @@ router.get('/:id', auth.isAuth, (req, res, next) => {
 router.post('/', auth.isAuth, (req, res, next) => {
 
   events.createEvent(req.user.id, req.body)
-  .then(id => {
-    // trigger creation of timers
-    timerService.sendEvent({ id: id, end: req.body.end });
-    res.status(201).json(result);
-  })
-  .catch(err => {
-    console.log(err);
-    next(err);
-  });
+    .then(id => {
+      // trigger creation of timers
+      timerService.sendEvent({ id: id, end: req.body.end });
+      res.status(201).json(result);
+    })
+    .catch(err => {
+      console.log(err);
+      next(err);
+    });
 });
 
 router.put('/:id', (req, res, next) => {
   events.updateEventById(req.params.id, req.body)
-  .then(result => res.json(result))
-  .catch(err => {
-    console.log(err);
-    next(err);
-  });
+    .then(result => res.json(result))
+    .catch(err => {
+      console.log(err);
+      next(err);
+    });
 });
 
 router.delete('/:id', (req, res) => {

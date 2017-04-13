@@ -15,13 +15,19 @@ import {
 
 
 const mapStateToProps = ({eventForms, dateReducer, groups}) => {
+
+  var begin = new Date(dateReducer.date);
+  var end = new Date(dateReducer.date);
+
+  begin.setTime(dateReducer.start.getTime());
+  end.setTime(dateReducer.end.getTime());
+
   return {
     form: {
       name: eventForms.name,
       location: eventForms.location,
-      date: dateReducer.date,
-      begin: dateReducer.start,
-      end: dateReducer.end,
+      begin: begin,
+      end: end,
       description: eventForms.description,
       lat: eventForms.lat,
       long: eventForms.long,
@@ -39,6 +45,14 @@ const styles = {
     marginTop: 20,
     marginBottom: 20
   }
+};
+
+const submitForm = function(form, dispatch) {
+  postEvent(form)
+    .then(() => dispatch({type: 'RESET_DATE'}))
+    .then(() => dispatch({type: 'RESET_EVENT_FORM'}))
+    .then(() => setTimeout(() => Actions.dashboard()))
+    .catch(console.log);
 };
 
 
@@ -108,7 +122,7 @@ export default connect(mapStateToProps)(function EventForm ({form, groups, dispa
 
       </Content>
 
-      <Button style={styles.button} onPress={() => postEvent(form).then(() => dispatch({type: 'RESET_DATE'}))}>
+      <Button style={styles.button} onPress={() => submitForm(form, dispatch)}>
         <Text>Create Event</Text>
       </Button>
 
