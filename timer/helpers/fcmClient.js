@@ -1,4 +1,4 @@
-const { FCM_CLIENT_KEY } = require('../../config');
+const { FCM_CLIENT_KEY } = require('../../config/config');
 const API_URL = 'https://fcm.googleapis.com/fcm/send';
 
 const axios = require('axios');
