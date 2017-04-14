@@ -54,8 +54,7 @@ module.exports = function(passport) {
     '/login',
     passport.authenticate('login'),
     (req, res, next) => {
-
-      users.updateUserToken(req.user.id, req.body.token)
+      users.updateUserToken(req.user.id, req.body.token || '')
         .then(() => {
           res.json(_.pick(req.user, ['id', 'username', 'first_name', 'last_name']));
         })
