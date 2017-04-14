@@ -23,8 +23,8 @@ const header = (state = {title: 'MY-SENTRY', prev: null}, action) => {
       prev: action.prev ? action.prev : null
     };
   case ActionConst.PUSH :
-    switch (action.title) {
-    case 'groups' || 'eventForm' || 'errorModal' :
+    switch (action.key) {
+    case 'groups' || 'eventForm' :
       return { ...state,
         title: action.title ? action.title : action.key,
         prev: 'events'
