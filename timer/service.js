@@ -22,10 +22,12 @@ ipc.serve(() => {
 
   ipc.server.on('safe', (data, socket) => {
     var eventId = JSON.parse(data);
+    console.log(`So and so was marked safe for event ${eventId}`);
   });
 
   ipc.server.on('danger', (data, socket) => {
     var eventId = JSON.parse(data);
+    console.log(`So and so was marked safe for event ${eventId}`);
   });
 
 });

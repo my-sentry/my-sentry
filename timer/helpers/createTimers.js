@@ -1,10 +1,6 @@
 var timers = require('../../server/db/controllers/timersCtrl');
 
-var {
-  MS_PER_MINUTE,
-  TIMER_TYPES,
-  TIMER_OFFSETS
-} = require('./constants');
+var { MS_PER_MINUTE, TIMER_TYPES, TIMER_OFFSETS } = require('./constants');
 
 var offsetMinutes = function(offset, date) {
   return new Date(date - (offset * MS_PER_MINUTE));
