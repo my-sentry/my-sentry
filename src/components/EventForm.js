@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import Header from './Header';
 import Datepicker from './Datepicker';
 import TimePicker from './TimePicker';
-import { Text, View } from 'react-native';
+import { Text, View, TextInput } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { postEvent } from '../actions/axiosController';
+import { postEvent, getPlaces } from '../actions/axiosController';
 import {
   Container, Title, Content, Footer, FooterTab,
   Button, Left, Right, Body, Icon,
@@ -66,20 +66,25 @@ export default connect(mapStateToProps)(function EventForm ({form, groups, dispa
           <Input onChangeText={text => dispatch({type: 'EVENT_NAME', text: text})}/>
         </Item>
 
-        <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}>
-          <View style={{ flexDirection: 'row' }}>
-
-            <Text style={{ flex: 0.8 }}>Location: {form.location}</Text>
-
-            <View style={{ flex: 0.2 }}>
-              <Button info onPress={() => Actions.locationSearch()}>
-                <Text>Search</Text>
-              </Button>
-            </View>
-
-          </View>
-        </View>
-
+        <Item>
+        <TextInput
+        style={{flex: 1}} 
+        underlineColorAndroid='rgba(0,0,0,0)'
+        placeholder="Search Locations"
+        value={form.location}
+        onFocus={() => {
+          dispatch({type: 'ADD_LOCATION', location: ''});
+          Actions.locationSearch();
+        }}
+        onChangeText={text => {
+          dispatch({type: 'ADD_LOCATION', location: text});
+          dispatch({ type: 'UPDATE_LOC_INPUT', text });
+          getPlaces(text)
+          .then(res => {
+            dispatch({ type: 'UPDATE_LOC_PREDICTIONS', predictions: res.data.predictions });
+          });
+        }}/>
+        </Item>
         <Item>
           <InputGroup>
             <Datepicker />

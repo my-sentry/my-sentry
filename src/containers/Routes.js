@@ -8,7 +8,6 @@ import GroupForm from '../components/GroupForm';
 import GroupView from '../components/GroupView';
 import EventForm from '../components/EventForm';
 import EventView from '../components/EventView';
-import LocationSearch from '../components/LocationSearch';
 import Login from '../components/Auth/Login';
 import Signup from '../components/Auth/Signup';
 import Loading from '../components/Loading';
@@ -16,6 +15,7 @@ import Datepicker from '../components/Datepicker';
 import ErrorModal from '../components/modals/Error';
 import Logout from '../components/modals/Logout';
 import Delete from '../components/modals/Delete';
+import LocationSearch from '../components/modals/LocationSearch';
 
 
 import { connect } from 'react-redux';
@@ -39,7 +39,6 @@ const scenes = Actions.create(
 
       <Scene key='feed' tabs={true} component={Feed}/>
       <Scene key='eventForm' tabs={true} component={EventForm} />
-      <Scene key='locationSearch' tabs={true} component={LocationSearch} />
       <Scene key='eventView' tabs={true} component={EventView} />
 
     </Scene>
@@ -50,7 +49,7 @@ const scenes = Actions.create(
   </Scene>
   <Scene key='logout' duration={1} component={Logout} />
   <Scene key='delete' duration={1} component={Delete} />
-
+  <Scene key='locationSearch' duration={1} component={LocationSearch} />
   <Scene key='errorModal' component={ErrorModal} />
 
   </Scene>

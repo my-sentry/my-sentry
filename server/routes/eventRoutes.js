@@ -41,7 +41,7 @@ router.post('/', auth.isAuth, (req, res, next) => {
     .then(id => {
       // trigger creation of timers
       timerService.sendEvent({ id: id, end: req.body.end });
-      res.status(201).json(result);
+      res.status(201).json(id);
     })
     .catch(err => {
       console.log(err);

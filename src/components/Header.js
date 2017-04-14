@@ -39,7 +39,10 @@ export default connect(mapStateToProps)(function MyHeader ({prev, title}) {
     </Left>
 
       <Body style={styles.body}>
-        <Text>{title}</Text>
+      {title === 'events' 
+      ? <Text>My-Sentry</Text>
+      : <Text>{title.length > 30 ? `${title.slice(0, 30)}...` : title}</Text>
+    }
       </Body>      
          
     <Right>
