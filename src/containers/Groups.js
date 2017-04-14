@@ -24,12 +24,13 @@ export default connect(mapStateToProps)(function Groups ({groups, userId, isAdmi
        <List dataArray={groups}
         renderRow={group =>
             <ListItem onPress={() => {
-              getGroupById(group.id, dispatch)
-                .then(() => {
+              getGroupById(group.id)
+                .then(res => {
+                  dispatch({type: 'RECEIVE_USERS', users: res.data.users})
                   dispatch({type: 'CURRENT_GROUP', id: {...group, userId: userId}});
                 })
                 .then(() => {
-                  return getUsers(dispatch).then((res) => {
+                  return getUsers().then((res) => {
                     dispatch({type: 'RECEIVE_SEARCH_DATA', users: res.data});
                     Actions.groupView({ title: group.name });
                   });

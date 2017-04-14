@@ -3,7 +3,7 @@ import {Actions} from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import {AsyncStorage } from 'react-native';
 import { Container, Content, Spinner, Body } from 'native-base';
-import {getEvents, getGroups, verifyLogin} from '../actions/axiosController';
+import {getEvents, getGroups, verifyLogin, getGroupById} from '../actions/axiosController';
 
 
 const styles = {
@@ -35,9 +35,20 @@ export default connect()(function ({dispatch}) {
     .then(id=> id !== 'null' 
     ? getGroups(dispatch)
       .then(() => AsyncStorage.getItem('NAME')
-        .then(name => dispatch({type: 'SET_VALUES', id: id, name: name}) )
-          .then(getEvents(dispatch)
-            .then(() => Actions.menu({title: 'events'}) ) 
+        .then(name => dispatch({type: 'SET_VALUES', id: id, name: name}) 
+      ).then(getEvents()
+            .then(({data}) => {
+              Promise.all(data.map(event => (
+                getGroupById(event.group_id, dispatch) 
+                ).then((group) => (
+                    data.map(dataObj => 
+                      ({...dataObj, groupName: group.data.name}))
+                  )
+                ))).then(newData => {
+                  dispatch({type: 'UPDATE_FEED', data: newData[1]})
+                  Actions.menu({title: 'events'})
+              })
+            } ) 
           )
       )    
     : Actions.login()

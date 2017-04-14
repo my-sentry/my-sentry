@@ -22,14 +22,15 @@ const mapStateToProps = ({events}) => {
     name: events.id.name,
     begin: events.id.begin,
     end: events.id.end,
-    description: events.id.description
+    description: events.id.description,
+    group: events.id.groupName
   };
 };
 
 
 
 export default connect(mapStateToProps)(function EventView (state) {
-  const {active, isPersonal, name, begin, end, description} = state;
+  const {active, isPersonal, name, begin, end, description, group} = state;
   return (
     <Container>
       <Header title={name}/>
@@ -53,7 +54,7 @@ export default connect(mapStateToProps)(function EventView (state) {
               <Body>
               <Text style={styles.text}>{begin}</Text>
               <Text style={styles.text}>{end}</Text>
-              <Text style={styles.text}>Group</Text>
+              <Text style={styles.text}>{group}</Text>
             </Body>
             </CardItem> 
           </Card>

@@ -22,9 +22,8 @@ export var getGroups = function(dispatch) {
   .catch(err => console.log(err));
 };
 
-export var getGroupById = function(id, dispatch) {
+export var getGroupById = function(id) {
   return axios(`${URL_CONFIG}/api/groups/${id}`)
-  .then(res => dispatch({type: 'RECEIVE_USERS', users: res.data.users}))
   .catch(err => console.log(err));
 
 };
@@ -67,9 +66,8 @@ export var deleteGroup = function(groupId) {
 };
 
 // EVENTS
-export var getEvents = function(dispatch) {
+export var getEvents = function() {
   return axios(`${URL_CONFIG}/api/events/`)
-    .then(res => dispatch({type: 'UPDATE_FEED', data: res.data}))
     .catch(err => console.log(err));
 };
 
