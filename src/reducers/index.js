@@ -33,8 +33,8 @@ const header = (state = {title: 'MY-SENTRY', prev: null}, action) => {
       return { ...state,
         title: action.title ? action.title : action.groupName,
         prev: 'groups'
-      };    
-    default: 
+      };
+    default:
       return {...state,
         title: action.title ? action.title : action.key,
         prev: state.title
@@ -70,7 +70,7 @@ const searchBar = (state = {users: [], results: []}, action) => {
       results: searchResults
     };
   case 'ADD_TO_MEMBERS' :
-    addOrRemoveUser(action.groupId, action.userId, true);
+    addUser(action.groupId, action.userId);
   case 'RECEIVE_SEARCH_DATA' :
     return {...state,
       users: action.users
@@ -119,15 +119,21 @@ const groups = (state = {id: null, groups: [], users: [], groupName: null, membe
       groupName: action.text
     };
   case 'ADD_MEMBER' :
-    if (state.members.includes(action.id)) {
-      var updated = state.members.filter(id => id !== action.id);
+    if (action.id) {
+      if (state.members.includes(action.id)) {
+        var updated = state.members.filter(id => id !== action.id);
 
-      return {...state,
-        members: updated
-      };
+        return {...state,
+          members: updated
+        };
+      } else {
+        return {...state,
+          members: [...state.members, action.id]
+        };
+      }
     } else {
       return {...state,
-        members: [...state.members, action.id]
+        users: [...state.users, action.user]
       };
     }
   case 'REMOVE_MEMBER' :
