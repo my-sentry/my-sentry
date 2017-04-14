@@ -33,8 +33,8 @@ export default connect(mapStateToProps)(function Feed ({feed, personal, dispatch
             setTimeout(()=> Actions.eventView({prev: 'dashboard', title: item.name}));
           }}>
         <Body>
-          <Text>{item.name}</Text>
-          <Text>{item.description}</Text>
+          <Text>{item.name.length > 40 ? [...item.name.slice(0,40), '...'].join('') : item.name}</Text>
+          <Text style={{fontSize: 10}}>{item.description}</Text>
         </Body>
         { activeCheck ? <Right><Icon name='alarm' style={{color: 'red'}} /></Right>
           : null

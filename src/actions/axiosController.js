@@ -115,9 +115,10 @@ export var loginCtrl = function(data, dispatch) {
     Actions.loading();
   }).catch(({response}) => {
     Actions.errorModal({
-      source: 'signup',
-      error: response.data,
-      hide: false
+      clear: {type: 'CLEAR_LOGIN'},
+      error: response.status === 401 
+      ? 'The password you\'ve entered is incorrect.'
+      : 'Please enter a password!'
     });
 
   });
@@ -132,7 +133,6 @@ export var logoutCtrl = function(dispatch) {
     },
     url: `${URL_CONFIG}/api/users/logout`
   }).then(() => {
-    dispatch({type: 'LOGOUT'});
     Actions.loading();
   })
     .catch(err => console.log(err));
@@ -160,7 +160,7 @@ export var signupCtrl = function(data, dispatch) {
     Actions.loading();
   }).catch(({response}) => {
     Actions.errorModal({
-      source: 'signup',
+      clear: {type: 'CLEAR_SIGNUP'},
       error: response.status === 401
       ? 'Username is already in use\nplease choose a different username'
       : 'Unknown error please try again!',

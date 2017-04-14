@@ -118,10 +118,8 @@ export default connect(mapStateToProps)(class Login extends Component {
             errorcode = !passwordRegex ? 'Password is invalid' : errorcode;
             errorcode = !signup.username.length ? 'Username is required' : errorcode;
             Actions.errorModal({
-              source: 'signup',
-              dispatch: dispatch,
-              error: errorcode, 
-              hide: false
+              clear: {type: 'CLEAR_SIGNUP'},
+              error: errorcode
             });
           }
         }}>

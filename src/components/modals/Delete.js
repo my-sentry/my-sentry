@@ -8,7 +8,7 @@ import { removeUserFromGroup, getGroupById } from '../../actions/axiosController
 
 
 
-export default connect()(class SignupModal extends Component { 
+export default connect()(class Delete extends Component { 
   constructor(props) {
     super(props);
     this.state = {
