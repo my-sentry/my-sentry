@@ -78,6 +78,7 @@ export var eventForms = (state = defaultForm, action) => {
       name: action.text,
     };
   case 'ADD_LOCATION':
+  console.log(action)
     return {...state,
       location: action.location,
       lat: action.lat,

@@ -15,7 +15,7 @@ export var routerReducer = (params) => {
   };
 };
 // changes name of header when scene changes
-const header = (state = {title: 'events', prev: null}, action) => {
+const header = (state = {title: 'MY-SENTRY', prev: null}, action) => {
   switch (action.type) {
   case ActionConst.JUMP :
     return { ...state,
@@ -23,13 +23,8 @@ const header = (state = {title: 'events', prev: null}, action) => {
       prev: action.prev ? action.prev : null
     };
   case ActionConst.PUSH :
-    switch (action.key) {
-    // case 'eventForm' :
-    //   return {...state,
-    //     title: action.title ? action.title : action.key,
-    //     prev: 'events'
-    //   };
-    case 'groups' || 'eventForm' :
+    switch (action.title) {
+    case 'groups' || 'eventForm' || 'errorModal' :
       return { ...state,
         title: action.title ? action.title : action.key,
         prev: 'events'
