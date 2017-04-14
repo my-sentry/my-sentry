@@ -71,6 +71,7 @@ export var getEvents = function() {
     .catch(err => console.log(err));
 };
 
+
 export var postEvent = function(data) {
   return axios({
     method: 'post',

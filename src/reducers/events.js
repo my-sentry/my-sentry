@@ -112,3 +112,4 @@ export var searchLocation = (state = { input: '', predictions: [] }, action) => 
     return state;
   }
 };
+
