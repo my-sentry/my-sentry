@@ -3,7 +3,7 @@ import {Actions} from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import {AsyncStorage} from 'react-native';
 import { Container, Title, Left, Right, Content, Label, Form, Button, Text, Item, Icon, Spinner, Body, Input, H1, Grid, Row } from 'native-base';
-import { loginCtrl } from '../../actions/axiosController';
+import { loginCtrl } from '../../actions/axiosController.js';
 
 
 
@@ -36,12 +36,12 @@ export default connect(mapStateToProps)(function Login ({form, dispatch}) {
     <Form style={styles.form} >
         <Item stackedLabel >
           <Label>Username</Label>
-          <Input value={form.username} 
+          <Input autoCapitalize={'none'} value={form.username} 
           onChangeText={text => dispatch({type: 'USERNAME', text: text})}/>
         </Item>
         <Item stackedLabel last >
           <Label>Password</Label>
-          <Input value={form.password} 
+          <Input autoCapitalize={'none'} value={form.password} 
           secureTextEntry={true} 
           onChangeText={text => dispatch({type: 'PASSWORD', text: text})}/>
         </Item>

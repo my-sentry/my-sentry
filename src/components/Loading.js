@@ -21,28 +21,27 @@ const styles = {
   },
 };
 
-export default connect()(function Loading({dispatch}) {
-  AsyncStorage.getItem('AUTHENTICATION')
-  .then(id=> id !== 'null' 
-  ? verifyLogin()
+export default connect()(function ({dispatch}) {
+  verifyLogin()
     .catch(({response}) => {
       if (response.status === 401) {
         dispatch({type: 'LOGOUT'});
         Actions.login();
       } else {
-        console.log(response);
+        console.log('unknown error', response);
       }
     })
-    .then(getGroups(dispatch)
+  .then(() => AsyncStorage.getItem('AUTHENTICATION')
+    .then(id=> id !== 'null' 
+    ? getGroups(dispatch)
       .then(() => AsyncStorage.getItem('NAME')
-        .then(name => dispatch({type: 'SET_VALUES', id: id, name: name}))
-      )
-      .then(getEvents(dispatch)
-        .then(() => setTimeout(()=> Actions.menu({title: 'events'})) ) 
-      )
-    )
-  : Actions.login()
-  );
+        .then(name => dispatch({type: 'SET_VALUES', id: id, name: name}) )
+          .then(getEvents(dispatch)
+            .then(() => Actions.menu({title: 'events'}) ) 
+          )
+      )    
+    : Actions.login()
+  ));
   return (
   <Container style={styles.centering} >
   <Content >

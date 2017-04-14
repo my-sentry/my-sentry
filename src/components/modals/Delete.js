@@ -4,23 +4,21 @@ import {Actions, ActionConst} from 'react-native-router-flux';
 import {View, TouchableHighlight, Dimensions, BackAndroid} from 'react-native';
 import { Container, Title, Text, Grid, Row, Form, Content, Button, Left, Right, Body, List, ListItem, H1 } from 'native-base';
 import { logoutCtrl } from '../../actions/axiosController';
+import { removeUserFromGroup, getGroupById } from '../../actions/axiosController';
 
 
-export default class SignupModal extends Component { 
+
+export default connect()(class SignupModal extends Component { 
   constructor(props) {
     super(props);
     this.state = {
-      message: props.message,
       hide: props.hide,
     };
     this.dismissModal = this.dismissModal.bind(this);
   }
 
   componentWillMount() {
-    BackAndroid.addEventListener('hardwareBackPress', () => {
-      this.dismissModal();
-      Actions.pop();
-    });
+    BackAndroid.addEventListener('hardwareBackPress', () => true );
   }
 
   dismissModal() {
@@ -28,6 +26,8 @@ export default class SignupModal extends Component {
   }
 
   render() {
+
+    var {groupId, userId, username, groupName} = this.props;
     var {height, width} = Dimensions.get('window');
     return this.state.hide
       ? (
@@ -59,20 +59,22 @@ export default class SignupModal extends Component {
     }}>
     <Grid style={{flex: 1}}>
     <Row >
-    <Text style={{alignSelf: 'center'}}> Are you sure you want to logout?</Text>
+    <Text style={{alignSelf: 'center'}}> Are you sure you remove {username} from {groupName}</Text>
     </Row>
     <Row style={{flex: 0}}>
     <Left>
       <Button block bordered 
       onPress={() =>{
         this.dismissModal();
-        Actions.pop();
+        Actions.pop({title: groupName});
       }} ><Text> NO</Text></Button>
     </Left>
     <Right>
       <Button block onPress={()=> {
         this.dismissModal();
-        logoutCtrl(this.props.dispatch);
+        removeUserFromGroup(groupId, userId)
+        .then(getGroupById(groupId, this.props.dispatch)
+          .then(() => Actions.pop({title: groupName})));
       }}><Text> Yes </Text>
       </Button>
     </Right>
@@ -82,6 +84,6 @@ export default class SignupModal extends Component {
   </Container>
   );    
   }
-}
+});
 
 

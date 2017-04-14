@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import { URL_CONFIG, PLACES_API_KEY } from '../../config/config';
+import {URL_CONFIG, PLACES_API_KEY} from '../../config/config.js';
 import {Actions} from 'react-native-router-flux';
-
 
 // GROUPS
 export var postGroup = function(data) {
@@ -26,7 +25,7 @@ export var getGroups = function(dispatch) {
 export var getGroupById = function(id, dispatch) {
   return axios(`${URL_CONFIG}/api/groups/${id}`)
   .then(res => dispatch({type: 'RECEIVE_USERS', users: res.data.users}))
-    .catch(err => console.log(err));
+  .catch(err => console.log(err));
 
 };
 
@@ -64,7 +63,15 @@ export var postEvent = function(data) {
     url: `${URL_CONFIG}/api/events/`,
     data: JSON.stringify(data)
   }).then(() => Actions.loading())
-    .catch(err => console.log(err));
+    .catch(({response}) => {
+      Actions.errorModal({
+        error: /ER_DATA_TOO_LONG:/.test(response.data)
+          ? 'Event must be shorter than 255 characters'
+          : `Unknown error ${response.data}`,
+        hide: false
+      });
+      
+    });
 };
 
 export var loginCtrl = function(data, dispatch) {
@@ -88,9 +95,13 @@ export var loginCtrl = function(data, dispatch) {
     });
     dispatch({type: 'CLEAR_LOGIN'});
     Actions.loading();
-  }).catch(err => {
-    dispatch({type: 'CLEAR_LOGIN'});
-    alert('LOGIN FAILED');
+  }).catch(({response}) => {
+    Actions.errorModal({
+      source: 'signup',
+      error: response.data,
+      hide: false
+    });
+
   });
 };
 
@@ -130,8 +141,8 @@ export var signupCtrl = function(data, dispatch) {
     dispatch({type: 'CLEAR_SIGNUP'});
     Actions.loading();
   }).catch(({response}) => {
-    dispatch({type: 'TOGGLE_POPUP'});
-    Actions.signupError({
+    Actions.errorModal({
+      source: 'signup',
       error: response.status === 401 
       ? 'Username is already in use\nplease choose a different username'
       : 'Unknown error please try again!',

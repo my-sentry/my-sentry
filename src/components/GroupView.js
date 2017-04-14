@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Text, View} from 'react-native';
 import { connect } from 'react-redux';
 import Header from './Header';
+import {Actions} from 'react-native-router-flux';
 import { Container, Item, Input, Title, List, ListItem, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, Card, CardItem, Image } from 'native-base';
 import { addOrRemoveUser } from '../actions/axiosController';
 
@@ -27,13 +28,14 @@ const styles = {
 const mapStateToProps = ({groups, auth, searchBar}) => {
   return {
     id: groups.id.id,
+    groupName: groups.id.name,
     isAdmin: groups.id.admin_user === Number(groups.id.userId),
     users: groups.users,
     searchResults: searchBar.results
   };
 };
 
-export default connect(mapStateToProps)(function GroupView ({id, users, isAdmin, searchResults, dispatch}) {
+export default connect(mapStateToProps)(function GroupView ({id, groupName, users, isAdmin, searchResults, dispatch}) {
   return isAdmin
   ? (
     <Container>

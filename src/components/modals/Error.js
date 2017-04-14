@@ -5,7 +5,7 @@ import {View, TouchableHighlight, Dimensions, BackAndroid} from 'react-native';
 import { Container, Title, Text, Content, Button, Body, List, ListItem, H1 } from 'native-base';
 
 
-export default class SignupModal extends Component { 
+export default connect()(class errorModal extends Component { 
   constructor(props) {
     super(props);
     this.state = {
@@ -15,7 +15,10 @@ export default class SignupModal extends Component {
     this.dismissModal = this.dismissModal.bind(this);
   }
   componentWillMount() {
-    BackAndroid.addEventListener('hardwareBackPress', () => true );
+    BackAndroid.addEventListener('hardwareBackPress', () => {
+      this.dismissModal();
+      Actions.pop();
+    });
   }
 
   dismissModal() {
@@ -33,6 +36,9 @@ export default class SignupModal extends Component {
         <Button 
         transparent
         onPress={() => {
+          this.props.source === 'signup' 
+          ? this.props.dispatch({type: 'CLEAR_SIGNUP'})
+          : null;
           Actions.pop();
         }}
         style={{
@@ -41,7 +47,7 @@ export default class SignupModal extends Component {
           height: height,
           width: width,
           borderRadius: -1,
-          backgroundColor: 'rgba(155,55,55,0.6)',          
+          backgroundColor: 'rgba(155,55,55,0.9)',          
           justifyContent: 'center',
           borderWidth: .2,
           borderColor: 'black'
@@ -50,6 +56,6 @@ export default class SignupModal extends Component {
         </Button>
       );    
   }
-};
+})
 
 

@@ -23,13 +23,31 @@ const header = (state = {title: 'events', prev: null}, action) => {
       prev: action.prev ? action.prev : null
     };
   case ActionConst.PUSH :
-    return { ...state,
-      title: action.title ? action.title : action.key,
-      prev: action.key === 'groups' ? 'events' : state.title
-    };
+    switch (action.key) {
+    // case 'eventForm' :
+    //   return {...state,
+    //     title: action.title ? action.title : action.key,
+    //     prev: 'events'
+    //   };
+    case 'groups' || 'eventForm' :
+      return { ...state,
+        title: action.title ? action.title : action.key,
+        prev: 'events'
+      };
+    case 'delete' :
+      return { ...state,
+        title: action.title ? action.title : action.groupName,
+        prev: 'groups'
+      };    
+    default: 
+      return {...state,
+        title: action.title ? action.title : action.key,
+        prev: state.title
+      };
+    }
   case ActionConst.BACK_ACTION :
     return {...state,
-      title: state.prev,
+      title: action.title ? action.title : state.prev,
     };
   default:
     return state;
@@ -90,11 +108,8 @@ const groups = (state = {id: null, groups: [], users: [], groupName: null, membe
       id: action.data.length > 0 ? action.data[0].id : 0
     };
   case 'ADD_GROUP' :
-    let store = JSON.stringify(action.id);
-    AsyncStorage.setItem('GROUP', store);
     return {...state,
       groups: [...state.groups, action.item],
-      hasGroups: true,
     };
   case 'REMOVE_GROUP' :
     return {...state,

@@ -13,8 +13,10 @@ import Login from '../components/Auth/Login';
 import Signup from '../components/Auth/Signup';
 import Loading from '../components/Loading';
 import Datepicker from '../components/Datepicker';
-import SignupModal from '../components/modals/Signup';
+import ErrorModal from '../components/modals/Error';
 import Logout from '../components/modals/Logout';
+import Delete from '../components/modals/Delete';
+
 
 import { connect } from 'react-redux';
 
@@ -47,8 +49,9 @@ const scenes = Actions.create(
 
   </Scene>
   <Scene key='logout' duration={1} component={Logout} />
+  <Scene key='delete' duration={1} component={Delete} />
 
-  <Scene key='signupError' component={SignupModal} />
+  <Scene key='errorModal' component={ErrorModal} />
 
   </Scene>
 );
