@@ -26,8 +26,8 @@ router.post('/', auth.isAuth, (req, res, next) => {
     req.body.name,
     req.user.id
   ).then(groupId => {
-    return Promise.all(req.body.members.map(memberId => {
-      return groups.addUserToGroup(groupId, memberId);
+    return Promise.all(req.body.members.map(member => {
+      return groups.addUserToGroup(groupId, member.id);
     })).then(() => {
       res.json(groupId);
     });

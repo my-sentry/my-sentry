@@ -119,16 +119,16 @@ const groups = (state = {id: null, groups: [], users: [], groupName: null, membe
       groupName: action.text
     };
   case 'ADD_MEMBER' :
-    if (action.id) {
-      if (state.members.includes(action.id)) {
-        var updated = state.members.filter(id => id !== action.id);
+    if (action.form) {
+      if (state.members.find(member => member.id === action.user.id)) {
+        var updatedMem = state.members.filter(member => member.id !== action.user.id);
 
         return {...state,
-          members: updated
+          members: updatedMem
         };
       } else {
         return {...state,
-          members: [...state.members, action.id]
+          members: [...state.members, action.user]
         };
       }
     } else {
