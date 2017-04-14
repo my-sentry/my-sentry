@@ -40,7 +40,7 @@ export default connect(mapStateToProps)(function GroupView ({id, groupName, user
   ? (
     <Container>
       <Header />
-      <Container>
+      <Content>
 
         <List dataArray={users}
           renderRow={user =>
@@ -74,22 +74,24 @@ export default connect(mapStateToProps)(function GroupView ({id, groupName, user
           </List>
         </Item>
 
-        <Button
-          style={{ alignSelf: 'center', marginTop: 20, marginBottom: 20, backgroundColor: '#EF4841' }}
-          onPress={() => {
-            removeUser(id, users)
-              .then(() => {
-                return deleteGroup(id)
-                  .then(() => {
-                    return getGroups(dispatch)
-                      .then(() => Actions.groups());
-                  });
-              });
-          }}>
-          <Text>Delete Group</Text>
-        </Button>
 
-      </Container>
+      </Content>
+
+      <Button
+        style={{ alignSelf: 'center', marginTop: 20, marginBottom: 20, backgroundColor: '#EF4841' }}
+        onPress={() => {
+          removeUser(id, users)
+          .then(() => {
+            return deleteGroup(id)
+            .then(() => {
+              return getGroups(dispatch)
+              .then(() => Actions.groups());
+            });
+          });
+        }}>
+        <Text>Delete Group</Text>
+      </Button>
+      
     </Container>
   )
   : (
