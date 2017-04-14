@@ -39,16 +39,18 @@ router.post('/', auth.isAuth, (req, res, next) => {
 });
 
 router.put('/:id', (req, res, next) => {
+  var id = req.params.id;
 
   if (req.query.delete) {
-    groups.deleteUserFromGroup(req.params.id, req.body.userId)
-      .then(() => res.sendStatus(200))
+    return Promise.all(req.body.userArray.map(user => {
+      return groups.deleteUserFromGroup(id, user.id);
+    })).then(() => res.sendStatus(200))
       .catch(err => {
         console.log(err);
         next(err);
       });
   } else {
-    groups.addUserToGroup(req.params.id, req.body.userId)
+    groups.addUserToGroup(id, req.body.userId)
       .then(id => res.json(id))
       .catch(err => {
         console.log(err);
