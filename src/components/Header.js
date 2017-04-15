@@ -7,14 +7,13 @@ import { Container, Header, Title, Content, Button, Left, Right, Body, Icon, H1 
 
 const styles = {
   header: {
-    backgroundColor: '#d0d0da'
+    backgroundColor: 'rgba(60,60,60,1)',
   },
   body: {
-    flex: 0,
     justifyContent: 'center'
   },
   menu: {
-    backgroundColor: '#d0d0da',
+    backgroundColor: 'rgba(60,60,60,0.8)',
   }
 };
 

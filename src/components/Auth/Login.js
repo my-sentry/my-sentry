@@ -1,21 +1,50 @@
 import React, {Component} from 'react';
 import {Actions} from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import {AsyncStorage, Keyboard} from 'react-native';
+import {AsyncStorage, Keyboard, Dimensions} from 'react-native';
 import { Container, Title, Left, Right, Content, Label, Form, Button, Text, Item, Icon, Spinner, Body, Input, H1, Grid, Row } from 'native-base';
 import { loginCtrl } from '../../actions/axiosController.js';
+const {height, width} = Dimensions.get('window');
 
-
-
-const styles = {
+export var styles = {
+  content: {
+    alignSelf: 'center',
+  },
   container: {
     flex: 1,
+    justifyContent: 'center',
+    backgroundColor: '#cfcccc'
   },
   item: {
     backgroundColor: '#a0a',
     flex: 1
   },
   form: {
+    backgroundColor: '#f0f0f0',
+    width: (width * .90),
+    alignSelf: 'center'
+  },
+  confirm: {
+    paddingTop: 15,
+    alignSelf: 'center'
+  },
+  confirmButton: {
+    width: 150
+  },
+  textbox: {
+    paddingTop: 0,
+    alignSelf: 'center'
+  },
+  back: {
+    paddingTop: 0,
+    marginTop: 0,
+
+  },
+  text: {
+    fontSize: 8,
+    color: 'black',
+    fontFamily: 'sans-serif',
+    alignSelf: 'center'
   }
 };
 
@@ -32,31 +61,44 @@ export default connect(mapStateToProps)(function Login ({form, dispatch}) {
    <Container style={styles.container}>
     <Grid style={{flex: 1}}>
     <Row >
-    <Content>
+    <Content style={styles.content}>
     <Form style={styles.form} >
-        <Item stackedLabel >
-          <Label>Username</Label>
-          <Input autoCapitalize={'none'} value={form.username} 
+        <Item style={{borderColor: 'transparent'}}>
+          <Input 
+          placeholder='Username' 
+          autoCapitalize={'none'} 
+          value={form.username} 
           onChangeText={text => dispatch({type: 'USERNAME', text: text})}/>
         </Item>
-        <Item stackedLabel last >
-          <Label>Password</Label>
-          <Input autoCapitalize={'none'} value={form.password} 
+        <Item last >
+          <Input 
+          autoCapitalize={'none'} 
+          value={form.password} 
+          placeholder='Password'
           secureTextEntry={true} 
           onChangeText={text => dispatch({type: 'PASSWORD', text: text})}/>
         </Item>
     </Form>
-    </Content>
-    </Row>
-    <Row style={{flex: 0}}>
-    <Left>
-      <Button block bordered onPress={Actions.signup} ><Text> SIGNUP</Text></Button></Left>
-      <Right>
-      <Button block onPress={()=> {
-        Keyboard.dismiss()
-        loginCtrl(form, dispatch)
+    <Row style={styles.confirm}>
+      <Button 
+      style={styles.confirmButton} 
+      block 
+      onPress={()=> {
+        Keyboard.dismiss();
+        loginCtrl(form, dispatch);
       }}><Text> LOGIN </Text>
-      </Button></Right>
+      </Button>
+      </Row>
+      <Row style={styles.textbox}>
+      <Button transparent
+        onPress={Actions.signup}
+        style={styles.back}
+        >
+
+      <Text style={styles.text}  >Dont Have an account?</Text>
+      </Button>
+    </Row>
+    </Content>
     </Row>
   </Grid>
   </Container>

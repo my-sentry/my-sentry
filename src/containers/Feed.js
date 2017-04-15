@@ -13,9 +13,8 @@ import { Container, Title, Content, Button, Left, Right, List, ListItem, Body, F
 const mapStateToProps = ({feed, auth}) => ({feed, personal: auth.id });
 
 export default connect(mapStateToProps)(function Feed ({feed, personal, dispatch}) {
-  // console.log('...............',feed)
   return (
-    <Container><Header /><Container>
+    <Container style={{backgroundColor: '#655E4F'}}><Header /><Container>
      <List style={{marginLeft: 0}}
      dataArray={feed.data}
       renderRow={item => {
