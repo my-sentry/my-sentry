@@ -8,16 +8,15 @@ import {postGroup, getGroups } from '../actions/axiosController';
 
 const mapStateToProps = ({groups, auth, searchBar}) => {
   return {
-    userId: auth.id,
+    adminUser: auth,
     groupName: groups.groupName,
     users: groups.users,
     members: groups.members,
-    searchResults: searchBar.results,
-    tempList: []
+    searchResults: searchBar.results
   };
 };
 
-export default connect(mapStateToProps)(function GroupForm ({users, userId, members, groupName, searchResults, tempList, dispatch}) {
+export default connect(mapStateToProps)(function GroupForm ({users, adminUser, members, groupName, searchResults, tempList, dispatch}) {
   return (
     <Container>
 
@@ -32,10 +31,10 @@ export default connect(mapStateToProps)(function GroupForm ({users, userId, memb
         </Form>
 
         <Item>
-          <List dataArray={tempList}
-            renderRow={user =>
+          <List dataArray={members}
+            renderRow={member =>
               <ListItem>
-                <Text>{user}</Text>
+                <Text>{member.username}</Text>
               </ListItem>
             }>
           </List>
@@ -46,7 +45,7 @@ export default connect(mapStateToProps)(function GroupForm ({users, userId, memb
           <List dataArray={searchResults}
             renderRow={user =>
               <ListItem onPress={() => {
-                dispatch({type: 'ADD_MEMBER', id: user.id});
+                dispatch({type: 'ADD_MEMBER', form: true, user: user});
               }}>
                 <Text>{user.username}</Text>
               </ListItem>
@@ -61,7 +60,7 @@ export default connect(mapStateToProps)(function GroupForm ({users, userId, memb
         onPress={() => {
           let data = {
             name: groupName,
-            members: [...members, userId ]
+            members: [...members, adminUser ]
           };
           postGroup(data).then(() => getGroups(dispatch).then(() => Actions.groups()));
         }}>

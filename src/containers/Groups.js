@@ -23,25 +23,25 @@ export default connect(mapStateToProps)(function Groups ({groups, userId, isAdmi
       <Container>
        <List dataArray={groups}
         renderRow={group =>
-            <ListItem onPress={() => {
-              getGroupById(group.id)
-                .then(res => {
-                  dispatch({type: 'RECEIVE_USERS', users: res.data.users})
-                  dispatch({type: 'CURRENT_GROUP', id: {...group, userId: userId}});
-                })
-                .then(() => {
-                  return getUsers().then((res) => {
-                    dispatch({type: 'RECEIVE_SEARCH_DATA', users: res.data});
-                    Actions.groupView({ title: group.name });
-                  });
+          <ListItem onPress={() => {
+            getGroupById(group.id)
+              .then(res => {
+                dispatch({type: 'RECEIVE_USERS', users: res.data.users});
+                dispatch({type: 'CURRENT_GROUP', id: {...group, userId: userId}});
+              })
+              .then(() => {
+                return getUsers().then((res) => {
+                  dispatch({type: 'RECEIVE_SEARCH_DATA', users: res.data});
+                  Actions.groupView({ title: group.name });
                 });
-            }}>
+              });
+          }}>
 
-              <Body>
-                <Text>{group.name}</Text>
-              </Body>
+            <Body>
+              <Text>{group.name}</Text>
+            </Body>
 
-            </ListItem>
+          </ListItem>
         }>
       </List>
       </Container>

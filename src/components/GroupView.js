@@ -3,6 +3,7 @@ import { Text, View} from 'react-native';
 import { connect } from 'react-redux';
 import Header from './Header';
 import {Actions} from 'react-native-router-flux';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { Container, Item, Input, Title, List, ListItem, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, Card, CardItem, Image } from 'native-base';
 import { addUser, removeUser, deleteGroup, getGroups } from '../actions/axiosController';
 
@@ -50,7 +51,7 @@ export default connect(mapStateToProps)(function GroupView ({id, groupName, user
             </Body>
               <Right>
                 <Button small bordered danger onPress={() => {
-                  removeUser(id, [user.id], false);
+                  removeUser(id, [user], false);
                   dispatch({type: 'REMOVE_MEMBER', id: user.id});
                 }}>
                   <Icon name='ios-trash-outline' style={{color: 'red'}} />
@@ -64,7 +65,10 @@ export default connect(mapStateToProps)(function GroupView ({id, groupName, user
           <Input onChangeText={text => dispatch({type: 'SEARCH_NAME', text: text})} placeholder='Add a Member'/>
           <List dataArray={searchResults}
             renderRow={user =>
-              <ListItem onPress={() => addUser(id, user.id)}>
+              <ListItem onPress={() => {
+                addUser(id, user.id)
+                  .then(() => dispatch({type: 'ADD_MEMBER', user: user}));
+              }}>
                 <Text>{user.username}</Text>
               </ListItem>
             }>
