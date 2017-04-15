@@ -1,4 +1,4 @@
-var { getActiveTimers, getTimerById } = require('../../server/db/controllers/timersCtrl');
+var { getActiveTimers, getTimerById, makeTimerInactive } = require('../../server/db/controllers/timersCtrl');
 var { timerCallback } = require('./notify.js');
 
 global.activeTimers = global.activeTimers || {};
@@ -11,9 +11,17 @@ var getMillisecondsToEnd = function(end) {
 
 var startTimer = function(timer) {
   console.log('Timer: ', timer);
-  var callback = timerCallback.bind(null, timer);
   var ms = getMillisecondsToEnd(timer.time);
-  activeTimers[timer.id] = setTimeout(callback, ms);
+  console.log('MSSSSSSS: ', ms);
+  console.log(typeof ms);
+  if (ms > 0) {
+    var callback = timerCallback.bind(null, timer);
+    activeTimers[timer.id] = setTimeout(callback, ms);
+  } else {
+    makeTimerInactive(timer.id).then(() => {
+      console.log(`Timer ${timer.id} is inactive`);
+    });
+  }
 };
 
 var setUninitializedTimers = function() {

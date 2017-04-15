@@ -30,7 +30,7 @@ var sendNotification = function(token, title, message) {
   })
 
   .then(response => {
-    console.log('Send Notification Response: ', response);
+    console.log('Notification on its way');
   })
 
   .catch(err => {
@@ -39,7 +39,7 @@ var sendNotification = function(token, title, message) {
 };
 
 
-exports.timerCallback = function ({id, type, token, recipients}) {
+exports.timerCallback = function ({id, type, token, recipients, name}) {
 
   switch (type) {
 
@@ -59,8 +59,10 @@ exports.timerCallback = function ({id, type, token, recipients}) {
   }
 
   console.log(`The ${type} timer for the ${name} event has gone off.`);
-  cancelTimer(id);
   makeTimerInactive(id).then(() => console.log(`Timer with id ${id} is now inactive`));
+  global.clearTimeout(activeTimers[id]);
+  delete activeTimers[id];
+  console.log(`Timer ${id} was taken out of memory.`);
 };
 
 exports.sendSafe = function({ recipients, username, name }) {
