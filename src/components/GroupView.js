@@ -3,7 +3,6 @@ import { Text, View} from 'react-native';
 import { connect } from 'react-redux';
 import Header from './Header';
 import {Actions} from 'react-native-router-flux';
-import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { Container, Item, Input, Title, List, ListItem, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, Card, CardItem, Image } from 'native-base';
 import { addUser, removeUser, deleteGroup, getGroups } from '../actions/axiosController';
 
