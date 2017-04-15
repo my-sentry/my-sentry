@@ -50,7 +50,7 @@ const scenes = Actions.create(
   <Scene key='logout' duration={1} component={Logout} />
   <Scene key='delete' duration={1} component={Delete} />
   <Scene key='locationSearch' duration={1} component={LocationSearch} />
-  <Scene key='errorModal' component={ErrorModal} />
+  <Scene key='errorModal' duration={1} component={ErrorModal} />
 
   </Scene>
 );

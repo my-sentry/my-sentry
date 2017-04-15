@@ -41,7 +41,7 @@ export default connect(mapStateToProps)(function SideMenu ({ name, dispatch }) {
 
         <List style={styles.list}>
           <ListItem onPress={() => {
-            Actions.logout({hide: false});
+            Actions.logout();
           }}>
             <Icon name='arrow-left' size={20} style={{ color: '#EF4841' }}/>
             <Text>    Logout</Text>
