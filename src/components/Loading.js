@@ -25,19 +25,21 @@ export default connect()(function ({dispatch}) {
   async function verifyAndLoad() {
     try {
       await verifyLogin();
+      await getGroups(dispatch);     
       var id = await AsyncStorage.getItem('AUTHENTICATION');
-      await getGroups(dispatch);
       var name = await AsyncStorage.getItem('NAME');
-      dispatch({type: 'SET_VALUES', id: id, name: name});
       var events = await getEvents();
-      var groupIdsfromEvents = await Promise.all(events.data.map(event => (
+      var groupIds = await Promise.all(events.data.map(event => (
         getGroupById(event.group_id)
       )));
-      var newData = groupIdsfromEvents.map((group, index) => (
-         {...events.data[index], groupName: group.data.name}
+      var feed = groupIds.map((group, i) => (
+         {...events.data[i], groupName: group.data.name}
       ));
-      dispatch({type: 'UPDATE_FEED', data: newData});
+
+      dispatch({type: 'SET_VALUES', id: id, name: name});
+      dispatch({type: 'UPDATE_FEED', data: feed});
       return Actions.menu();
+
     } catch ({response}) {
       if (response.status === 401) {
         dispatch({type: 'LOGOUT'});
