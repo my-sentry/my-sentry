@@ -11,3 +11,5 @@ exports.TIMER_OFFSETS = {
 };
 
 exports.TIMER_TYPES = ['WARNING_10', 'WARNING_2', 'DANGER'];
+
+exports.API_URL = 'https://fcm.googleapis.com/fcm/send';

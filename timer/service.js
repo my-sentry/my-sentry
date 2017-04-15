@@ -1,7 +1,7 @@
 const ipc = require('node-ipc');
 const { populateTimers, endEvent } = require('./helpers/util');
 
-require('./worker').start();
+require('./helpers/worker').start();
 
 ipc.config.id = 'timer';
 ipc.config.port = 6060;
@@ -18,12 +18,13 @@ ipc.serve(() => {
 
   ipc.server.on('safe', (data, socket) => {
     var eventId = JSON.parse(data);
-    endEvent(eventId);
+    endEvent(eventId, true);
     console.log(`So and so was marked safe for event ${eventId}`);
   });
 
   ipc.server.on('danger', (data, socket) => {
     var eventId = JSON.parse(data);
+    endEvent(eventId, false);
     console.log(`So and so was marked safe for event ${eventId}`);
   });
 

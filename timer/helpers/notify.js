@@ -1,9 +1,45 @@
-var { makeTimerInactive } = require('../../server/db/controllers/timersCtrl');
-var { cancelTimer } = require('../worker');
-var { sendNotification, endEvent } = require('./fcmClient');
-var { WARNING_10, WARNING_2, DANGER } = require('./constants');
+const { FCM_CLIENT_KEY } = require('../../config/config');
+const { WARNING_10, WARNING_2, DANGER, API_URL } = require('./constants');
+const { makeTimerInactive } = require('../../server/db/controllers/timersCtrl');
+const { cancelTimer } = require('./worker');
+const axios = require('axios');
 
-module.exports = function ({id, type, token, recipients}) {
+var sendNotification = function(token, title, message) {
+
+  var notif = JSON.stringify({
+    'to': token,
+    'data': {
+      'title': title,
+      'body': message,
+      'sound': 'default',
+      'click_action': 'fcm.ACTION.HELLO',
+      'remote': true
+    },
+    'priority': 'normal'
+  });
+
+  return axios({
+    method: 'POST',
+    url: API_URL,
+    headers: {
+      'Content-Type': 'application/json',
+      'Content-Length': parseInt(notif.length),
+      'Authorization': `key=${FCM_CLIENT_KEY}`
+    },
+    data: notif
+  })
+
+  .then(response => {
+    console.log('Send Notification Response: ', response);
+  })
+
+  .catch(err => {
+    console.log('Error Sending Notification: ', err);
+  });
+};
+
+
+exports.timerCallback = function ({id, type, token, recipients}) {
 
   switch (type) {
 
@@ -25,4 +61,18 @@ module.exports = function ({id, type, token, recipients}) {
   console.log(`The ${type} timer for the ${name} event has gone off.`);
   cancelTimer(id);
   makeTimerInactive(id).then(() => console.log(`Timer with id ${id} is now inactive`));
+};
+
+exports.sendSafe = function({ recipients, username, name }) {
+  recipients.forEach(token => {
+    let message = `${username} has marked themselves safe for the event ${name}`;
+    sendNotification(token, 'Safe', message);
+  });
+};
+
+exports.sendDanger = function({ recipients, username, name }) {
+  recipients.forEach(token => {
+    let message = `${username} is in a dangerous situation for the event ${name}!`;
+    sendNotification(token, 'Danger!', message);
+  });
 };

@@ -1,5 +1,5 @@
-var { getActiveTimers, getTimerById } = require('../server/db/controllers/timersCtrl');
-var notify = require('./helpers/notify.js');
+var { getActiveTimers, getTimerById } = require('../../server/db/controllers/timersCtrl');
+var { timerCallback } = require('./notify.js');
 
 global.activeTimers = global.activeTimers || {};
 
@@ -11,7 +11,7 @@ var getMillisecondsToEnd = function(end) {
 
 var startTimer = function(timer) {
   console.log('Timer: ', timer);
-  var callback = notify.bind(null, timer);
+  var callback = timerCallback.bind(null, timer);
   var ms = getMillisecondsToEnd(timer.time);
   activeTimers[timer.id] = setTimeout(callback, ms);
 };
@@ -32,7 +32,7 @@ exports.cancelTimer = function(id) {
     return console.log('Timer does not exist in memory');
   }
 
-  window.clearTimeout(activeTimers[id]);
+  global.clearTimeout(activeTimers[id]);
   delete activeTimers[id];
   console.log(`Timer ${id} was taken out of memory.`);
 };
