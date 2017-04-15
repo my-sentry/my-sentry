@@ -92,5 +92,6 @@ exports.makeTimerInactive = function(id) {
 };
 
 exports.getTimersByEvent = function(eventId) {
-
+  return knex('timers')
+    .where('event_id', eventId);
 };

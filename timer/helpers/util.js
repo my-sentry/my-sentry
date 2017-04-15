@@ -1,4 +1,9 @@
-var { createTimer } = require('../../server/db/controllers/timersCtrl');
+var {
+  createTimer,
+  getTimersByEvent,
+  makeTimerInactive
+} = require('../../server/db/controllers/timersCtrl');
+var { cancelTimer } = require('../worker');
 var { MS_PER_MINUTE, TIMER_TYPES, TIMER_OFFSETS } = require('./constants');
 
 var offsetMinutes = function(offset, date) {
@@ -24,5 +29,11 @@ exports.populateTimers = function(eventId, end) {
 };
 
 exports.endEvent = function(eventId) {
-  
+  return getTimersByEvent(eventId)
+    .then(res => res.map(({ id }) => id))
+    .then(ids => {
+      ids.forEach(id => cancelTimer(id));
+      return Promise.all(ids.map(id => makeTimerInactive(id)));
+    })
+    .catch(console.log);
 };

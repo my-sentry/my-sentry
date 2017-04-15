@@ -32,6 +32,7 @@ exports.cancelTimer = function(id) {
     return console.log('Timer does not exist in memory');
   }
 
+  window.clearTimeout(activeTimers[id]);
   delete activeTimers[id];
   console.log(`Timer ${id} was taken out of memory.`);
 };

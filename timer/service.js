@@ -1,5 +1,5 @@
 const ipc = require('node-ipc');
-const { populateTimers } = require('./helpers/util');
+const { populateTimers, endEvent } = require('./helpers/util');
 
 require('./worker').start();
 
@@ -18,6 +18,7 @@ ipc.serve(() => {
 
   ipc.server.on('safe', (data, socket) => {
     var eventId = JSON.parse(data);
+    endEvent(eventId);
     console.log(`So and so was marked safe for event ${eventId}`);
   });
 
