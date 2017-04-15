@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Actions} from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import {AsyncStorage} from 'react-native';
+import {AsyncStorage, Keyboard} from 'react-native';
 import { Container, Title, Left, Right, Content, Label, Form, Button, Text, Item, Icon, Spinner, Body, Input, H1, Grid, Row } from 'native-base';
 import { loginCtrl } from '../../actions/axiosController.js';
 
@@ -52,7 +52,10 @@ export default connect(mapStateToProps)(function Login ({form, dispatch}) {
     <Left>
       <Button block bordered onPress={Actions.signup} ><Text> SIGNUP</Text></Button></Left>
       <Right>
-      <Button block onPress={()=> loginCtrl(form, dispatch)}><Text> LOGIN </Text>
+      <Button block onPress={()=> {
+        Keyboard.dismiss()
+        loginCtrl(form, dispatch)
+      }}><Text> LOGIN </Text>
       </Button></Right>
     </Row>
   </Grid>
