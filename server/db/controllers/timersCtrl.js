@@ -90,3 +90,7 @@ exports.makeTimerInactive = function(id) {
     .where('id', id)
     .update({ active: 0 });
 };
+
+exports.getTimersByEvent = function(eventId) {
+
+};

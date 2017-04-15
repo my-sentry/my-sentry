@@ -1,30 +1,28 @@
-var timers = require('../../server/db/controllers/timersCtrl');
-var { sendNotification } = require('./fcmClient');
+var { makeTimerInactive } = require('../../server/db/controllers/timersCtrl');
+var { cancelTimer } = require('../worker');
+var { sendNotification, endEvent } = require('./fcmClient');
 var { WARNING_10, WARNING_2, DANGER } = require('./constants');
 
-module.exports = function (timer) {
+module.exports = function ({id, type, token, recipients}) {
 
-  switch (timer.type) {
+  switch (type) {
 
   case WARNING_10:
-    sendNotification(timer.token, 'Ten Minute Warning', 'Mark yourself safe soon.');
+    sendNotification(token, 'Ten Minute Warning', 'Mark yourself safe soon.');
     break;
 
   case WARNING_2:
-    sendNotification(timer.token, 'Two Minute Warning', 'Mark yourself safe soon.');
+    sendNotification(token, 'Two Minute Warning', 'Mark yourself safe soon.');
     break;
 
   case DANGER:
-    timer.recipients.forEach(token => {
+    recipients.forEach(token => {
       sendNotification(token, 'Danger', 'Someone in your group is in trouble');
     });
     break;
   }
 
-  // some logic to send out the correct notification
-  console.log(`The ${timer.type} timer for the ${timer.name} event has gone off.`);
-  delete activeTimers[timer.id];
-  timers
-    .makeTimerInactive(timer.id)
-    .then(console.log.bind(null, 'Timer with id ${id} is now inactive'));
+  console.log(`The ${type} timer for the ${name} event has gone off.`);
+  cancelTimer(id);
+  makeTimerInactive(id).then(() => console.log(`Timer with id ${id} is now inactive`));
 };

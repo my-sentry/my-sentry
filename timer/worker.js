@@ -1,7 +1,7 @@
-var timers = require('../server/db/controllers/timersCtrl');
+var { getActiveTimers, getTimerById } = require('../server/db/controllers/timersCtrl');
 var notify = require('./helpers/notify.js');
 
-global.activeTimers = {};
+global.activeTimers = global.activeTimers || {};
 
 var getMillisecondsToEnd = function(end) {
   var now = new Date();
@@ -17,16 +17,26 @@ var startTimer = function(timer) {
 };
 
 var setUninitializedTimers = function() {
-  return timers.getActiveTimers()
+  return getActiveTimers()
     // filter out timers that haven't been initialized
-    .then(timers => timers.filter(timer => !activeTimers[timer.id]))
+    .then(timers => timers.filter(({ id }) => !activeTimers[id]))
     // get all the relevent information about each timer to be added
-    .then(results => Promise.all(results.map(item => timers.getTimerById(item.id))))
+    .then(results => Promise.all(results.map(({ id }) => getTimerById(id))))
     // start each timer
     .then(inactiveTimers => inactiveTimers.forEach(timer => startTimer(timer)));
 };
 
-module.exports = function() {
+exports.cancelTimer = function(id) {
+
+  if (!activeTimers[id]) {
+    return console.log('Timer does not exist in memory');
+  }
+
+  delete activeTimers[id];
+  console.log(`Timer ${id} was taken out of memory.`);
+};
+
+exports.start = function() {
   setUninitializedTimers();
   setInterval(setUninitializedTimers, 30000);
 };
