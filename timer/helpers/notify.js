@@ -65,14 +65,14 @@ exports.timerCallback = function ({id, type, token, recipients}) {
 
 exports.sendSafe = function({ recipients, username, name }) {
   recipients.forEach(token => {
-    let message = `${username} has marked themselves safe for the event ${name}`;
-    sendNotification(token, 'Safe', message);
+    let message = `${username} has marked themselves safe`;
+    sendNotification(token, `${name}`, message);
   });
 };
 
 exports.sendDanger = function({ recipients, username, name }) {
   recipients.forEach(token => {
-    let message = `${username} is in a dangerous situation for the event ${name}!`;
-    sendNotification(token, 'Danger!', message);
+    let message = `${username} is in a dangerous situation`;
+    sendNotification(token, `${name} - DANGER`, message);
   });
 };
