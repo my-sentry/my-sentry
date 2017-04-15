@@ -71,7 +71,8 @@ exports.updateEventById = function (id, event) {
       'long': event.long,
       'description': event.description,
       'place_id': event.place_id,
-      'place_name': event.location
+      'place_name': event.location,
+      'safe': event.safe
     });
 };
 
@@ -121,4 +122,10 @@ exports.getEventWithRecipients = function(id) {
           return event;
         });
     });
+};
+
+exports.markEventSafe = function(id) {
+  return knex('events')
+    .where('id', id)
+    .update({ safe: 1 });
 };
