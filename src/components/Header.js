@@ -27,7 +27,7 @@ export default connect(mapStateToProps)(function MyHeader ({prev, title}) {
     <Header style={styles.header} > 
     <Left> 
     {title !== 'events' ? (
-      <Button style={styles.menu} onPress={()=> Actions[prev]()}>
+      <Button style={styles.menu} onPress={()=> Actions.pop()}>
         <Icon 
           name='arrow-back' 
           style={styles.menu}          

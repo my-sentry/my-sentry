@@ -19,20 +19,21 @@ const mapStateToProps = ({signup, token}) => {
   };
 };
 const signupOnPress = (passwordRegex, signup, dispatch) => {
+  let { firstName, lastName, username, password, token, confirm } = signup;
   let data = {
-    firstName: signup.firstName,
-    lastName: signup.lastName,
-    username: signup.username,
-    password: signup.password,
-    token: signup.token
+    firstName: firstName,
+    lastName: lastName,
+    username: username,
+    password: password,
+    token: token
   };
 
-  if (signup.confirm === signup.password && passwordRegex && signup.username.length) {
+  if (confirm === password && passwordRegex && username.length) {
     signupCtrl(data, dispatch);
   } else {
-    var errorcode = signup.confirm !== signup.password ? 'Passwords don\'t match' : null;
+    var errorcode = confirm !== password ? 'Passwords don\'t match' : null;
     errorcode = !passwordRegex ? 'Password is invalid' : errorcode;
-    errorcode = !signup.username.length ? 'Username is required' : errorcode;
+    errorcode = !username.length ? 'Username is required' : errorcode;
     Actions.errorModal({
       clear: {type: 'CLEAR_SIGNUP'},
       error: errorcode
@@ -78,7 +79,7 @@ export default connect(mapStateToProps)(function Login ({dispatch, signup}) {
           onChangeText={text => dispatch({type: 'PASSWORD_SIGNUP', text: text})}/>
         </Item>
 
-        <Item last >
+        <Item last style={{borderColor: 'transparent'}}>
           <Input 
           placeholder='Confirm Password' 
           value={signup.confirm} 
@@ -88,7 +89,7 @@ export default connect(mapStateToProps)(function Login ({dispatch, signup}) {
           {signup.confirm === signup.password ? null : <Icon name='ios-close-circle' style={{color: 'red'}}/>}
         </Item>
       {!passwordRegex && signup.password.length
-        ? <Text style={styles.password}
+        ? <Text style={styles.text}
         >password must be atleast 8 characters long and contain letters and numbers
         </Text>
         : null

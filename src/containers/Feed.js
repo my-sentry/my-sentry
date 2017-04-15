@@ -14,14 +14,15 @@ const mapStateToProps = ({feed, auth}) => ({feed, personal: auth.id });
 
 export default connect(mapStateToProps)(function Feed ({feed, personal, dispatch}) {
   return (
-    <Container style={{backgroundColor: '#655E4F'}}><Header /><Container>
+    <Container ><Header /><Container>
      <List style={{marginLeft: 0}}
      dataArray={feed.data}
       renderRow={item => {
+
         let personalCheck = personal === item.user_id;
         let activeCheck = new Date(item.begin).getTime() - Date.now() < 0; 
         return ( <ListItem 
-          style={{marginLeft: 0}}
+          style={{marginLeft: 12}}
           onPress={() => {
             dispatch({
               type: 'CURRENT_ITEM', 
@@ -29,10 +30,10 @@ export default connect(mapStateToProps)(function Feed ({feed, personal, dispatch
               active: activeCheck, 
               personal: personalCheck
             });
-            setTimeout(()=> Actions.eventView({prev: 'dashboard', title: item.name}));
+            Actions.eventView({prev: 'events', title: item.name});
           }}>
         <Body>
-          <Text>{item.name.length > 40 ? [...item.name.slice(0,40), '...'].join('') : item.name}</Text>
+          <Text>{item.name.length > 40 ? [...item.name.slice(0, 40), '...'].join('') : item.name}</Text>
           <Text style={{fontSize: 10}}>{item.description}</Text>
         </Body>
         { activeCheck ? <Right><Icon name='alarm' style={{color: 'red'}} /></Right>
