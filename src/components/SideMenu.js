@@ -22,7 +22,9 @@ const styles = {
     alignSelf: 'center',
     marginTop: 15,
     fontSize: 17,
-    // fontWeight: 'bold'
+  },
+  icon: {
+    color: '#2891ee' 
   }
 };
 
@@ -40,28 +42,26 @@ export default connect(mapStateToProps)(function SideMenu ({ name, dispatch }) {
         </Content>
 
         <List style={styles.list}>
-          <ListItem onPress={() => {
-            Actions.logout();
-          }}>
+          <ListItem onPress={() => Actions.logout()}>
             <Icon name='arrow-left' size={20} style={{ color: '#EF4841' }}/>
-            <Text>    Logout</Text>
+            <Text style={{paddingLeft: 16}}>Logout</Text>
           </ListItem>
 
-          <ListItem onPress={() => {
-            setTimeout(() =>Actions.refresh({key: 'menu', open: value => !value }));
-            getGroups(dispatch).then(()=> Actions.groups());
-
+          <ListItem onPress={async () => {
+            await getGroups(dispatch);
+            await Actions.refresh({key: 'menu', open: value => !value });
+            Actions.groups();
           }}>
-            <Icon name='users' size={20} style={{ color: '#2891ee' }}/>
-            <Text>   Groups</Text>
+            <Icon name='users' size={20} style={styles.icon}/>
+            <Text style={{paddingLeft: 13}}>Groups</Text>
           </ListItem>
 
-          <ListItem onPress={() => {
-            setTimeout(() =>Actions.refresh({key: 'menu', open: value => !value }));
+          <ListItem onPress={async () => {
+            Actions.refresh({key: 'menu', open: value => !value });
             Actions.events();
           }}>
-            <Icon name='calendar' size={20} style={{ color: '#2891ee' }}/>
-            <Text>   Events</Text>
+            <Icon name='calendar' size={20} style={styles.icon}/>
+            <Text style={{paddingLeft: 15}}>Events</Text>
           </ListItem>
         </List>
       </Content>

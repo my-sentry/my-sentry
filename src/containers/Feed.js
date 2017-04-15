@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import {Actions} from 'react-native-router-flux';
 import ActionButton from 'react-native-action-button';
 import Header from '../components/Header';
-import axios from 'axios';
 import { getGroups } from '../actions/axiosController';
 
 
@@ -45,7 +44,10 @@ export default connect(mapStateToProps)(function Feed ({feed, personal, dispatch
     </Container>
         <ActionButton
         buttonColor='rgba(231,76,60,1)'
-        onPress={() => getGroups(dispatch).then(() => Actions.eventForm()) }/>  
+        onPress={async () => {
+          await getGroups(dispatch);
+          Actions.eventForm();
+        }}/>  
   
     </Container>
   );

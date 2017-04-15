@@ -38,7 +38,6 @@ export var styles = {
   back: {
     paddingTop: 0,
     marginTop: 0,
-
   },
   text: {
     fontSize: 8,
@@ -63,6 +62,7 @@ export default connect(mapStateToProps)(function Login ({form, dispatch}) {
     <Row >
     <Content style={styles.content}>
     <Form style={styles.form} >
+
         <Item style={{borderColor: 'transparent'}}>
           <Input 
           placeholder='Username' 
@@ -70,6 +70,7 @@ export default connect(mapStateToProps)(function Login ({form, dispatch}) {
           value={form.username} 
           onChangeText={text => dispatch({type: 'USERNAME', text: text})}/>
         </Item>
+
         <Item last >
           <Input 
           autoCapitalize={'none'} 
@@ -78,7 +79,9 @@ export default connect(mapStateToProps)(function Login ({form, dispatch}) {
           secureTextEntry={true} 
           onChangeText={text => dispatch({type: 'PASSWORD', text: text})}/>
         </Item>
+        
     </Form>
+
     <Row style={styles.confirm}>
       <Button 
       style={styles.confirmButton} 
@@ -89,15 +92,18 @@ export default connect(mapStateToProps)(function Login ({form, dispatch}) {
       }}><Text> LOGIN </Text>
       </Button>
       </Row>
+
       <Row style={styles.textbox}>
       <Button transparent
-        onPress={Actions.signup}
+        onPress={() => {
+          Keyboard.dismiss();
+          Actions.signup();
+        }}
         style={styles.back}
-        >
-
-      <Text style={styles.text}  >Dont Have an account?</Text>
+        ><Text style={styles.text}>Dont Have an account?</Text>
       </Button>
     </Row>
+
     </Content>
     </Row>
   </Grid>
