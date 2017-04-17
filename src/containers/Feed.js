@@ -5,15 +5,20 @@ import {Actions} from 'react-native-router-flux';
 import ActionButton from 'react-native-action-button';
 import Header from '../components/Header';
 import { getGroups } from '../actions/axiosController';
-
-
 import { Container, Title, Content, Button, Left, Right, List, ListItem, Body, Fab, Icon, H1, H2, H3 } from 'native-base';
+
+const styles = {
+  container: {
+    backgroundColor: '#cfcccc',
+  }
+};
 
 const mapStateToProps = ({feed, auth}) => ({feed, personal: auth.id });
 
 export default connect(mapStateToProps)(function Feed ({feed, personal, dispatch}) {
+  console.log(feed.data[0].begin);
   return (
-    <Container ><Header /><Container>
+    <Container ><Header /><Container style={styles.container}>
      <List style={{marginLeft: 0}}
      dataArray={feed.data}
       renderRow={item => {

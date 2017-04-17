@@ -12,7 +12,7 @@ import Header from '../components/Header';
 
 const styles = {
   container: {
-    backgroundColor: '#2D2B36',
+    backgroundColor: '#cfcccc',
     flex: 0,
     justifyContent: 'center',
     alignItems: 'center',

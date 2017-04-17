@@ -23,7 +23,7 @@ const styles = {
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#ffffff'
+    backgroundColor: '#cfcccc'
   },
   item: {
     backgroundColor: '#a0a',
