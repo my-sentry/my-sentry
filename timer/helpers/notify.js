@@ -1,7 +1,6 @@
 const { FCM_CLIENT_KEY } = require('../../config/config');
 const { WARNING_10, WARNING_2, DANGER, API_URL } = require('./constants');
 const { makeTimerInactive } = require('../../server/db/controllers/timersCtrl');
-const { markEventSafe } = require('../../server/db/controllers/eventCtrl');
 const { endTimer } = require('./timers');
 const axios = require('axios');
 
@@ -68,9 +67,6 @@ exports.sendSafe = function({ recipients, username, name, id }) {
   recipients.forEach(token => {
     let message = `${username} has marked themselves safe`;
     sendNotification(token, `${name}`, message);
-  });
-  markEventSafe(id).then(() => {
-    console.log(`Event ${name} (id ${id}) has been marked safe.`);
   });
 };
 
