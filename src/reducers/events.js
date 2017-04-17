@@ -53,7 +53,7 @@ export var dateReducer = (state = {date: new Date(), start: new Date(), end: new
       end: newTime
     };
   case 'START':
-    let startTime = action.time.split(':');
+    let startTime = action.time.split(':').map(x => +x);
     let startSet = new Date(state.date);
     startSet.setHours(startTime[0]);
     startSet.setMinutes(startTime[1]);
@@ -62,7 +62,7 @@ export var dateReducer = (state = {date: new Date(), start: new Date(), end: new
       date: startSet
     };
   case 'END':
-    let endTime = action.time.split(':');
+    let endTime = action.time.split(':').map(x => +x);
     let endSet = new Date(state.date);
     endSet.setHours(endTime[0]);
     endSet.setMinutes(endTime[1]);
