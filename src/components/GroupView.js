@@ -29,14 +29,14 @@ const mapStateToProps = ({groups, auth, searchBar}) => {
   return {
     id: groups.id.id,
     groupName: groups.id.name,
-    admin: groups.id.admin_user,
     isAdmin: groups.id.admin_user === Number(groups.id.userId),
     users: groups.users,
-    searchResults: searchBar.results
+    searchResults: searchBar.results,
+    searchValue: searchBar.searchValue
   };
 };
 
-export default connect(mapStateToProps)(function GroupView ({id, groupName, users, isAdmin, searchResults, dispatch}) {
+export default connect(mapStateToProps)(function GroupView ({id, groupName, users, isAdmin, searchResults, searchValue, dispatch}) {
   return isAdmin
   ? (
     <Container>
@@ -51,7 +51,7 @@ export default connect(mapStateToProps)(function GroupView ({id, groupName, user
             </Body>
               <Right>
                 <Button small bordered danger onPress={() => {
-                  removeUser(id, [user], false);
+                  removeUser(id, [user]);
                   dispatch({type: 'REMOVE_MEMBER', id: user.id});
                 }}>
                   <Icon name='ios-trash-outline' style={{color: 'red'}} />
@@ -62,13 +62,14 @@ export default connect(mapStateToProps)(function GroupView ({id, groupName, user
         </List>
 
         <Item>
-          <Input onChangeText={text => dispatch({type: 'SEARCH_NAME', text: text, users: users})} placeholder='Add a Member'/>
+          <Input onChangeText={text => dispatch({type: 'SEARCH_NAME', text: text, users: users})} value={searchValue} placeholder='Add a Member'/>
           <List dataArray={searchResults}
             renderRow={user =>
               <ListItem onPress={() => {
                 addUser(id, user.id)
                   .then(() => {
                     dispatch({type: 'ADD_MEMBER', user: user});
+                    dispatch({type: 'CLEAR_SEARCH_VALUE'});
                   });
               }}>
                 <Text>{user.username}</Text>

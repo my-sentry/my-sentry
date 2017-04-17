@@ -49,11 +49,10 @@ const header = (state = {title: 'MY-SENTRY', prev: null}, action) => {
   }
 };
 
-const searchBar = (state = {users: [], results: []}, action) => {
+const searchBar = (state = {users: [], results: [], searchValue: null}, action) => {
   switch (action.type) {
   case 'SEARCH_NAME' :
     var searchResults = [];
-    console.log('admin---------->', action.admin)
 
     var search = function (text) {
       if (text === '' || text === ' ') {
@@ -73,6 +72,7 @@ const searchBar = (state = {users: [], results: []}, action) => {
     search(action.text);
 
     return {...state,
+      searchValue: action.text,
       results: searchResults
     };
   case 'ADD_TO_MEMBERS' :
@@ -86,6 +86,11 @@ const searchBar = (state = {users: [], results: []}, action) => {
   case 'RECEIVE_SEARCH_DATA' :
     return {...state,
       users: action.users
+    };
+  case 'CLEAR_SEARCH_VALUE' :
+    return {...state,
+      searchValue: null,
+      results: []
     };
   default :
     return state;
