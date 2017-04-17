@@ -3,9 +3,8 @@ import { Text, View, AsyncStorage} from 'react-native';
 import { connect } from 'react-redux';
 import {Actions} from 'react-native-router-flux';
 import ActionButton from 'react-native-action-button';
-import { Container, Title, Content, Button, Left, Right, Body, Icon, H1 } from 'native-base';
+import { Container, Content, Button, H1 } from 'native-base';
 import { getUsers } from '../actions/axiosController';
-
 
 import Feed from './Feed';
 import Groups from './Groups';
@@ -13,7 +12,7 @@ import Header from '../components/Header';
 
 const styles = {
   container: {
-    backgroundColor: '#2D2B36',
+    backgroundColor: '#cfcccc',
     flex: 0,
     justifyContent: 'center',
     alignItems: 'center',
@@ -32,9 +31,11 @@ export default connect(mapStateToProps)(function Dashboard({dispatch, groups}) {
         <Header />
         <Container style={styles.container}>
         <H1>No Groups</H1>
-        <Button block primary onPress={() => getUsers()
-          .then(res => dispatch({type: 'RECEIVE_USERS', users: res.data}))
-          .then(() =>Actions.groupForm()) } >
+        <Button block primary onPress={async () => {
+          let res = await getUsers();
+          dispatch({type: 'RECEIVE_USERS', users: res.data});
+          Actions.groupForm();
+        }} >
           <Text>Create Group</Text>
         </Button>
         </Container>

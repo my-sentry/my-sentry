@@ -7,6 +7,7 @@ import { signupCtrl } from '../../actions/axiosController';
 import {styles } from './Login';
 var {height, width} = Dimensions.get('window');
 
+
 const mapStateToProps = ({signup, token}) => {
   return { signup: {
     firstName: signup.firstName,
@@ -95,16 +96,19 @@ export default connect(mapStateToProps)(function Login ({dispatch, signup}) {
         : null
       }
       </Form>
+
     <Row style={styles.confirm}>
       <Button 
-      style={styles.confirmButton} 
-      block 
-      onPress={(() => signupOnPress(passwordRegex, signup, dispatch))}>
-        <Text> Create Account</Text>
+        style={styles.confirmButton} 
+        block 
+        onPress={() => signupOnPress(passwordRegex, signup, dispatch)}
+        ><Text> Create Account</Text>
       </Button>
       </Row>
+
       <Row style={styles.textbox}>
-      <Button transparent 
+      <Button 
+        transparent 
         style={styles.back}
         onPress={() => {
           Keyboard.dismiss();

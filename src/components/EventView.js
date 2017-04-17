@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Text, View} from 'react-native';
 import { connect } from 'react-redux';
 import Header from './Header';
-import GoogleStaticMap from'react-native-google-static-map';
+import GoogleStaticMap from 'react-native-google-static-map';
 import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, Card, CardItem, Image } from 'native-base';
 
 const styles = {

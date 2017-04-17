@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Header from './Header';
 import Datepicker from './Datepicker';
 import TimePicker from './TimePicker';
-import { Text, View, TextInput } from 'react-native';
+import { Text, View, TextInput, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { postEvent, getPlaces } from '../actions/axiosController';
@@ -10,8 +10,50 @@ import {
   Container, Title, Content, Footer, FooterTab,
   Button, Left, Right, Body, Icon,
   H1, List, ListItem, InputGroup,
-  Picker, Label, Item, Input, Form
+  Picker, Label, Item, Input, Form,
+  Grid, Row,
 } from 'native-base';
+var {height, width} = Dimensions.get('window');
+
+
+const styles = {
+  content: {
+    alignSelf: 'center',
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: '#cfcccc'
+  },
+  item: {
+    backgroundColor: '#a0a',
+    flex: 1
+  },
+  form: {
+    backgroundColor: '#f0f0f0',
+    width: (width * .90),
+    alignSelf: 'center'
+  },
+  confirm: {
+    paddingTop: 15,
+    alignSelf: 'center'
+  },
+  confirmButton: {
+    width: 150
+  },
+  textbox: {
+    paddingTop: 0,
+    alignSelf: 'center'
+  },
+  back: {
+    paddingTop: 0,
+    marginTop: 0,
+  },
+  text: {
+    paddingLeft: 20,
+    color: 'black',
+  }
+};
 
 
 const mapStateToProps = ({eventForms, dateReducer, groups}) => {
@@ -38,28 +80,18 @@ const mapStateToProps = ({eventForms, dateReducer, groups}) => {
   };
 };
 
-
-const styles = {
-  button: {
-    alignSelf: 'center',
-    marginTop: 20,
-    marginBottom: 20
-  }
-};
-
-
-
 export default connect(mapStateToProps)(function EventForm ({form, groups, dispatch}) {
   var grouplist = groups.map(group => (
     <Item label={group.name} value={group.id} key={group.id}/>
   ));
 
   return (
-    <Container>
-
+   <Container style={styles.container}>
       <Header />
-
-      <Content>
+      <Grid style={{flex: 1}}>
+      <Row >
+      <Content style={styles.content}>
+      <Form style={styles.form} >
 
         <Item stackedLabel>
           <Label>Event Name</Label>
@@ -117,19 +149,25 @@ export default connect(mapStateToProps)(function EventForm ({form, groups, dispa
             <Input onChangeText={text => dispatch({type: 'EVENT_DESC', text: text})}/>
           </InputGroup>
         </Item>
+        </Form>
+
+          <Row style={styles.confirm}>
+            <Button 
+              style={styles.confirmButton} 
+              onPress={() => postEvent(form)
+                .then(() => {
+                  dispatch({type: 'RESET_DATE'});
+                  dispatch({type: 'RESET_EVENT_FORM'});
+                })}
+            ><Text style={styles.text}>Create Event</Text>
+            </Button>
+          </Row>
 
       </Content>
+      </Row>
+      </Grid>
 
-      <Button 
-      style={styles.button} 
-      onPress={() => postEvent(form)
-        .then(() => {
-          dispatch({type: 'RESET_DATE'});
-          dispatch({type: 'RESET_EVENT_FORM'});
-        })
-      }>
-        <Text>Create Event</Text>
-      </Button>
+
 
     </Container>
   );
