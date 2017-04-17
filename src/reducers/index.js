@@ -49,7 +49,7 @@ const header = (state = {title: 'MY-SENTRY', prev: null}, action) => {
   }
 };
 
-const searchBar = (state = {users: [], results: []}, action) => {
+const searchBar = (state = {users: [], results: [], searchValue: null}, action) => {
   switch (action.type) {
   case 'SEARCH_NAME' :
     var searchResults = [];
@@ -59,7 +59,12 @@ const searchBar = (state = {users: [], results: []}, action) => {
         searchResults = [];
       } else {
         searchResults = state.users.filter(user => {
-          return user.username.toLowerCase().includes(text.toLowerCase());
+          //return user.username.toLowerCase().includes(text.toLowerCase());
+          if (action.users.find(u => u.id === user.id)) {
+            return false;
+          } else {
+            return user.username.toLowerCase().includes(text.toLowerCase());
+          }
         });
       }
     };
@@ -67,13 +72,25 @@ const searchBar = (state = {users: [], results: []}, action) => {
     search(action.text);
 
     return {...state,
+      searchValue: action.text,
       results: searchResults
     };
   case 'ADD_TO_MEMBERS' :
     addUser(action.groupId, action.userId);
+  case 'FILTER_SEARCH_DATA' :
+    var updated = state.users.filter(user => user.username !== action.user);
+
+    return {...state,
+      users: updated
+    };
   case 'RECEIVE_SEARCH_DATA' :
     return {...state,
       users: action.users
+    };
+  case 'CLEAR_SEARCH_VALUE' :
+    return {...state,
+      searchValue: null,
+      results: []
     };
   default :
     return state;

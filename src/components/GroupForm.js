@@ -10,13 +10,13 @@ const mapStateToProps = ({groups, auth, searchBar}) => {
   return {
     adminUser: auth,
     groupName: groups.groupName,
-    users: groups.users,
     members: groups.members,
-    searchResults: searchBar.results
+    searchResults: searchBar.results,
+    searchValue: searchBar.searchValue
   };
 };
 
-export default connect(mapStateToProps)(function GroupForm ({users, adminUser, members, groupName, searchResults, tempList, dispatch}) {
+export default connect(mapStateToProps)(function GroupForm ({adminUser, members, groupName, searchResults, searchValue, tempList, dispatch}) {
   return (
     <Container>
 
@@ -41,11 +41,12 @@ export default connect(mapStateToProps)(function GroupForm ({users, adminUser, m
         </Item>
 
         <Item>
-          <Input onChangeText={text => dispatch({type: 'SEARCH_NAME', text: text})} placeholder='Add a Member'/>
+          <Input onChangeText={text => dispatch({type: 'SEARCH_NAME', text: text, users: members})} value={searchValue} placeholder='Add a Member'/>
           <List dataArray={searchResults}
             renderRow={user =>
               <ListItem onPress={() => {
                 dispatch({type: 'ADD_MEMBER', form: true, user: user});
+                dispatch({type: 'CLEAR_SEARCH_VALUE'});
               }}>
                 <Text>{user.username}</Text>
               </ListItem>
