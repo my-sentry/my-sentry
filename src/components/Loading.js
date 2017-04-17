@@ -22,7 +22,7 @@ const styles = {
 };
 
 export default connect()(function ({dispatch}) {
-  const verifyAndLoad = async () => {
+  (async function() {
     try {
       await verifyLogin();
       await getGroups(dispatch);     
@@ -48,8 +48,7 @@ export default connect()(function ({dispatch}) {
         console.log('unknown error', response);
       }
     }
-  };
-  verifyAndLoad();
+  }());
   return (
   <Container style={styles.centering} >
   <Content >
