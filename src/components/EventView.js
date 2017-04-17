@@ -16,18 +16,19 @@ const styles = {
     marginLeft: 20,
   },
   timer: {
-    fontSize: 40,
-    marginLeft: 110,
+    fontSize: 35,
+    marginLeft: 90,
   }
 };
-const mapStateToProps = ({events}) => { 
+const mapStateToProps = ({events, dateReducer}) => { 
   console.log(events);
   return {
     isPersonal: events.isPersonal,
     active: events.active,
     name: events.id.name,
-    begin: Date([events.id.begin]),
-    end: Date([events.id.end]),
+    begin: new Date(events.id.begin),
+    end: new Date(events.id.end),
+    current: new Date(dateReducer.current),
     description: events.id.description,
     lat: events.id.lat,
     long: events.id.long,
@@ -38,9 +39,26 @@ const mapStateToProps = ({events}) => {
 
 
 
-export default connect(mapStateToProps)(function EventView (state) {
-  const {active, isPersonal, name, begin, end, description, lat, long, group} = state;
-  console.log(state);
+export default connect(mapStateToProps)(class EventView extends Component {
+  constructor(props) {
+    super(props)
+  }
+
+  componentDidMount() {
+    const {begin, end, current} = this.props;
+    if (end.valueOf() > current.valueOf()) {
+
+    this.id = setInterval( () => {
+          this.props.dispatch({ type: 'CURRENT'})
+        }, 1000);
+    } 
+  };
+
+  componentWillUnmount() {
+    clearInterval(this.id);
+  }
+  render() {
+  const {active, isPersonal, name, begin, end, description, lat, long, group, current, dispatch} = this.props;
   return (
     <Container>
       <Header title={name}/>
@@ -49,9 +67,9 @@ export default connect(mapStateToProps)(function EventView (state) {
             <CardItem>
               <Body>
               {active ? (
-              <H1>Timer will go here</H1>
+              <H1>{(end.getUTCHours() - current.getUTCHours()) + ":" + (current.getUTCMinutes() - end.getUTCMinutes()) + ":" + (end.getUTCSeconds() -+ current.getUTCSeconds())}</H1>
               ) : (
-              <H1 style={styles.timer}>{begin.slice(16, 25)}</H1>
+              <H1 style={styles.timer}>{begin.toLocaleTimeString()}</H1>
               )}
               </Body>
             </CardItem> 
@@ -62,8 +80,8 @@ export default connect(mapStateToProps)(function EventView (state) {
             </CardItem>
             <CardItem>
               <Body>
-              <Text style={styles.text}>Start: {begin.slice(0, 25)}</Text>
-              <Text style={styles.text}>End: {end.slice(0, 25)}</Text>
+              <Text style={styles.text}>Start: {`${begin.toLocaleString().slice(0, 16)} ${begin.toLocaleString().slice(19)}`}</Text>
+              <Text style={styles.text}>End: {`${end.toLocaleString().slice(0, 16)} ${end.toLocaleString().slice(19)}`}</Text>
               <Text style={styles.text}>Group Name: {group}</Text>
             </Body>
             </CardItem> 
@@ -89,11 +107,12 @@ export default connect(mapStateToProps)(function EventView (state) {
             latitude= {lat.toString()}
             longitude= {long.toString()}
             zoom={13}
-            size={{ width: 400, height: 300 }}
+            size={{ width: 400, height: 325 }}
         />
 			)}
     </Container>
   );
+}
 });
 
 

@@ -22,37 +22,34 @@ const styles = {
 };
 
 export default connect()(function ({dispatch}) {
-  verifyLogin()
-    .catch(({response}) => {
+  async function verifyAndLoad() {
+    try {
+      await verifyLogin();
+      await getGroups(dispatch);     
+      var id = await AsyncStorage.getItem('AUTHENTICATION');
+      var name = await AsyncStorage.getItem('NAME');
+      var events = await getEvents();
+      var groupIds = await Promise.all(events.data.map(event => (
+        getGroupById(event.group_id)
+      )));
+      var feed = groupIds.map((group, i) => (
+         {...events.data[i], groupName: group.data.name}
+      ));
+
+      dispatch({type: 'SET_VALUES', id: id, name: name});
+      dispatch({type: 'UPDATE_FEED', data: feed});
+      return Actions.menu();
+
+    } catch ({response}) {
       if (response.status === 401) {
         dispatch({type: 'LOGOUT'});
         Actions.login();
       } else {
         console.log('unknown error', response);
       }
-    })
-  .then(() => AsyncStorage.getItem('AUTHENTICATION')
-    .then(id=> id !== 'null' 
-    ? getGroups(dispatch)
-      .then(() => AsyncStorage.getItem('NAME')
-        .then(name => dispatch({type: 'SET_VALUES', id: id, name: name}) 
-      ).then(getEvents()
-            .then(({data}) => {
-              Promise.all(data.map(event => (
-                getGroupById(event.group_id, dispatch) 
-                ).then((group) => (
-                    data.map(dataObj => 
-                      ({...dataObj, groupName: group.data.name}))
-                  )
-                ))).then(newData => {
-                  dispatch({type: 'UPDATE_FEED', data: newData[1]})
-                  Actions.menu({title: 'events'})
-              })
-            } ) 
-          )
-      )    
-    : Actions.login()
-  ));
+    }
+  }
+  verifyAndLoad();
   return (
   <Container style={styles.centering} >
   <Content >
