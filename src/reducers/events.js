@@ -31,7 +31,7 @@ export var events = (state = {id: null, active: null, isPersonal: null}, action)
   }
 };
 
-export var dateReducer = (state = {date: new Date(), start: new Date(), end: new Date()}, action) => {
+export var dateReducer = (state = {date: new Date(), start: new Date(), end: new Date(), current: new Date()}, action) => {
   switch (action.type) {
   case 'DATE_CHANGE':
     return {...state,
@@ -52,6 +52,10 @@ export var dateReducer = (state = {date: new Date(), start: new Date(), end: new
     endSet.setMinutes(endTime[1]);
     return {...state,
       end: endSet
+    };
+  case 'CURRENT':
+    return {...state,
+      current: new Date()
     };
   case 'RESET_DATE':
     return { date: new Date(), start: new Date(), end: new Date };
@@ -112,3 +116,4 @@ export var searchLocation = (state = { input: '', predictions: [] }, action) => 
     return state;
   }
 };
+
