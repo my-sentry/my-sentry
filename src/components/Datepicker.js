@@ -7,6 +7,7 @@ const mapStateToProps = ({dateReducer}) => ({date: dateReducer.date});
 export default connect(mapStateToProps)(class MyDatePicker extends Component {
  
   render() {
+    console.log(this.props.date)
     return (
       <DatePicker
         style={{width: 200}}

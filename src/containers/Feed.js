@@ -10,36 +10,70 @@ import { Container, Title, Content, Button, Left, Right, List, ListItem, Body, F
 const styles = {
   container: {
     backgroundColor: '#cfcccc',
-  }
+    paddingLeft: 0,
+  },
+  list: {
+    borderStyle: 'solid',
+    borderColor: 'black',
+  },
+  text: {
+    paddingLeft: 17,
+
+  },
+  subtext: {
+    fontSize: 10,
+    paddingLeft: 17,
+  },
+  current: {
+    marginLeft: 0,
+    backgroundColor: '#4C8338',
+    paddingLeft: 0,
+    borderWidth: 2,
+  },
+  danger: {
+    marginLeft: 0,
+    paddingLeft: 0,
+    borderWidth: 2,
+    backgroundColor: '#974044',
+  },
+  inactive: {
+    marginLeft: 0,
+    borderWidth: 2,
+    paddingLeft: 0,
+
+  },
 };
 
 const mapStateToProps = ({feed, auth}) => ({feed, personal: auth.id });
 
 export default connect(mapStateToProps)(function Feed ({feed, personal, dispatch}) {
-  console.log(feed.data[0].begin);
+  const now = new Date();
   return (
     <Container ><Header /><Container style={styles.container}>
-     <List style={{marginLeft: 0}}
+     <List style={styles.list}
      dataArray={feed.data}
       renderRow={item => {
-
+        let started = new Date(item.begin).valueOf() - now.valueOf() < 0;
+        let ended = new Date(item.end).valueOf() - now.valueOf() < 0;
         let personalCheck = personal === item.user_id;
-        let activeCheck = new Date(item.begin).getTime() - Date.now() < 0; 
+        let current = (started && !ended);
+        let danger = (!item.safe && ended);
         return ( <ListItem 
+          style={danger ? styles.danger : current ? styles.current : styles.inactive}
           onPress={() => {
             dispatch({
               type: 'CURRENT_ITEM', 
               item: item, 
-              active: activeCheck, 
+              active: started && !ended, 
               personal: personalCheck
             });
             Actions.eventView({prev: 'events', title: item.name});
           }}>
         <Body>
-          <Text>{item.name.length > 40 ? [...item.name.slice(0, 40), '...'].join('') : item.name}</Text>
-          <Text style={{fontSize: 10}}>{item.description}</Text>
+          <Text style={styles.text}>{item.name.length > 40 ? [...item.name.slice(0, 40), '...'].join('') : item.name}</Text>
+          <Text style={styles.subtext}>{item.description}</Text>
         </Body>
-        { activeCheck ? <Right><Icon name='alarm' style={{color: 'red'}} /></Right>
+        { started && !ended ? <Right><Icon name='alarm' style={{color: 'red'}} /></Right>
           : null
         }
         </ListItem> );

@@ -1,9 +1,15 @@
 export var feed = (state = {}, action) => {
   switch (action.type) {
   case 'UPDATE_FEED':
+ 
+
     return {...state,
       data: [...action.data].sort((a, b) =>
-      new Date(a.begin).getTime() - new Date(b.begin).getTime())
+      new Date(a.begin).valueOf() - new Date(b.begin).valueOf())
+      .filter(item => {
+        let ended = new Date(item.end).valueOf() - new Date().valueOf() < 0;
+        return !ended || !item.safe;
+      })
     };
   case 'ADD_ITEM':
     return {...state,
@@ -34,8 +40,17 @@ export var events = (state = {id: null, active: null, isPersonal: null}, action)
 export var dateReducer = (state = {date: new Date(), start: new Date(), end: new Date(), current: new Date()}, action) => {
   switch (action.type) {
   case 'DATE_CHANGE':
+
+    let date = action.date.split('-').map(x => +x);
+    let newTime = new Date(state.date);
+
+    newTime.setFullYear(date[0]);
+    newTime.setMonth(date[1] - 1);
+    newTime.setDate(date[2]);
     return {...state,
-      date: action.date
+      date: newTime, 
+      start: newTime,
+      end: newTime
     };
   case 'START':
     let startTime = action.time.split(':');
@@ -43,7 +58,8 @@ export var dateReducer = (state = {date: new Date(), start: new Date(), end: new
     startSet.setHours(startTime[0]);
     startSet.setMinutes(startTime[1]);
     return {...state,
-      start: startSet
+      start: startSet,
+      date: startSet
     };
   case 'END':
     let endTime = action.time.split(':');
@@ -51,7 +67,8 @@ export var dateReducer = (state = {date: new Date(), start: new Date(), end: new
     endSet.setHours(endTime[0]);
     endSet.setMinutes(endTime[1]);
     return {...state,
-      end: endSet
+      end: endSet,
+      date: endSet
     };
   case 'CURRENT':
     return {...state,
