@@ -18,16 +18,15 @@ ipc.serve(() => {
 
   ipc.server.on('safe', (data, socket) => {
     var eventId = JSON.parse(data);
+    // second argument is safe boolean
     endEvent(eventId, true);
-    console.log(`So and so was marked safe for event ${eventId}`);
   });
 
   ipc.server.on('danger', (data, socket) => {
     var eventId = JSON.parse(data);
+    // second argument is safe boolean
     endEvent(eventId, false);
-    console.log(`So and so was marked safe for event ${eventId}`);
   });
-
 });
 
 ipc.server.start();

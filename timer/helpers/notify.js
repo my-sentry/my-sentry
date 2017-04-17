@@ -2,7 +2,7 @@ const { FCM_CLIENT_KEY } = require('../../config/config');
 const { WARNING_10, WARNING_2, DANGER, API_URL } = require('./constants');
 const { makeTimerInactive } = require('../../server/db/controllers/timersCtrl');
 const { markEventSafe } = require('../../server/db/controllers/eventCtrl');
-const { cancelTimer } = require('./worker');
+const { endTimer } = require('./timers');
 const axios = require('axios');
 
 var sendNotification = function(token, title, message) {
@@ -60,10 +60,8 @@ exports.timerCallback = function ({id, type, token, recipients, name}) {
   }
 
   console.log(`The ${type} timer for the ${name} event has gone off.`);
+  endTimer(id);
   makeTimerInactive(id).then(() => console.log(`Timer with id ${id} is now inactive`));
-  global.clearTimeout(activeTimers[id]);
-  delete activeTimers[id];
-  console.log(`Timer ${id} was taken out of memory.`);
 };
 
 exports.sendSafe = function({ recipients, username, name, id }) {
