@@ -21,7 +21,6 @@ export default connect(mapStateToProps)(function Feed ({feed, personal, dispatch
         let personalCheck = personal === item.user_id;
         let activeCheck = new Date(item.begin).getTime() - Date.now() < 0; 
         return ( <ListItem 
-          style={{marginLeft: 12}}
           onPress={() => {
             dispatch({
               type: 'CURRENT_ITEM', 
@@ -43,6 +42,7 @@ export default connect(mapStateToProps)(function Feed ({feed, personal, dispatch
     </List>
     </Container>
         <ActionButton
+        bgColor='green'
         buttonColor='rgba(231,76,60,1)'
         onPress={async () => {
           await getGroups(dispatch);

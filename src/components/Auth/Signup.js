@@ -7,6 +7,7 @@ import { signupCtrl } from '../../actions/axiosController';
 import {styles } from './Login';
 var {height, width} = Dimensions.get('window');
 
+
 const mapStateToProps = ({signup, token}) => {
   return { signup: {
     firstName: signup.firstName,

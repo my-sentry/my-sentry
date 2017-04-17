@@ -49,8 +49,8 @@ export default connect(mapStateToProps)(function SideMenu ({ name, dispatch }) {
 
           <ListItem onPress={async () => {
             await getGroups(dispatch);
-            await Actions.refresh({key: 'menu', open: value => !value });
-            Actions.groups();
+            Actions.refresh({key: 'menu', open: value => !value });
+            Actions.groups({title: 'My Groups'});
           }}>
             <Icon name='users' size={20} style={styles.icon}/>
             <Text style={{paddingLeft: 13}}>Groups</Text>

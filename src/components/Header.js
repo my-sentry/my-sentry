@@ -7,13 +7,13 @@ import { Container, Header, Title, Content, Button, Left, Right, Body, Icon, H1 
 
 const styles = {
   header: {
-    backgroundColor: 'rgba(60,60,60,1)',
+    backgroundColor: 'rgba(160,160,160,1)',
   },
   body: {
     justifyContent: 'center'
   },
   menu: {
-    backgroundColor: 'rgba(60,60,60,0.8)',
+    backgroundColor: 'rgba(160,160,160,0.8)',
   }
 };
 
@@ -26,7 +26,7 @@ export default connect(mapStateToProps)(function MyHeader ({prev, title}) {
   return (
     <Header style={styles.header} > 
     <Left> 
-    {title !== 'events' ? (
+    {title !== 'My-Sentry' ? (
       <Button style={styles.menu} onPress={()=> Actions.pop()}>
         <Icon 
           name='arrow-back' 
@@ -38,19 +38,20 @@ export default connect(mapStateToProps)(function MyHeader ({prev, title}) {
     </Left>
 
       <Body style={styles.body}>
-      {title === 'events' 
-      ? <Text>My-Sentry</Text>
-      : <Text>{title.length > 30 ? `${title.slice(0, 30)}...` : title}</Text>
-    }
+      <Text>{title.length > 30 ? `${title.slice(0, 30)}...` : title}</Text>
       </Body>      
          
     <Right>
-      <Button style={styles.menu} onPress={()=> Actions.refresh({key: 'menu', open: value => !value })}>
-        <Icon 
-        ios='ios-menu' 
-        android="md-menu" 
-        />
-      </Button>
+      {title === 'My-Sentry' 
+
+      ? (<Button style={styles.menu} onPress={()=> Actions.refresh({key: 'menu', open: value => !value })}>
+              <Icon 
+              ios='ios-menu' 
+              android="md-menu" 
+              />
+        </Button>)
+      : null
+    }
     </Right>
     </Header>
   );
