@@ -50,12 +50,28 @@ router.post('/', auth.isAuth, (req, res, next) => {
 });
 
 router.put('/:id', (req, res, next) => {
-  events.updateEventById(req.params.id, req.body)
+
+  var eventId = req.params.id;
+
+  if (req.query.safe) {
+
+    timerService.alertSafe(eventId);
+    res.json(eventId);
+
+  } else if (req.query.danger) {
+
+    timerService.alertDanger(eventId);
+    res.json(eventId);
+
+  } else {
+
+    events.updateEventById(req.params.id, req.body)
     .then(result => res.json(result))
     .catch(err => {
       console.log(err);
       next(err);
     });
+  }
 });
 
 router.delete('/:id', (req, res) => {

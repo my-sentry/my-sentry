@@ -28,5 +28,13 @@ exports.initialize = function() {
 };
 
 exports.sendEvent = function(event) {
-  ipc.of.timer.emit('event', JSON.stringify(event));
+  ipc.of.timer.emit('create', JSON.stringify(event));
+};
+
+exports.alertSafe = function(eventId) {
+  ipc.of.timer.emit('safe', JSON.stringify(eventId));
+};
+
+exports.alertDanger = function(eventId) {
+  ipc.of.timer.emit('danger', JSON.stringify(eventId));
 };

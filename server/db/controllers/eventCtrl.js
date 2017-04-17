@@ -71,7 +71,8 @@ exports.updateEventById = function (id, event) {
       'long': event.long,
       'description': event.description,
       'place_id': event.place_id,
-      'place_name': event.location
+      'place_name': event.location,
+      'safe': event.safe
     });
 };
 
@@ -80,4 +81,51 @@ exports.deleteEventById = function (id) {
   return knex('events')
     .where('id', id)
     .del();
+};
+
+exports.getEventWithRecipients = function(id) {
+  // get event
+  return knex('events')
+    .select('events.*', 'users.username')
+    .where('events.id', id)
+    .innerJoin('users', 'users.id', 'events.user_id')
+    .then(results => {
+      let event = results[0];
+      // get appropriate recipients
+      return knex('events')
+        .select('users.*')
+        .innerJoin('group_user', 'group_user.group_id', 'events.group_id')
+        .innerJoin('users', function() {
+          this
+            .on('group_user.user_id', 'users.id')
+            .andOn('users.id', '!=', 'events.user_id')
+            .andOn('events.id', knex.raw(id));
+        })
+        .union(function() {
+          this
+            .select('users.*')
+            .from('events')
+            .innerJoin('groups', 'events.group_id', 'groups.id')
+            .innerJoin('users', function() {
+              this
+                .on('groups.admin_user', 'users.id')
+                .andOn('users.id', '!=', 'events.user_id')
+                .andOn('events.id', knex.raw(id));
+            });
+        })
+        // return event with recipinets property that contains tokens
+        .then(res => {
+          let recipientTokens = res
+            .map(user => user.token)
+            .filter(token => Boolean(token));
+          event.recipients = recipientTokens;
+          return event;
+        });
+    });
+};
+
+exports.markEventSafe = function(id) {
+  return knex('events')
+    .where('id', id)
+    .update({ safe: 1 });
 };

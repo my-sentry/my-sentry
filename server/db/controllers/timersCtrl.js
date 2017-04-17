@@ -90,3 +90,8 @@ exports.makeTimerInactive = function(id) {
     .where('id', id)
     .update({ active: 0 });
 };
+
+exports.getTimersByEvent = function(eventId) {
+  return knex('timers')
+    .where('event_id', eventId);
+};
