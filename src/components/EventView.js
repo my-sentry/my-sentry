@@ -41,25 +41,25 @@ const mapStateToProps = ({events, dateReducer}) => {
 
 export default connect(mapStateToProps)(class EventView extends Component {
   constructor(props) {
-    super(props)
+    super(props);
   }
 
   componentDidMount() {
     const {begin, end, current} = this.props;
     if (end.valueOf() > current.valueOf()) {
 
-    this.id = setInterval( () => {
-          this.props.dispatch({ type: 'CURRENT'})
-        }, 1000);
+      this.id = setInterval( () => {
+        this.props.dispatch({ type: 'CURRENT'});
+      }, 1000);
     } 
-  };
+  }
 
   componentWillUnmount() {
     clearInterval(this.id);
   }
   render() {
-  const {active, isPersonal, name, begin, end, description, lat, long, group, current, dispatch} = this.props;
-  return (
+    const {active, isPersonal, name, begin, end, description, lat, long, group, current, dispatch} = this.props;
+    return (
     <Container>
       <Header title={name}/>
         <Content>
@@ -67,7 +67,7 @@ export default connect(mapStateToProps)(class EventView extends Component {
             <CardItem>
               <Body>
               {active ? (
-              <H1>{(end.getUTCHours() - current.getUTCHours()) + ":" + (current.getUTCMinutes() - end.getUTCMinutes()) + ":" + (end.getUTCSeconds() -+ current.getUTCSeconds())}</H1>
+              <H1>{(end.getHours() - current.getHours()) + ':' + (end.getUTCMinutes() - current.getUTCMinutes()) + ':' + (end.getSeconds() + (begin.getSeconds() - current.getSeconds()))}</H1>
               ) : (
               <H1 style={styles.timer}>{begin.toLocaleTimeString()}</H1>
               )}
@@ -102,8 +102,8 @@ export default connect(mapStateToProps)(class EventView extends Component {
       <Text>Emergency Alert</Text>
       </Button>
       </Container>
-			) : ( 
-				 <GoogleStaticMap  
+			) : (
+      <GoogleStaticMap  
             latitude= {lat.toString()}
             longitude= {long.toString()}
             zoom={13}
@@ -111,8 +111,8 @@ export default connect(mapStateToProps)(class EventView extends Component {
         />
 			)}
     </Container>
-  );
-}
+    );
+  }
 });
 
 
