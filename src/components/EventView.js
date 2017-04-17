@@ -67,7 +67,7 @@ export default connect(mapStateToProps)(class EventView extends Component {
             <CardItem>
               <Body>
               {active ? (
-              <H1>{(end.getHours() - current.getHours()) + ':' + (end.getMinutes() - current.getMinutes()) + ':' + (end.getSeconds() + (begin.getSeconds() - current.getSeconds()))}</H1>
+              <H1>{(end.getHours() - current.getHours()) + ':' + (end.getUTCMinutes() - current.getUTCMinutes()) + ':' + (end.getSeconds() + (begin.getSeconds() - current.getSeconds()))}</H1>
               ) : (
               <H1 style={styles.timer}>{begin.toLocaleTimeString()}</H1>
               )}
