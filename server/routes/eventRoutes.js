@@ -58,10 +58,7 @@ router.put('/:id', (req, res, next) => {
 
     timerService.alertSafe(eventId);
     events.markEventSafe(id)
-      .then(() => {
-        console.log(`Event ${name} (id ${id}) has been marked safe.`);
-        return events.getEventById(eventId);
-      })
+      .then(() => events.getEventById(eventId))
       .then(event => res.json(event))
       .catch(err => next(err));
 

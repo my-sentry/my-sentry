@@ -3,6 +3,7 @@ import { Text, View} from 'react-native';
 import { connect } from 'react-redux';
 import Header from './Header';
 import GoogleStaticMap from 'react-native-google-static-map';
+import { markSafe, markDanger } from '../actions/axiosController';
 import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, Card, CardItem, Image } from 'native-base';
 
 const styles = {
@@ -20,9 +21,10 @@ const styles = {
     marginLeft: 90,
   }
 };
-const mapStateToProps = ({events, dateReducer}) => { 
+const mapStateToProps = ({events, dateReducer}) => {
   console.log(events);
   return {
+    id: events.id.id,
     isPersonal: events.isPersonal,
     active: events.active,
     name: events.id.name,
@@ -34,7 +36,8 @@ const mapStateToProps = ({events, dateReducer}) => {
     long: events.id.long,
     place_id: events.id.place_id,
     place_name: events.id.place_name,
-    group: events.id.groupName
+    group: events.id.groupName,
+    safe: events.id.safe
   };
 };
 
@@ -52,15 +55,16 @@ export default connect(mapStateToProps)(class EventView extends Component {
       this.id = setInterval( () => {
         this.props.dispatch({ type: 'CURRENT'});
       }, 1000);
-    } 
+    }
   }
+
 
   componentWillUnmount() {
     clearInterval(this.id);
   }
   render() {
-    const {active, isPersonal, name, begin, end, description, lat, long, group, current, dispatch, place_name} = this.props;
-    return (
+  const { id, active, isPersonal, name, begin, end, description, lat, long, group, current, dispatch} = this.props;
+  return (
     <Container style={{backgroundColor: '#F3ECE2'}}>
       <Header title={name}/>
         <Content>
@@ -73,7 +77,7 @@ export default connect(mapStateToProps)(class EventView extends Component {
               <H1 style={styles.timer}>{begin.toLocaleTimeString()}</H1>
               )}
               </Body>
-            </CardItem> 
+            </CardItem>
           </Card>
           <Card>
             <CardItem header>
@@ -86,26 +90,30 @@ export default connect(mapStateToProps)(class EventView extends Component {
               <Text style={styles.text}>Location: {place_name}</Text>
               <Text style={styles.text}>Group Name: {group}</Text>
             </Body>
-            </CardItem> 
+            </CardItem>
           </Card>
 
-           
 
-        
+
+
       {active && isPersonal ? (
       <Container>
-      <Button block style={styles.button}>
+      <Button block style={styles.button} onPress={() => {
+        markSafe(id).then(event => this.props.dispatch({type: 'CURRENT_ITEM', item: event}));
+      }}>
       <Text>Safe</Text>
       </Button>
-      <Button block style={styles.button}>
-      <Text>Extend Event</Text>
-      </Button>
-      <Button danger block style={styles.button}>
-      <Text>Emergency Alert</Text>
+      {/* <Button block style={styles.button}>
+        <Text>Extend Event</Text>
+      </Button> */}
+      <Button danger block style={styles.button} onPress={() => {
+        markDanger(id).then(event => this.props.dispatch({type: 'CURRENT_ITEM', item: event}));
+      }}>
+        <Text>Emergency Alert</Text>
       </Button>
       </Container>
-			) : (
-      <GoogleStaticMap  
+      ) : (
+         <GoogleStaticMap
             latitude= {lat.toString()}
             longitude= {long.toString()}
             zoom={16}
@@ -117,10 +125,3 @@ export default connect(mapStateToProps)(class EventView extends Component {
     );
   }
 });
-
-
-
-
-
-
-
