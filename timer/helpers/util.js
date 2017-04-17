@@ -1,5 +1,5 @@
 const { MS_PER_MINUTE, TIMER_TYPES, TIMER_OFFSETS } = require('./constants');
-const { cancelTimer } = require('./worker');
+const { endTimer } = require('./timers');
 const { sendSafe, sendDanger } = require('./notify');
 const { getEventWithRecipients } = require('../../server/db/controllers/eventCtrl');
 const {
@@ -9,7 +9,8 @@ const {
 } = require('../../server/db/controllers/timersCtrl');
 
 const offsetMinutes = function(offset, date) {
-  return new Date(date - (offset * MS_PER_MINUTE));
+  var ms = offset * MS_PER_MINUTE;
+  return new Date(date.valueOf() - ms);
 };
 
 exports.populateTimers = function(eventId, end) {
@@ -36,7 +37,7 @@ exports.endEvent = function(eventId, safe) {
     .then(timers => timers.map(({ id }) => id))
     .then(ids => {
       // cancel each timer in memory
-      ids.forEach(id => cancelTimer(id));
+      ids.forEach(id => endTimer(id));
       // mark each timer inactive in database
       return Promise.all(ids.map(id => makeTimerInactive(id)));
     })
