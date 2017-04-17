@@ -69,60 +69,62 @@ export default connect(mapStateToProps)(class EventView extends Component {
     return (
       <Container>
         <Header title={name}/>
-          <Content>
 
-            <Card>
-              <CardItem>
-                <Body>
-                  {active ? (
-                  <H1>{(end.getHours() - current.getHours()) + ':' + (end.getUTCMinutes() - current.getUTCMinutes()) + ':' + (end.getSeconds() + (begin.getSeconds() - current.getSeconds()))}</H1>
-                  ) : (
-                  <H1 style={styles.timer}>{begin.toLocaleTimeString()}</H1>
-                  )}
-                </Body>
-              </CardItem>
-            </Card>
+        <Content>
 
-            <Card>
-              <CardItem header>
-                <Text style={styles.text}>{description}</Text>
-              </CardItem>
-              <CardItem>
-                <Body>
-                  <Text style={styles.text}>Start: {`${begin.toLocaleString().slice(0, 16)} ${begin.toLocaleString().slice(19)}`}</Text>
-                  <Text style={styles.text}>End: {`${end.toLocaleString().slice(0, 16)} ${end.toLocaleString().slice(19)}`}</Text>
-                  <Text style={styles.text}>Group Name: {group}</Text>
-                </Body>
-              </CardItem>
-            </Card>
+          <Card>
+            <CardItem>
+              <Body>
+                {active ? (
+                <H1>{(end.getHours() - current.getHours()) + ':' + (end.getUTCMinutes() - current.getUTCMinutes()) + ':' + (end.getSeconds() + (begin.getSeconds() - current.getSeconds()))}</H1>
+                ) : (
+                <H1 style={styles.timer}>{begin.toLocaleTimeString()}</H1>
+                )}
+              </Body>
+            </CardItem>
+          </Card>
 
-          </Content>
+          <Card>
+            <CardItem header>
+              <Text style={styles.text}>{description}</Text>
+            </CardItem>
+            <CardItem>
+              <Body>
+                <Text style={styles.text}>Start: {`${begin.toLocaleString().slice(0, 16)} ${begin.toLocaleString().slice(19)}`}</Text>
+                <Text style={styles.text}>End: {`${end.toLocaleString().slice(0, 16)} ${end.toLocaleString().slice(19)}`}</Text>
+                <Text style={styles.text}>Group Name: {group}</Text>
+              </Body>
+            </CardItem>
+          </Card>
 
-          {active && isPersonal ? (
-          <Container>
-            <Button block style={styles.button} onPress={() => {
-              markSafe(id).then(event => this.props.dispatch({type: 'CURRENT_ITEM', item: event}));
-            }}>
-              <Text>Safe</Text>
-            </Button>
-            {/* <Button block style={styles.button}>
-              <Text>Extend Event</Text>
-            </Button> */}
-            <Button danger block style={styles.button} onPress={() => {
-              markDanger(id).then(event => this.props.dispatch({type: 'CURRENT_ITEM', item: event}));
-            }}>
-              <Text>Emergency Alert</Text>
-            </Button>
-          </Container>
-          ) : (
-          <GoogleStaticMap
-            latitude= {lat.toString()}
-            longitude= {long.toString()}
-            zoom={13}
-            size={{ width: 400, height: 325 }}
-          />
-          )}
+        </Content>
+
+        {active && isPersonal ? (
+        <Container>
+          <Button block style={styles.button} onPress={() => {
+            markSafe(id).then(event => this.props.dispatch({type: 'CURRENT_ITEM', item: event}));
+          }}>
+            <Text>Safe</Text>
+          </Button>
+          {/* <Button block style={styles.button}>
+            <Text>Extend Event</Text>
+          </Button> */}
+          <Button danger block style={styles.button} onPress={() => {
+            markDanger(id).then(event => this.props.dispatch({type: 'CURRENT_ITEM', item: event}));
+          }}>
+            <Text>Emergency Alert</Text>
+          </Button>
+        </Container>
+        ) : (
+        <GoogleStaticMap
+          latitude= {lat.toString()}
+          longitude= {long.toString()}
+          zoom={13}
+          size={{ width: 400, height: 325 }}
+        />
+        )}
+
       </Container>
-      );
+    );
   }
 });
