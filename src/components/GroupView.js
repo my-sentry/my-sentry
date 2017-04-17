@@ -29,6 +29,7 @@ const mapStateToProps = ({groups, auth, searchBar}) => {
   return {
     id: groups.id.id,
     groupName: groups.id.name,
+    admin: groups.id.admin_user,
     isAdmin: groups.id.admin_user === Number(groups.id.userId),
     users: groups.users,
     searchResults: searchBar.results
@@ -61,12 +62,14 @@ export default connect(mapStateToProps)(function GroupView ({id, groupName, user
         </List>
 
         <Item>
-          <Input onChangeText={text => dispatch({type: 'SEARCH_NAME', text: text})} placeholder='Add a Member'/>
+          <Input onChangeText={text => dispatch({type: 'SEARCH_NAME', text: text, users: users})} placeholder='Add a Member'/>
           <List dataArray={searchResults}
             renderRow={user =>
               <ListItem onPress={() => {
                 addUser(id, user.id)
-                  .then(() => dispatch({type: 'ADD_MEMBER', user: user}));
+                  .then(() => {
+                    dispatch({type: 'ADD_MEMBER', user: user});
+                  });
               }}>
                 <Text>{user.username}</Text>
               </ListItem>
@@ -91,7 +94,7 @@ export default connect(mapStateToProps)(function GroupView ({id, groupName, user
         }}>
         <Text>Delete Group</Text>
       </Button>
-      
+
     </Container>
   )
   : (
