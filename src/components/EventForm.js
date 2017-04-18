@@ -26,8 +26,6 @@ export var styles = {
     padding: 0,
     alignSelf: 'center',
     height: 400,
-    // width: width,
-    // backgroundColor: '#ccc2cd',
   },
   item: {
     backgroundColor: '#a0a',
@@ -35,10 +33,13 @@ export var styles = {
   form: {
     padding: 0,
     backgroundColor: '#cccccc',
-    // height: 400,
-
     width: width,
-    // position: 'absolute',
+  },
+  formAlt: {
+    padding: 0,
+    backgroundColor: '#cccccc',
+    height: 400,
+    width: width,
   },
   confirm: {
     height: 125,
@@ -79,13 +80,13 @@ export var styles = {
     paddingLeft: 10,
   },
   listItemAlt: {
-    elevation: .5,
     marginLeft: 0,
     paddingLeft: 0,
     borderWidth: 2,
     backgroundColor: '#ccc',
     margin: 0,
     paddingLeft: 10,
+    borderColor: 'transparent',
   },
 };
 
@@ -120,16 +121,16 @@ export default connect(mapStateToProps)(function EventForm ({form, groups, dispa
   ));
 
   return (
-   <Container style={{backgroundColor: '#1f1f1f'}}>
-      <Header />
-      <Grid>
-      <Row style={styles.container}>
+   <Container style={{backgroundColor: '#1f1f1f'}}><Header/><Grid><Row style={styles.container}>
       <Content style={styles.content}>
-      <Form style={styles.form} >
+      <Form style={styles.formAlt} >
 
-        <Item stackedLabel >
-          <Label>Event Name</Label>
-          <Input onChangeText={text => dispatch({type: 'EVENT_NAME', text: text})}/>
+        <Item >
+          <InputGroup style={{borderColor: 'transparent'}}regular>
+            <Input placeholder='Event Name' 
+            onChangeText={text => dispatch({type: 'EVENT_NAME', text: text})}/>
+          </InputGroup>
+
         </Item>
 
         <Item>
@@ -151,59 +152,52 @@ export default connect(mapStateToProps)(function EventForm ({form, groups, dispa
           });
         }}/>
         </Item>
-        <Item>
-          <InputGroup>
-            <Datepicker />
-          </InputGroup>
-        </Item>
+          <Item>
+            <InputGroup>
+              <Datepicker />
+            </InputGroup>
+          </Item>
 
-        <Item>
-          <InputGroup>
+          <Item>
+            <InputGroup>
+              <Icon name="ios-alarm"/>
+              <TimePicker type={'START'} />
+              <Icon name="ios-alarm"/>
+              <TimePicker type={'END'} />
+            </InputGroup>
+          </Item>
 
-            <Icon name="ios-alarm"/>
-            <TimePicker type={'START'} />
+          <Picker
+            mode='dropdown'
+            style={{width: width * .8}}
+            iosHeader="Select one"
+            selectedValue={form.groupId}
+            onValueChange={id => dispatch({type: 'CURRENT_GROUP', id: id})}
+          >{grouplist}</Picker>
 
-            <Icon name="ios-alarm"/>
-            <TimePicker type={'END'} />
+          <Item stackedLabel style={styles.listItemAlt}>
+            <Label>Event Description</Label>
+            <InputGroup style={{borderColor: 'transparent'}}regular>
+              <Input onChangeText={text => dispatch({type: 'EVENT_DESC', text: text})}/>
+            </InputGroup>
+          </Item>
 
-          </InputGroup>
-        </Item>
-
-        <Picker
-          mode='dropdown'
-          style={{width: 300}}
-          iosHeader="Select one"
-          selectedValue={form.groupId}
-          onValueChange={id => dispatch({type: 'CURRENT_GROUP', id: id})}
-        >{grouplist}</Picker>
-
-        <Item stackedLabel>
-          <Label>Event Description</Label>
-          <InputGroup regular>
-            <Input onChangeText={text => dispatch({type: 'EVENT_DESC', text: text})}/>
-          </InputGroup>
-        </Item>
         </Form>
-
       </Content>
-          <Row style={styles.confirm}>
-            <Button full
-              outline light rounded
-              style={styles.confirmButton} 
-              onPress={() => postEvent(form)
-                .then(() => {
-                  dispatch({type: 'RESET_DATE'});
-                  dispatch({type: 'RESET_EVENT_FORM'});
-                })}
-            ><Text style={styles.text}>Create Event</Text>
-            </Button>
-          </Row>
 
-      </Row>
+      </Row>      
+
+      <Row style={styles.confirm}>
+        <Button full
+          outline light rounded
+          style={styles.confirmButton} 
+          onPress={() => postEvent(form)
+            .then(() => {
+              dispatch({type: 'RESET_DATE'});
+              dispatch({type: 'RESET_EVENT_FORM'});
+            })}><Text style={styles.textbox}>Create Event</Text></Button></Row>
+
       </Grid>
-
-
-
     </Container>
   );
 });

@@ -64,8 +64,7 @@ export default connect(mapStateToProps)(function GroupForm ({adminUser, members,
               members: [...members, adminUser ]
             };
             postGroup(data).then(() => getGroups(dispatch).then(() => Actions.groups()));
-          }}>
-          <Text style={styles.textbox}>Create Group</Text></Button></Row>
+          }}><Text style={styles.textbox}>Create Group</Text></Button></Row>
       </Grid>
     </Container>
   );

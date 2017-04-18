@@ -135,7 +135,7 @@ export default connect(mapStateToProps)(function Feed ({feed, personal, dispatch
           <Text style={styles.subtext}>{item.description}</Text>
         </Body>
         { danger ? <Right style={styles.iconRight}><Text style={styles.iconRightText}>Danger!</Text><Icon name='circle' style={styles.warningIcon} /></Right>
-          : current ? <Right style={styles.iconRight}><Text style={styles.iconRightText}>Active!</Text><Icon name='circle' style={styles.activeIcon} /></Right>
+          : current ? <Right style={styles.iconRight}><Text style={styles.iconRightText}>Active! </Text><Icon name='circle' style={styles.activeIcon} /></Right>
           : null }
       
         </ListItem> );
