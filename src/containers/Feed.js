@@ -9,7 +9,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { Container, Title, Content, Button, Left, Right, List,Grid, Row, ListItem, Body, Fab, H1, H2, H3 } from 'native-base';
 const {height, width} = Dimensions.get('window');
 
-const styles = {
+export var styles = {
   container: {
     backgroundColor: '#cccccc',
     padding: 1,
@@ -19,7 +19,7 @@ const styles = {
     borderColor: 'rgba(0,0,0,0.15)',
     borderLeftColor: null,
     borderRightColor: null,
-    borderRadius: 3,
+    borderRadius: 2.22,
     position: 'absolute',
 
   },
@@ -90,7 +90,7 @@ const styles = {
     top: height * .74,
     width: width,
     position: 'absolute',
-    paddingLeft: width / 4.5,
+    paddingLeft: width / 4.2,
     alignSelf: 'center',
     flexDirection: 'column',
   },

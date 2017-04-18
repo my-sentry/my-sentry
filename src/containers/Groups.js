@@ -1,14 +1,17 @@
 import React, {Component} from 'react';
-import { Text, View, AsyncStorage } from 'react-native';
+import { Text, View, AsyncStorage, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import {Actions} from 'react-native-router-flux';
 import ActionButton from 'react-native-action-button';
 import { getUsers, getGroupById } from '../actions/axiosController';
+import {styles} from './Feed';
 
 
 
-import { Container, Title, Content, List, ListItem, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, H3 } from 'native-base';
+import { Container, Title, Content, Button, Left, Right, List,Grid, Row, ListItem, Body, Fab, H1, H2, H3 } from 'native-base';
+const {height, width} = Dimensions.get('window');
+
 const mapStateToProps = ({groups, auth}) => {
   return {
     groups: groups.groups,
@@ -18,12 +21,13 @@ const mapStateToProps = ({groups, auth}) => {
 };
 export default connect(mapStateToProps)(function Groups ({groups, userId, isAdmin, dispatch}) {
   return (
-      <Container>
-      <Header />
-      <Container>
+    <Container style={{backgroundColor: '#1f1f1f'}}><Header /><Grid><Row style={styles.container}>
+    <Content style={styles.content} >
        <List dataArray={groups}
         renderRow={group =>
-          <ListItem onPress={() => {
+          <ListItem 
+          style={styles.danger}
+          onPress={() => {
             getGroupById(group.id)
               .then(res => {
                 dispatch({type: 'RECEIVE_USERS', users: res.data.users});
@@ -38,22 +42,26 @@ export default connect(mapStateToProps)(function Groups ({groups, userId, isAdmi
           }}>
 
             <Body>
-              <Text>{group.name}</Text>
+              <Text style={styles.text}>{group.name}</Text>
             </Body>
 
           </ListItem>
         }>
-      </List>
-      </Container>
-      <ActionButton
-          buttonColor='rgba(231,76,60,1)'
+    </List></Content>
+    </Row>
+
+    <Row style={styles.confirm}>
+      <Button full
+        outline light rounded
+        style={styles.confirmButton}
           onPress={() =>
             getUsers()
               .then((res) => {
                 dispatch({type: 'RECEIVE_USERS', users: res.data});
                 dispatch({type: 'RECEIVE_SEARCH_DATA', users: res.data});
               })
-              .then(() => Actions.groupForm()) }/>
-      </Container>
+              .then(() => Actions.groupForm({title: "Create a new Group"})) }><Text style={styles.textbox}>Create a new Group</Text></Button></Row> 
+    </Grid>
+    </Container>
   );
 });

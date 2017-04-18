@@ -3,8 +3,9 @@ import { Text, View} from 'react-native';
 import { connect } from 'react-redux';
 import {Actions} from 'react-native-router-flux';
 import Header from './Header';
-import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, List, ListItem, InputGroup, Picker, Label, Item, Input, Form, style} from 'native-base';
+import { Container, Title, Content, Grid, Row, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, List, ListItem, InputGroup, Picker, Label, Item, Input, Form, style} from 'native-base';
 import {postGroup, getGroups } from '../actions/axiosController';
+import {styles} from './EventForm';
 
 const mapStateToProps = ({groups, auth, searchBar}) => {
   return {
@@ -18,37 +19,33 @@ const mapStateToProps = ({groups, auth, searchBar}) => {
 
 export default connect(mapStateToProps)(function GroupForm ({adminUser, members, groupName, searchResults, searchValue, tempList, dispatch}) {
   return (
-    <Container>
-
-      <Header />
-
-      <Content>
-
-        <Form>
-          <Item>
+   <Container style={{backgroundColor: '#1f1f1f'}}><Header /><Grid><Row style={styles.container}>
+      <Content style={styles.content}>
+      <Form style={styles.form} >
+          <Item style={styles.listItemAlt}>
             <Input onChangeText={(text) => dispatch({type: 'ADD_NAME', text: text})} placeholder='Group Name' />
           </Item>
-        </Form>
 
-        <Item>
+        <Item style={styles.list}>
           <List dataArray={members}
             renderRow={member =>
-              <ListItem>
+              <ListItem style={styles.listItem}>
                 <Text>{member.username}</Text>
               </ListItem>
             }>
           </List>
         </Item>
 
-        <Item>
+        </Form>
+
+        <Item style={styles.listItemAlt}>
           <Input onChangeText={text => dispatch({type: 'SEARCH_NAME', text: text, users: members})} value={searchValue} placeholder='Add a Member'/>
           <List dataArray={searchResults}
             renderRow={user =>
-              <ListItem onPress={() => {
+              <ListItem style={styles.listItem} onPress={() => {
                 dispatch({type: 'ADD_MEMBER', form: true, user: user});
                 dispatch({type: 'CLEAR_SEARCH_VALUE'});
-              }}>
-                <Text>{user.username}</Text>
+              }}><Text>{user.username}</Text>
               </ListItem>
             }>
           </List>
@@ -56,18 +53,20 @@ export default connect(mapStateToProps)(function GroupForm ({adminUser, members,
 
       </Content>
 
-      <Button
-        style={{ alignSelf: 'center', marginTop: 20, marginBottom: 20 }}
-        onPress={() => {
-          let data = {
-            name: groupName,
-            members: [...members, adminUser ]
-          };
-          postGroup(data).then(() => getGroups(dispatch).then(() => Actions.groups()));
-        }}>
-        <Text>Create Group</Text>
-      </Button>
-
+      </Row>
+        <Row style={styles.confirm}>
+        <Button full
+          outline light rounded
+          style={styles.confirmButton}
+          onPress={() => {
+            let data = {
+              name: groupName,
+              members: [...members, adminUser ]
+            };
+            postGroup(data).then(() => getGroups(dispatch).then(() => Actions.groups()));
+          }}>
+          <Text style={styles.textbox}>Create Group</Text></Button></Row>
+      </Grid>
     </Container>
   );
 });

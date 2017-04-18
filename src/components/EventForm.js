@@ -16,29 +16,33 @@ import {
 var {height, width} = Dimensions.get('window');
 
 
-const styles = {
+export var styles = {
   container: {
-    flex: 1,
+    top: 25,
     justifyContent: 'center',
-    backgroundColor: '#1f1f1f'
+    backgroundColor: '#1f1f1f',
   },
   content: {
     padding: 0,
     alignSelf: 'center',
+    height: 400,
+    // width: width,
     // backgroundColor: '#ccc2cd',
   },
   item: {
     backgroundColor: '#a0a',
-    flex: 1
   },
   form: {
+    padding: 0,
     backgroundColor: '#cccccc',
-    height: 400,
-    width: (width * .95),
-    alignSelf: 'center'
+    // height: 400,
+
+    width: width,
+    // position: 'absolute',
   },
   confirm: {
-    paddingTop: 15,
+    height: 125,
+    paddingTop: 40,
     alignSelf: 'center'
   },
   confirmButton: {
@@ -52,8 +56,36 @@ const styles = {
     paddingTop: 0,
     marginTop: 0,
   },
+  row: {
+    height: 400,
+    position: 'absolute',
+  },
   text: {
     paddingLeft: 20,
+  },
+  list: {
+    height: 300,
+    marginLeft: 0,
+    marginRight: 0,
+    borderWidth: 2,
+  },
+  listItem: {
+    elevation: .5,
+    marginLeft: 0,
+    paddingLeft: 0,
+    borderWidth: 2,
+    backgroundColor: '#ccc2cd',
+    margin: 0,
+    paddingLeft: 10,
+  },
+  listItemAlt: {
+    elevation: .5,
+    marginLeft: 0,
+    paddingLeft: 0,
+    borderWidth: 2,
+    backgroundColor: '#ccc',
+    margin: 0,
+    paddingLeft: 10,
   },
 };
 
@@ -88,10 +120,10 @@ export default connect(mapStateToProps)(function EventForm ({form, groups, dispa
   ));
 
   return (
-   <Container style={styles.container}>
+   <Container style={{backgroundColor: '#1f1f1f'}}>
       <Header />
-      <Grid style={{flex: 1}}>
-      <Row >
+      <Grid>
+      <Row style={styles.container}>
       <Content style={styles.content}>
       <Form style={styles.form} >
 
@@ -153,8 +185,10 @@ export default connect(mapStateToProps)(function EventForm ({form, groups, dispa
         </Item>
         </Form>
 
+      </Content>
           <Row style={styles.confirm}>
-            <Button light
+            <Button full
+              outline light rounded
               style={styles.confirmButton} 
               onPress={() => postEvent(form)
                 .then(() => {
@@ -165,7 +199,6 @@ export default connect(mapStateToProps)(function EventForm ({form, groups, dispa
             </Button>
           </Row>
 
-      </Content>
       </Row>
       </Grid>
 
