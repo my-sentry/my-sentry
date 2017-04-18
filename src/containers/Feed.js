@@ -6,7 +6,7 @@ import ActionButton from 'react-native-action-button';
 import Header from '../components/Header';
 import { getGroups } from '../actions/axiosController';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Container, Title, Content, Button, Left, Right, List, ListItem, Body, Fab, H1, H2, H3 } from 'native-base';
+import { Container, Title, Content, Button, Left, Right, List,Grid, Row, ListItem, Body, Fab, H1, H2, H3 } from 'native-base';
 const {height, width} = Dimensions.get('window');
 
 const styles = {
@@ -77,6 +77,18 @@ const styles = {
     flex: 0,
     fontSize: 8,
   },
+  confirm: {
+    flex:0.75,
+    paddingTop: 30,
+    alignSelf: 'center'
+  },
+  confirmButton: {
+    width: 200
+  },
+  textbox: {
+    paddingTop: 0,
+    alignSelf: 'center'
+  },
 };
 
 const mapStateToProps = ({feed, auth}) => ({feed, personal: auth.id });
@@ -87,7 +99,7 @@ export default connect(mapStateToProps)(function Feed ({feed, personal, dispatch
   feed.data[2].safe = 1
   // feed.data[3].safe = 1
   return (
-    <Container><Header />
+    <Container><Header /><Grid><Row style = {{flex: 4}}>
     <Content style={styles.container}>
      <List style={styles.container}
      dataArray={feed.data}
@@ -119,14 +131,18 @@ export default connect(mapStateToProps)(function Feed ({feed, personal, dispatch
         </ListItem> );
       }}>
     </List></Content>
-        <ActionButton
+    </Row>
+    <Row style={styles.confirm}>
+        <Button full
+        outline light rounded
+        style={styles.confirmButton}
         bgColor='green'
-        buttonColor='rgba(231,76,60,1)'
+        buttonColor='rgba(231,76,61,1)'
         onPress={async () => {
           await getGroups(dispatch);
           Actions.eventForm();
-        }}/>  
-  
+        }}><Text style={styles.textbox}>Create a new Event</Text></Button></Row> 
+    </Grid>
     </Container>
   );
 });

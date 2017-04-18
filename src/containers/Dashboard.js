@@ -12,8 +12,8 @@ import Header from '../components/Header';
 
 const styles = {
   container: {
-    backgroundColor: '#cfcccc',
-  }
+    backgroundColor: '#cac0ab',
+  },
 };
 
 const mapStateToProps = ({groups}) => groups;
