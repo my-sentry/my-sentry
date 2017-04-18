@@ -8,7 +8,7 @@ import { Container, Header, Title, Content, Button, Left, Right, Body, Icon, H1 
 const styles = {
   header: {
     height: 60,
-    backgroundColor: 'transparent',
+    backgroundColor: '#1f1f1f',
   },
   body: {
     justifyContent: 'center'
