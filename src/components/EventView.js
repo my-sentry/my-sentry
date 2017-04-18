@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Text, View} from 'react-native';
 import { connect } from 'react-redux';
 import Header from './Header';
+import moment from 'moment';
 import GoogleStaticMap from 'react-native-google-static-map';
 import { markSafe, markDanger } from '../actions/axiosController';
 import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, Card, CardItem, Image } from 'native-base';
@@ -23,7 +24,6 @@ const styles = {
 };
 
 const mapStateToProps = ({events, dateReducer}) => {
-  console.log(events);
   return {
     id: events.id.id,
     isPersonal: events.isPersonal,
