@@ -13,9 +13,6 @@ import Header from '../components/Header';
 const styles = {
   container: {
     backgroundColor: '#cfcccc',
-    flex: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
   }
 };
 
@@ -23,7 +20,7 @@ const mapStateToProps = ({groups}) => groups;
 
 export default connect(mapStateToProps)(function Dashboard({dispatch, groups}) {
   return (
-    <Container>
+    <Container style={styles.container}>
     {groups.length > 0 
       ? <Feed />
       : (

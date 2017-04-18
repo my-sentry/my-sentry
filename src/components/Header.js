@@ -7,22 +7,21 @@ import { Container, Header, Title, Content, Button, Left, Right, Body, Icon, H1 
 
 const styles = {
   header: {
-    backgroundColor: 'rgba(160,160,160,1)',
+    backgroundColor: 'transparent',
   },
   body: {
     justifyContent: 'center'
   },
   menu: {
-    backgroundColor: 'rgba(160,160,160,0.8)',
+    backgroundColor: 'transparent',
   }
 };
 
 
 const mapStateToProps = ({header}) => ({prev: header.prev, title: header.title});
 
-// this has to be called MyHeader instead of Header because i am importing Header
 
-export default connect(mapStateToProps)(function MyHeader ({prev, title}) { 
+export default connect(mapStateToProps)(function ({prev, title}) { 
   return (
     <Header style={styles.header} > 
     <Left> 
