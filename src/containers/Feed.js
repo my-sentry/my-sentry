@@ -1,20 +1,39 @@
 import React, {Component} from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, Dimensions} from 'react-native';
 import { connect } from 'react-redux';
 import {Actions} from 'react-native-router-flux';
 import ActionButton from 'react-native-action-button';
 import Header from '../components/Header';
 import { getGroups } from '../actions/axiosController';
-import { Container, Title, Content, Button, Left, Right, List, ListItem, Body, Fab, Icon, H1, H2, H3 } from 'native-base';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { Container, Title, Content, Button, Left, Right, List,Grid, Row, ListItem, Body, Fab, H1, H2, H3 } from 'native-base';
+const {height, width} = Dimensions.get('window');
 
 const styles = {
   container: {
-    backgroundColor: '#cfcccc',
-    paddingLeft: 0,
+    backgroundColor: '#cccccc',
+    padding: 1,
+    top: 25,
+    borderWidth: 4,
+    borderStyle: 'solid',
+    borderColor: 'rgba(0,0,0,0.15)',
+    borderLeftColor: null,
+    borderRightColor: null,
+    borderRadius: 3,
+    position: 'absolute',
+
+  },
+  content: {
+    borderWidth: 5,
+    borderRadius: 5,
+    height: 400,
+    borderColor: 'black',
   },
   list: {
-    borderStyle: 'solid',
-    borderColor: 'black',
+    backgroundColor: '#c4cc4c',
+    margin: 20,
+    borderRadius: 5,
+    backgroundColor: '#4C8338',
   },
   text: {
     paddingLeft: 17,
@@ -26,7 +45,6 @@ const styles = {
   },
   current: {
     marginLeft: 0,
-    backgroundColor: '#4C8338',
     paddingLeft: 0,
     borderWidth: 2,
   },
@@ -34,7 +52,7 @@ const styles = {
     marginLeft: 0,
     paddingLeft: 0,
     borderWidth: 2,
-    backgroundColor: '#974044',
+    backgroundColor: '#ccc2cd',
   },
   inactive: {
     marginLeft: 0,
@@ -42,15 +60,58 @@ const styles = {
     paddingLeft: 0,
 
   },
+  iconRight: {
+    width: 1,
+    flexDirection: 'row',
+    alignSelf: 'center',
+    alignItems: null,
+  },
+  warningIcon: {
+    width: 20,
+    paddingLeft: 5,
+    margin: null,
+    color: 'red', 
+    flex: 0
+  },
+  activeIcon: {
+    width: 20,
+    paddingLeft: 5,
+    margin: null,
+    color: 'green', 
+    flex: 0
+  },
+  iconRightText: {
+    paddingLeft: 32.5,
+    margin: null,
+    flex: 0,
+    fontSize: 8,
+  },
+  confirm: {
+    top: height * .74,
+    width: width,
+    position: 'absolute',
+    paddingLeft: width / 4.5,
+    alignSelf: 'center',
+    flexDirection: 'column',
+  },
+  confirmButton: {
+    width: 200,
+  },
+  textbox: {
+    paddingTop: 0,
+    alignSelf: 'center'
+  },
 };
 
 const mapStateToProps = ({feed, auth}) => ({feed, personal: auth.id });
 
 export default connect(mapStateToProps)(function Feed ({feed, personal, dispatch}) {
   const now = new Date();
+  feed.data[2].safe = 1;
   return (
-    <Container ><Header /><Container style={styles.container}>
-     <List style={styles.list}
+    <Container><Header /><Grid><Row style={styles.container}>
+    <Content style={styles.content} >
+     <List 
      dataArray={feed.data}
       renderRow={item => {
         let started = new Date(item.begin).valueOf() - now.valueOf() < 0;
@@ -73,21 +134,25 @@ export default connect(mapStateToProps)(function Feed ({feed, personal, dispatch
           <Text style={styles.text}>{item.name.length > 40 ? [...item.name.slice(0, 40), '...'].join('') : item.name}</Text>
           <Text style={styles.subtext}>{item.description}</Text>
         </Body>
-        { started && !ended ? <Right><Icon name='alarm' style={{color: 'red'}} /></Right>
-          : null
-        }
+        { danger ? <Right style={styles.iconRight}><Text style={styles.iconRightText}>Danger!</Text><Icon name='circle' style={styles.warningIcon} /></Right>
+          : current ? <Right style={styles.iconRight}><Text style={styles.iconRightText}>Active!</Text><Icon name='circle' style={styles.activeIcon} /></Right>
+          : null }
+      
         </ListItem> );
       }}>
-    </List>
-    </Container>
-        <ActionButton
+    </List></Content>
+    </Row>
+    <Row style={styles.confirm}>
+        <Button full
+        outline light rounded
+        style={styles.confirmButton}
         bgColor='green'
-        buttonColor='rgba(231,76,60,1)'
+        buttonColor='rgba(231,76,61,1)'
         onPress={async () => {
           await getGroups(dispatch);
-          Actions.eventForm();
-        }}/>  
-  
+          Actions.eventForm({title: 'New Event'});
+        }}><Text style={styles.textbox}>Create a new Event</Text></Button></Row> 
+    </Grid>
     </Container>
   );
 });

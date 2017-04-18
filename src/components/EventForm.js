@@ -17,21 +17,24 @@ var {height, width} = Dimensions.get('window');
 
 
 const styles = {
-  content: {
-    alignSelf: 'center',
-  },
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#cfcccc'
+    backgroundColor: '#1f1f1f'
+  },
+  content: {
+    padding: 0,
+    alignSelf: 'center',
+    // backgroundColor: '#ccc2cd',
   },
   item: {
     backgroundColor: '#a0a',
     flex: 1
   },
   form: {
-    backgroundColor: '#f0f0f0',
-    width: (width * .90),
+    backgroundColor: '#cccccc',
+    height: 400,
+    width: (width * .95),
     alignSelf: 'center'
   },
   confirm: {
@@ -51,8 +54,7 @@ const styles = {
   },
   text: {
     paddingLeft: 20,
-    color: 'black',
-  }
+  },
 };
 
 
@@ -93,7 +95,7 @@ export default connect(mapStateToProps)(function EventForm ({form, groups, dispa
       <Content style={styles.content}>
       <Form style={styles.form} >
 
-        <Item stackedLabel>
+        <Item stackedLabel >
           <Label>Event Name</Label>
           <Input onChangeText={text => dispatch({type: 'EVENT_NAME', text: text})}/>
         </Item>
@@ -152,7 +154,7 @@ export default connect(mapStateToProps)(function EventForm ({form, groups, dispa
         </Form>
 
           <Row style={styles.confirm}>
-            <Button 
+            <Button light
               style={styles.confirmButton} 
               onPress={() => postEvent(form)
                 .then(() => {

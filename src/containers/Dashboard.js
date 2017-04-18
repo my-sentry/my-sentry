@@ -12,18 +12,15 @@ import Header from '../components/Header';
 
 const styles = {
   container: {
-    backgroundColor: '#cfcccc',
-    flex: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-  }
+    backgroundColor: '#1f1f1f',
+  },
 };
 
 const mapStateToProps = ({groups}) => groups;
 
 export default connect(mapStateToProps)(function Dashboard({dispatch, groups}) {
   return (
-    <Container>
+    <Container style={styles.container}>
     {groups.length > 0 
       ? <Feed />
       : (
@@ -34,6 +31,7 @@ export default connect(mapStateToProps)(function Dashboard({dispatch, groups}) {
         <Button block primary onPress={async () => {
           let res = await getUsers();
           dispatch({type: 'RECEIVE_USERS', users: res.data});
+          dispatch({type: 'RECEIVE_SEARCH_DATA', users: res.data});
           Actions.groupForm();
         }} >
           <Text>Create Group</Text>

@@ -4,12 +4,11 @@ export var feed = (state = {}, action) => {
  
 
     return {...state,
-      data: [...action.data].sort((a, b) =>
-      new Date(a.begin).valueOf() - new Date(b.begin).valueOf())
+      data: [...action.data]
       .filter(item => {
         let ended = new Date(item.end).valueOf() - new Date().valueOf() < 0;
         return !ended || !item.safe;
-      })
+      }).sort((a, b) => new Date(a.begin).valueOf() - new Date(b.begin).valueOf())
     };
   case 'ADD_ITEM':
     return {...state,
