@@ -25,7 +25,7 @@ const mapStateToProps = ({groups}) => groups;
 export default connect(mapStateToProps)(function Dashboard({dispatch, groups}) {
   return (
     <Container>
-    {groups.length > 0 
+    {groups.length > 0
       ? <Feed />
       : (
       <Content>
@@ -33,7 +33,10 @@ export default connect(mapStateToProps)(function Dashboard({dispatch, groups}) {
         <Container style={styles.container}>
         <H1>No Groups</H1>
         <Button block primary onPress={() => getUsers()
-          .then(res => dispatch({type: 'RECEIVE_USERS', users: res.data}))
+          .then(res => {
+            dispatch({type: 'RECEIVE_USERS', users: res.data});
+            dispatch({type: 'RECEIVE_SEARCH_DATA', users: res.data});
+          })
           .then(() =>Actions.groupForm()) } >
           <Text>Create Group</Text>
         </Button>
@@ -44,7 +47,3 @@ export default connect(mapStateToProps)(function Dashboard({dispatch, groups}) {
     </Container>
   );
 });
-
-
-
-
