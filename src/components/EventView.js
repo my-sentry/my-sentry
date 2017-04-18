@@ -115,9 +115,6 @@ export default connect(mapStateToProps)(class EventView extends Component {
           }}>
             <Text>Safe</Text>
           </Button>
-          {/* <Button block style={styles.button}>
-            <Text>Extend Event</Text>
-          </Button> */}
           <Button danger block style={styles.button} onPress={() => {
             markDanger(id).then(event => this.props.dispatch({type: 'CURRENT_ITEM', item: event, active: active, isPersonal: isPersonal }));
           }}>
