@@ -1,10 +1,10 @@
 import moment from 'moment';
+import _ from 'lodash';
 
 export var feed = (state = {}, action) => {
   switch (action.type) {
+
   case 'UPDATE_FEED':
-
-
     return {...state,
       data: [...action.data]
       .filter(item => {
@@ -12,6 +12,7 @@ export var feed = (state = {}, action) => {
         return !ended || !item.safe;
       }).sort((a, b) => new Date(a.begin).valueOf() - new Date(b.begin).valueOf())
     };
+
   case 'ADD_ITEM':
     return {...state,
     };
@@ -19,22 +20,23 @@ export var feed = (state = {}, action) => {
   case 'REMOVE_ITEM':
     return {...state,
     };
+
   default:
     return state;
   }
 };
 
-export var events = (state = {id: null, active: null, isPersonal: null}, action) => {
+export var event = (state = {id: null, active: null, isPersonal: null}, action) => {
   switch (action.type) {
+
   case 'CURRENT_ITEM':
-    return {...state,
-      id: action.item,
-      active: action.active,
-      isPersonal: action.personal
-    };
+    var event = action.item;
+    event.active = action.active;
+    event.isPersonal = action.personal;
+    return event;
+
   default:
     return state;
-
   }
 };
 
@@ -98,7 +100,7 @@ export var dateReducer = (state = defaultDates(), action) => {
 
   case 'CURRENT':
     return {...state,
-      current: moment().second(0).millisecond(0).format()
+      current: moment().format()
     };
 
   case 'RESET_DATE':
@@ -127,7 +129,6 @@ export var eventForms = (state = defaultForm, action) => {
       name: action.text,
     };
   case 'ADD_LOCATION':
-    console.log(action);
     return {...state,
       location: action.location,
       lat: action.lat,

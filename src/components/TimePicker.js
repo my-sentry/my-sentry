@@ -10,7 +10,6 @@ const mapStateToProps = ({dateReducer}) => ({
 
 export default connect(mapStateToProps)(function TimePicker (state) {
   const {type, dispatch} = state;
-  console.log(`state[${type}]`, state[type].format('HH:mm'));
   return (
       <DatePicker
         style={{width: 100}}
