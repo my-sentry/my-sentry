@@ -8,14 +8,19 @@ import { Container, Header, Title, Content, Button, Left, Right, Body, Icon, H1 
 const styles = {
   header: {
     height: 60,
-    backgroundColor: 'teal',
+    backgroundColor: 'transparent',
   },
   body: {
     justifyContent: 'center'
   },
   menu: {
     backgroundColor: 'transparent',
-  }
+  },
+  text: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#f0f0f0'
+  },
 };
 
 
@@ -38,7 +43,7 @@ export default connect(mapStateToProps)(function ({prev, title}) {
     </Left>
 
       <Body style={styles.body}>
-      <Text>{title.length > 30 ? `${title.slice(0, 30)}...` : title}</Text>
+      <Text style={styles.text}>{title.length > 30 ? `${title.slice(0, 30)}...` : title}</Text>
       </Body>      
          
     <Right>

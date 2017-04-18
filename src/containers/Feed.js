@@ -11,14 +11,23 @@ const {height, width} = Dimensions.get('window');
 
 const styles = {
   container: {
-    paddingLeft: 0,
-    top: 35,
-    height: 420,
-    borderColor: 'black',
+    backgroundColor: '#cccccc',
+    padding: 1,
+    top: 25,
+    borderWidth: 4,
     borderStyle: 'solid',
+    borderColor: 'rgba(0,0,0,0.15)',
+    borderLeftColor: null,
+    borderRightColor: null,
+    borderRadius: 3,
+    position: 'absolute',
+
   },
   content: {
-    backgroundColor: '#4F4F4F',
+    borderWidth: 5,
+    borderRadius: 5,
+    height: 400,
+    borderColor: 'black',
   },
   list: {
     backgroundColor: '#c4cc4c',
@@ -78,12 +87,15 @@ const styles = {
     fontSize: 8,
   },
   confirm: {
-    flex:0.75,
-    paddingTop: 30,
-    alignSelf: 'center'
+    top: height * .75,
+    width: width,
+    position: 'absolute',
+    paddingLeft: width /5,
+    alignSelf: 'center',
+    flexDirection: 'column',
   },
   confirmButton: {
-    width: 200
+    width: 200,
   },
   textbox: {
     paddingTop: 0,
@@ -99,9 +111,9 @@ export default connect(mapStateToProps)(function Feed ({feed, personal, dispatch
   feed.data[2].safe = 1
   // feed.data[3].safe = 1
   return (
-    <Container><Header /><Grid><Row style = {{flex: 4}}>
-    <Content style={styles.container}>
-     <List style={styles.container}
+    <Container><Header /><Grid><Row style={styles.container}>
+    <Content style={styles.content} >
+     <List 
      dataArray={feed.data}
       renderRow={item => {
         let started = new Date(item.begin).valueOf() - now.valueOf() < 0;
