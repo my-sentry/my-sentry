@@ -31,6 +31,7 @@ export default connect(mapStateToProps)(function Dashboard({dispatch, groups}) {
         <Button block primary onPress={async () => {
           let res = await getUsers();
           dispatch({type: 'RECEIVE_USERS', users: res.data});
+          dispatch({type: 'RECEIVE_SEARCH_DATA', users: res.data});
           Actions.groupForm();
         }} >
           <Text>Create Group</Text>
