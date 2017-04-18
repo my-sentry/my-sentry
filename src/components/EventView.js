@@ -7,7 +7,7 @@ import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body
 
 const styles = {
   text: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: 'bold',
   },
   button: {
@@ -33,6 +33,7 @@ const mapStateToProps = ({events, dateReducer}) => {
     lat: events.id.lat,
     long: events.id.long,
     place_id: events.id.place_id,
+    place_name: events.id.place_name,
     group: events.id.groupName
   };
 };
@@ -58,9 +59,9 @@ export default connect(mapStateToProps)(class EventView extends Component {
     clearInterval(this.id);
   }
   render() {
-    const {active, isPersonal, name, begin, end, description, lat, long, group, current, dispatch} = this.props;
+    const {active, isPersonal, name, begin, end, description, lat, long, group, current, dispatch, place_name} = this.props;
     return (
-    <Container>
+    <Container style={{backgroundColor: '#F3ECE2'}}>
       <Header title={name}/>
         <Content>
           <Card>
@@ -82,6 +83,7 @@ export default connect(mapStateToProps)(class EventView extends Component {
               <Body>
               <Text style={styles.text}>Start: {`${begin.toLocaleString().slice(0, 16)} ${begin.toLocaleString().slice(19)}`}</Text>
               <Text style={styles.text}>End: {`${end.toLocaleString().slice(0, 16)} ${end.toLocaleString().slice(19)}`}</Text>
+              <Text style={styles.text}>Location: {place_name}</Text>
               <Text style={styles.text}>Group Name: {group}</Text>
             </Body>
             </CardItem> 
@@ -89,7 +91,7 @@ export default connect(mapStateToProps)(class EventView extends Component {
 
            
 
-        </Content>
+        
       {active && isPersonal ? (
       <Container>
       <Button block style={styles.button}>
@@ -106,10 +108,11 @@ export default connect(mapStateToProps)(class EventView extends Component {
       <GoogleStaticMap  
             latitude= {lat.toString()}
             longitude= {long.toString()}
-            zoom={13}
-            size={{ width: 400, height: 325 }}
+            zoom={16}
+            size={{ width: 415, height: 350 }}
         />
 			)}
+      </Content>
     </Container>
     );
   }
