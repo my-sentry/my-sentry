@@ -100,7 +100,7 @@ export default connect(mapStateToProps)(function Login ({dispatch, signup}) {
     <Row style={styles.confirm}>
       <Button 
         style={styles.confirmButton} 
-        block 
+        block light
         onPress={() => signupOnPress(passwordRegex, signup, dispatch)}
         ><Text> Create Account</Text>
       </Button>

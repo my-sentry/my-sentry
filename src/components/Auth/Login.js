@@ -13,14 +13,14 @@ export var styles = {
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#cfcccc'
+    backgroundColor: '#1f1f1f'
   },
   item: {
     backgroundColor: '#a0a',
     flex: 1
   },
   form: {
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#cccccc',
     width: (width * .90),
     alignSelf: 'center'
   },
@@ -41,7 +41,7 @@ export var styles = {
   },
   text: {
     fontSize: 8,
-    color: 'black',
+    color: 'white',
     fontFamily: 'sans-serif',
     alignSelf: 'center'
   }
@@ -85,7 +85,7 @@ export default connect(mapStateToProps)(function Login ({form, dispatch}) {
     <Row style={styles.confirm}>
       <Button 
       style={styles.confirmButton} 
-      block 
+      block light
       onPress={()=> {
         Keyboard.dismiss();
         loginCtrl(form, dispatch);

@@ -87,10 +87,10 @@ const styles = {
     fontSize: 8,
   },
   confirm: {
-    top: height * .75,
+    top: height * .74,
     width: width,
     position: 'absolute',
-    paddingLeft: width /5,
+    paddingLeft: width / 4.5,
     alignSelf: 'center',
     flexDirection: 'column',
   },
@@ -152,7 +152,7 @@ export default connect(mapStateToProps)(function Feed ({feed, personal, dispatch
         buttonColor='rgba(231,76,61,1)'
         onPress={async () => {
           await getGroups(dispatch);
-          Actions.eventForm();
+          Actions.eventForm({title: 'New Event'});
         }}><Text style={styles.textbox}>Create a new Event</Text></Button></Row> 
     </Grid>
     </Container>
