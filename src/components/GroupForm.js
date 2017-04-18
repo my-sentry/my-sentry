@@ -38,8 +38,10 @@ export default connect(mapStateToProps)(function GroupForm ({adminUser, members,
 
         </Form>
 
-        <Item style={styles.listItemAlt}>
+        <Item style={styles.addMember}>
+        <Row>
           <Input onChangeText={text => dispatch({type: 'SEARCH_NAME', text: text, users: members})} value={searchValue} placeholder='Add a Member'/>
+          </Row>
           <List dataArray={searchResults}
             renderRow={user =>
               <ListItem style={styles.listItem} onPress={() => {
@@ -49,6 +51,7 @@ export default connect(mapStateToProps)(function GroupForm ({adminUser, members,
               </ListItem>
             }>
           </List>
+
         </Item>
 
       </Content>

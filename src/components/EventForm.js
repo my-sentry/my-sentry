@@ -38,7 +38,7 @@ export var styles = {
   formAlt: {
     padding: 0,
     backgroundColor: '#cccccc',
-    height: 400,
+    height: height / 1.8,
     width: width,
   },
   confirm: {
@@ -87,6 +87,16 @@ export var styles = {
     margin: 0,
     paddingLeft: 10,
     borderColor: 'transparent',
+  },
+  addMember: {
+    marginLeft: 0,
+    paddingLeft: 0,
+    borderWidth: 2,
+    backgroundColor: '#ccc',
+    margin: 0,
+    paddingLeft: 10,
+    borderColor: 'transparent',
+    height: 50,
   },
 };
 
