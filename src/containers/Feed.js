@@ -130,8 +130,8 @@ export default connect(mapStateToProps)(function Feed ({feed, personal, dispatch
             Actions.eventView({prev: 'events', title: item.name});
           }}>
         <Body>
-          <Text style={styles.text}>{item.name.length > 40 ? [...item.name.slice(0, 40), '...'].join('') : item.name}</Text>
-          <Text style={styles.subtext}>{item.description}</Text>
+          <Text style={styles.text}>{item.fullName.length > 40 ? [...item.fullName.slice(0, 40), '...'].join('') : item.fullName}</Text>
+          <Text style={styles.subtext}>{item.name}</Text>
         </Body>
         { danger ? <Right style={styles.iconRight}><Text style={styles.iconRightText}>Danger!</Text><Icon name='circle' style={styles.warningIcon} /></Right>
           : current ? <Right style={styles.iconRight}><Text style={styles.iconRightText}>Active! </Text><Icon name='circle' style={styles.activeIcon} /></Right>
@@ -146,7 +146,6 @@ export default connect(mapStateToProps)(function Feed ({feed, personal, dispatch
         outline light rounded
         style={styles.confirmButton}
         bgColor='green'
-        buttonColor='rgba(231,76,61,1)'
         onPress={async () => {
           await getGroups(dispatch);
           Actions.eventForm({title: 'New Event'});

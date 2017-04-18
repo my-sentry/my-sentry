@@ -28,6 +28,12 @@ export var getGroupById = function(id) {
 
 };
 
+export var getUserById = function(id) {
+  return axios(`${URL_CONFIG}/api/users/${id}`)
+  .catch(err => console.log(err));
+
+};
+
 export var addUser = function(groupId, userId) {
   return axios({
     method: 'put',

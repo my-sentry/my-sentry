@@ -60,7 +60,7 @@ export default connect(mapStateToProps)(function Groups ({groups, userId, isAdmi
                 dispatch({type: 'RECEIVE_USERS', users: res.data});
                 dispatch({type: 'RECEIVE_SEARCH_DATA', users: res.data});
               })
-              .then(() => Actions.groupForm({title: "Create a new Group"})) }><Text style={styles.textbox}>Create a new Group</Text></Button></Row> 
+              .then(() => Actions.groupForm({title: 'Create a new Group'})) }><Text style={styles.textbox}>Create a new Group</Text></Button></Row> 
     </Grid>
     </Container>
   );
