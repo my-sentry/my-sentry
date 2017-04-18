@@ -34,7 +34,7 @@ export default connect(mapStateToProps)(function LocationSearch({ predictions, d
   return (
     <Container style={{
       position: 'absolute',
-      top: ( height / 4) + 25,
+      top: ( height / 4) + 29,
       height: 150,
       width: width,
       backgroundColor: '#ccc2cd',  

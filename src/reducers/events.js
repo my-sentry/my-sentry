@@ -7,7 +7,7 @@ export var feed = (state = {}, action) => {
       data: [...action.data]
       .filter(item => {
         let ended = new Date(item.end).valueOf() - new Date().valueOf() < 0;
-        return !ended || !item.safe;
+        return !ended;
       }).sort((a, b) => new Date(a.begin).valueOf() - new Date(b.begin).valueOf())
     };
   case 'ADD_ITEM':
