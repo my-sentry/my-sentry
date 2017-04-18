@@ -107,9 +107,7 @@ const mapStateToProps = ({feed, auth}) => ({feed, personal: auth.id });
 
 export default connect(mapStateToProps)(function Feed ({feed, personal, dispatch}) {
   const now = new Date();
-  // feed.data[1].safe = 1
-  feed.data[2].safe = 1
-  // feed.data[3].safe = 1
+  feed.data[2].safe = 1;
   return (
     <Container><Header /><Grid><Row style={styles.container}>
     <Content style={styles.content} >
