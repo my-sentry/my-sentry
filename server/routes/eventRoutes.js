@@ -57,7 +57,7 @@ router.put('/:id', (req, res, next) => {
   if (req.query.safe) {
 
     timerService.alertSafe(eventId);
-    events.markEventSafe(id)
+    events.markEventSafe(eventId)
       .then(() => events.getEventById(eventId))
       .then(event => res.json(event))
       .catch(err => next(err));
