@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Actions} from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { Dimensions, Keyboard } from 'react-native';
+import { Dimensions, TextInput, Keyboard } from 'react-native';
 import { Container, Title, Content, Label, Form, Button, Item, Text, Icon, Left, Right, Body, Input, H1, Grid, Row } from 'native-base';
 import { signupCtrl } from '../../actions/axiosController';
 import {styles } from './Login';
@@ -43,84 +43,120 @@ const signupOnPress = (passwordRegex, signup, dispatch) => {
   Keyboard.dismiss();
 };
 
-export default connect(mapStateToProps)(function Login ({dispatch, signup}) {
-  const passwordRegex = /^(?=.*\d)([0-9a-zA-Z \W]{8,})$/g.test(signup.password);
-  
-  return (
-   <Container style={styles.container}>
-      <Grid style={{flex: 1}}>
-      <Row >
-    <Content style={styles.content}>
-      <Form style={styles.form} >
-        <Item >
-          <Input 
-          placeholder='First Name' 
-          value={signup.firstName} 
-          onChangeText={text => dispatch({type: 'FIRST_NAME', text: text})}/>
-        </Item>
+export default connect(mapStateToProps)(class Signup extends Component {
+  constructor(props) {
+    super(props);
+  }
 
-        <Item >
-          <Input 
-          placeholder='Last Name' 
-          value={signup.lastName} 
-          onChangeText={text => dispatch({type: 'LAST_NAME', text: text})}/>
-        </Item>
+  focusNextField(nextField) {
+    this.refs[nextField].focus();
+  }
 
-        <Item >
-          <Input placeholder='Username' 
-          value={signup.username} 
-          onChangeText={text => dispatch({type: 'USERNAME_SIGNUP', text: text})}/>
-        </Item>
+  render() {
 
-        <Item >
-          <Input 
-          placeholder='Password' 
-          value={signup.password} 
-          secureTextEntry={true} 
-          onChangeText={text => dispatch({type: 'PASSWORD_SIGNUP', text: text})}/>
-        </Item>
+    const {signup, dispatch} = this.props;
+    const passwordRegex = /^(?=.*\d)([0-9a-zA-Z \W]{8,})$/g.test(signup.password);
+    return (
+     <Container style={styles.container}>
+        <Grid style={{flex: 1}}>
+        <Row >
+      <Content style={styles.content}>
+        <Form style={styles.form} >
+          <Item >
+            <TextInput 
+            underlineColorAndroid='rgba(0,0,0,0)'
+            ref='1'
+            style={styles.formInput} 
+            returnKeyType = {'next'}
+            placeholder='First Name' 
+            value={signup.firstName} 
+            onSubmitEditing={() => this.focusNextField('2')}
+            onChangeText={text => dispatch({type: 'FIRST_NAME', text: text})}/>
+          </Item>
 
-        <Item last style={{borderColor: 'transparent'}}>
-          <Input 
-          placeholder='Confirm Password' 
-          value={signup.confirm} 
-          secureTextEntry={true} 
-          onChangeText={text => dispatch({type: 'CONFIRM_PASSWORD', text: text})}/>
+          <Item >
+            <TextInput 
+            underlineColorAndroid='rgba(0,0,0,0)'
+            ref='2'
+            style={styles.formInput} 
+            returnKeyType = {'next'}
+            placeholder='Last Name' 
+            value={signup.lastName} 
+            onSubmitEditing={() => this.focusNextField('3')}
+            onChangeText={text => dispatch({type: 'LAST_NAME', text: text})}/>
+          </Item>
 
-          {signup.confirm === signup.password ? null : <Icon name='ios-close-circle' style={{color: 'red'}}/>}
-        </Item>
-      {!passwordRegex && signup.password.length
-        ? <Text style={styles.text}
-        >password must be atleast 8 characters long and contain letters and numbers
-        </Text>
-        : null
-      }
-      </Form>
+          <Item >
+            <TextInput             
+            underlineColorAndroid='rgba(0,0,0,0)'
+            ref='3'
+            style={styles.formInput} 
+            returnKeyType = {'next'}
+            placeholder='Username' 
+            value={signup.username} 
+            onSubmitEditing={() => this.focusNextField('4')}
+            onChangeText={text => dispatch({type: 'USERNAME_SIGNUP', text: text})}/>
+          </Item>
 
-    <Row style={styles.confirm}>
-      <Button 
-        style={styles.confirmButton} 
-        block light
-        onPress={() => signupOnPress(passwordRegex, signup, dispatch)}
-        ><Text> Create Account</Text>
-      </Button>
-      </Row>
+          <Item >
+            <TextInput 
+            underlineColorAndroid='rgba(0,0,0,0)'
+            ref='4'
+            style={styles.formInput} 
+            returnKeyType = {'next'}
+            placeholder='Password' 
+            value={signup.password} 
+            secureTextEntry={true} 
+            onSubmitEditing={() => this.focusNextField('5')}
+            onChangeText={text => dispatch({type: 'PASSWORD_SIGNUP', text: text})}/>
+          </Item>
 
-      <Row style={styles.textbox}>
-      <Button 
-        transparent 
-        style={styles.back}
-        onPress={() => {
-          Keyboard.dismiss();
-          dispatch({type: 'CLEAR_SIGNUP'});
-          Actions.login();
-        }}><Text style={styles.text}>Already have an account ?</Text>
+          <Item last style={{borderColor: 'transparent'}}>
+            <TextInput             
+            underlineColorAndroid='rgba(0,0,0,0)'
+            ref='5'
+            style={styles.formInput} 
+            placeholder='Confirm Password' 
+            value={signup.confirm} 
+            secureTextEntry={true} 
+            onSubmitEditing={() => signupOnPress(passwordRegex, signup, dispatch)}
+            onChangeText={text => dispatch({type: 'CONFIRM_PASSWORD', text: text})}/>
+
+            {signup.confirm === signup.password ? null : <Icon name='ios-close-circle' style={{color: 'red'}}/>}
+          </Item>
+        {!passwordRegex && signup.password.length
+          ? <Text style={styles.text}
+          >password must be atleast 8 characters long and contain letters and numbers
+          </Text>
+          : null
+        }
+        </Form>
+
+      <Row style={styles.confirm}>
+        <Button 
+          style={styles.confirmButton} 
+          block light
+          onPress={() => signupOnPress(passwordRegex, signup, dispatch)}
+          ><Text> Create Account</Text>
         </Button>
         </Row>
 
-    </Content>
-    </Row>
-    </Grid>
-  </Container>
-  );
+        <Row style={styles.textbox}>
+        <Button 
+          transparent 
+          style={styles.back}
+          onPress={() => {
+            Keyboard.dismiss();
+            dispatch({type: 'CLEAR_SIGNUP'});
+            Actions.login();
+          }}><Text style={styles.text}>Already have an account ?</Text>
+          </Button>
+          </Row>
+
+      </Content>
+      </Row>
+      </Grid>
+    </Container>
+    );
+  }
 });

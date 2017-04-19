@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Actions} from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import {AsyncStorage, Keyboard, Dimensions} from 'react-native';
+import {AsyncStorage, TextInput, Keyboard, Dimensions} from 'react-native';
 import { Container, Title, Left, Right, Content, Label, Form, Button, Text, Item, Icon, Spinner, Body, Input, H1, Grid, Row } from 'native-base';
 import { loginCtrl } from '../../actions/axiosController.js';
 const {height, width} = Dimensions.get('window');
@@ -44,7 +44,13 @@ export var styles = {
     color: 'white',
     fontFamily: 'sans-serif',
     alignSelf: 'center'
-  }
+  },
+  input: {
+    paddingLeft: 15,
+  },
+  formInput: {
+    flex: 1,
+  },
 };
 
 const mapStateToProps = ({login, token}) => {
@@ -55,58 +61,78 @@ const mapStateToProps = ({login, token}) => {
   }};
 };
 
-export default connect(mapStateToProps)(function Login ({form, dispatch}) {
-  return (
-   <Container style={styles.container}>
-    <Grid style={{flex: 1}}>
-    <Row >
-    <Content style={styles.content}>
-    <Form style={styles.form} >
+export default connect(mapStateToProps)(class Login extends Component {
+  constructor(props) {
+    super(props);
+  }
 
-        <Item style={{borderColor: 'transparent'}}>
-          <Input 
-          placeholder='Username' 
-          autoCapitalize={'none'} 
-          value={form.username} 
-          onChangeText={text => dispatch({type: 'USERNAME', text: text})}/>
-        </Item>
+  focusNextField(nextField) {
+    this.refs[nextField].focus();
+  }
 
-        <Item last >
-          <Input 
-          autoCapitalize={'none'} 
-          value={form.password} 
-          placeholder='Password'
-          secureTextEntry={true} 
-          onChangeText={text => dispatch({type: 'PASSWORD', text: text})}/>
-        </Item>
-        
-    </Form>
+  render() {
+    const {form, dispatch} = this.props;
 
-    <Row style={styles.confirm}>
-      <Button 
-      style={styles.confirmButton} 
-      block light
-      onPress={()=> {
-        Keyboard.dismiss();
-        loginCtrl(form, dispatch);
-      }}><Text> LOGIN </Text>
-      </Button>
+    const loginSubmit = function() {
+      Keyboard.dismiss();
+      loginCtrl(form, dispatch);
+    };
+
+    return (
+     <Container style={styles.container}>
+      <Grid style={{flex: 1}}>
+      <Row >
+      <Content style={styles.content}>
+      <Form style={styles.form} >
+
+            <TextInput 
+            underlineColorAndroid='rgba(0,0,0,0)'
+            placeholder='Username' 
+            ref='1'
+            autoCapitalize={'none'} 
+            style={styles.input} 
+            value={form.username}
+            returnKeyType = {'next'}
+            onSubmitEditing={() => this.focusNextField('2')}
+            onChangeText={text => dispatch({type: 'USERNAME', text: text})}/>
+
+
+            <TextInput 
+            underlineColorAndroid='rgba(0,0,0,0)'
+            onSubmitEditing={loginSubmit}
+            ref='2'
+            autoCapitalize={'none'}
+            style={styles.input} 
+            value={form.password} 
+            placeholder='Password'
+            secureTextEntry={true} 
+            onChangeText={text => dispatch({type: 'PASSWORD', text: text})}/>
+          
+      </Form>
+
+      <Row style={styles.confirm}>
+        <Button 
+        style={styles.confirmButton} 
+        block light
+        onPress={loginSubmit}><Text> LOGIN </Text>
+        </Button>
+        </Row>
+
+        <Row style={styles.textbox}>
+        <Button transparent
+          onPress={() => {
+            Keyboard.dismiss();
+            Actions.signup();
+          }}
+          style={styles.back}
+          ><Text style={styles.text}>Dont Have an account?</Text>
+        </Button>
       </Row>
 
-      <Row style={styles.textbox}>
-      <Button transparent
-        onPress={() => {
-          Keyboard.dismiss();
-          Actions.signup();
-        }}
-        style={styles.back}
-        ><Text style={styles.text}>Dont Have an account?</Text>
-      </Button>
-    </Row>
-
-    </Content>
-    </Row>
-  </Grid>
-  </Container>
-  );
+      </Content>
+      </Row>
+    </Grid>
+    </Container>
+    );
+  }
 });
