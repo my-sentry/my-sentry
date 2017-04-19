@@ -91,3 +91,10 @@ exports.updateUserToken = function(userId, token) {
     .where('id', userId)
     .update({ token: token });
 };
+
+// delete user pushie token
+exports.removeUserToken = function(userId, token) {
+  return knex('users')
+    .where('id', userId)
+    .update({ token: '' });
+};

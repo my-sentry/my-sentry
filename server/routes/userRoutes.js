@@ -66,8 +66,11 @@ module.exports = function(passport) {
   );
 
   router.post('/logout', (req, res, next) => {
+    users.removeUserToken(req.user.id, req.body.token)
+      .then(() => {
+        res.sendStatus(200);
+      });
     req.logout();
-    res.sendStatus(200);
   });
 
   router.put('/:id', (req, res, next) => {
