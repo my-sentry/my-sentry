@@ -3,7 +3,7 @@ import {AsyncStorage} from 'react-native';
 import {Reducer} from 'react-native-router-flux';
 import { ActionConst } from 'react-native-router-flux';
 import {auth, login, signup, token} from './login';
-import {feed, events, dateReducer, eventForms, searchLocation } from './events';
+import {feed, event, dateReducer, eventForms, searchLocation } from './events';
 
 
 
@@ -176,7 +176,7 @@ export default combineReducers({
   header,
   searchBar,
   groups,
-  events,
+  event,
   dateReducer,
   login,
   signup,

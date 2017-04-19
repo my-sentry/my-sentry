@@ -1,11 +1,8 @@
 var ipc = require('node-ipc');
-var _ = require('lodash');
 
 ipc.config.id = 'server';
 ipc.config.port = 6060;
 ipc.config.repeat = 1500;
-
-var listeners = {};
 
 var initialize = function() {
 
@@ -16,11 +13,6 @@ var initialize = function() {
   ipc.of.timer.on('disconnect', () => {
     console.log('Disconnected from the timer service.');
   });
-
-  ipc.of.timer.on('error', (data) => {
-    console.log(data);
-  });
-
 };
 
 exports.initialize = function() {

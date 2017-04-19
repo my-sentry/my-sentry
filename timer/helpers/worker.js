@@ -1,7 +1,6 @@
 var { getActiveTimers, getTimerById, makeTimerInactive } = require('../../server/db/controllers/timersCtrl');
 var { timerCallback } = require('./notify.js');
-
-global.activeTimers = global.activeTimers || {};
+var { initializeTimer } = require('./timers');
 
 var getMillisecondsToEnd = function(end) {
   var now = new Date();
@@ -10,15 +9,15 @@ var getMillisecondsToEnd = function(end) {
 };
 
 var startTimer = function(timer) {
-  var ms = getMillisecondsToEnd(timer.time);
+
+  var { id, time } = timer;
+  var ms = getMillisecondsToEnd(time);
+
   if (ms > 0) {
-    console.log(`Timer ${timer.id} initialized.`);
     var callback = timerCallback.bind(null, timer);
-    activeTimers[timer.id] = setTimeout(callback, ms);
+    initializeTimer(id, ms, callback);
   } else {
-    makeTimerInactive(timer.id).then(() => {
-      console.log(`Timer ${timer.id} is inactive`);
-    });
+    makeTimerInactive(id).then(() => console.log(`Timer ${id} is inactive`));
   }
 };
 
@@ -30,17 +29,6 @@ var setUninitializedTimers = function() {
     .then(results => Promise.all(results.map(({ id }) => getTimerById(id))))
     // start each timer
     .then(inactiveTimers => inactiveTimers.forEach(timer => startTimer(timer)));
-};
-
-exports.cancelTimer = function(id) {
-
-  if (!activeTimers[id]) {
-    return console.log('Timer does not exist in memory');
-  }
-
-  global.clearTimeout(activeTimers[id]);
-  delete activeTimers[id];
-  console.log(`Timer ${id} was taken out of memory.`);
 };
 
 exports.start = function() {

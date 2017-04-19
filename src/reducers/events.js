@@ -1,8 +1,10 @@
+import moment from 'moment';
+import _ from 'lodash';
+
 export var feed = (state = {}, action) => {
   switch (action.type) {
-  case 'UPDATE_FEED':
- 
 
+  case 'UPDATE_FEED':
     return {...state,
       data: [...action.data]
       .filter(item => {
@@ -10,6 +12,7 @@ export var feed = (state = {}, action) => {
         return !ended || !item.safe;
       }).sort((a, b) => new Date(a.begin).valueOf() - new Date(b.begin).valueOf())
     };
+
   case 'ADD_ITEM':
     return {...state,
     };
@@ -17,64 +20,92 @@ export var feed = (state = {}, action) => {
   case 'REMOVE_ITEM':
     return {...state,
     };
+
   default:
     return state;
   }
 };
 
-export var events = (state = {id: null, active: null, isPersonal: null}, action) => {
+export var event = (state = {id: null, active: null, isPersonal: null}, action) => {
   switch (action.type) {
+
   case 'CURRENT_ITEM':
-    return {...state,
-      id: action.item,
-      active: action.active,
-      isPersonal: action.personal
-    };
+    var event = action.item;
+    event.active = action.active;
+    event.isPersonal = action.personal;
+    return event;
+
   default:
     return state;
-
   }
 };
 
-export var dateReducer = (state = {date: new Date(), start: new Date(), end: new Date(), current: new Date()}, action) => {
+var defaultDates = function() {
+  return {
+    start: moment().second(0).millisecond(0).format(),
+    end: moment().second(0).millisecond(0).format(),
+    current: moment().second(0).millisecond(0).format()
+  };
+};
+
+export var dateReducer = (state = defaultDates(), action) => {
   switch (action.type) {
+
   case 'DATE_CHANGE':
+    var newStart = moment(state.start);
+    var newEnd = moment(state.end);
 
-    let date = action.date.split('-').map(x => +x);
-    let newTime = new Date(state.date);
+    var day = moment(action.date).day();
+    var month = moment(action.date).month();
+    var year = moment(action.date).year();
 
-    newTime.setFullYear(date[0]);
-    newTime.setMonth(date[1] - 1);
-    newTime.setDate(date[2]);
+    newStart.day(day);
+    newStart.month(month);
+    newStart.year(year);
+
+    newEnd.day(day);
+    newEnd.month(month);
+    newEnd.year(year);
+
     return {...state,
-      date: newTime, 
-      start: newTime,
-      end: newTime
+      start: newStart.format(),
+      end: newStart.format()
     };
+
   case 'START':
-    let startTime = action.time.split(':').map(x => +x);
-    let startSet = new Date(state.date);
-    startSet.setHours(startTime[0]);
-    startSet.setMinutes(startTime[1]);
+    var newStart = moment(state.start);
+
+    var hour = moment(action.time).hour();
+    var minute = moment(action.time).minute();
+
+    newStart.hour(hour);
+    newStart.minute(minute);
+
     return {...state,
-      start: startSet,
-      date: startSet
+      start: newStart.format()
     };
+
   case 'END':
-    let endTime = action.time.split(':').map(x => +x);
-    let endSet = new Date(state.date);
-    endSet.setHours(endTime[0]);
-    endSet.setMinutes(endTime[1]);
+    var newEnd = moment(state.end);
+
+    var hour = moment(action.time).hour();
+    var minute = moment(action.time).minute();
+
+    newEnd.hour(hour);
+    newEnd.minute(minute);
+
     return {...state,
-      end: endSet,
-      date: endSet
+      end: newEnd.format()
     };
+
   case 'CURRENT':
     return {...state,
-      current: new Date()
+      current: moment().format()
     };
+
   case 'RESET_DATE':
-    return { date: new Date(), start: new Date(), end: new Date };
+    return defaultDates();
+
   default:
     return state;
   }
@@ -98,7 +129,6 @@ export var eventForms = (state = defaultForm, action) => {
       name: action.text,
     };
   case 'ADD_LOCATION':
-    console.log(action);
     return {...state,
       location: action.location,
       lat: action.lat,
@@ -132,4 +162,3 @@ export var searchLocation = (state = { input: '', predictions: [] }, action) => 
     return state;
   }
 };
-

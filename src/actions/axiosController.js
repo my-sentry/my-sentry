@@ -123,7 +123,7 @@ export var loginCtrl = function(data, dispatch) {
   }).catch(({response}) => {
     Actions.errorModal({
       clear: {type: 'CLEAR_LOGIN'},
-      error: response.status === 401 
+      error: response.status === 401
       ? 'The password you\'ve entered is incorrect.'
       : 'Please enter a password!'
     });
@@ -229,6 +229,28 @@ export var getPlaceDetails = function(placeId) {
   })
   .catch(err => {
     console.log('There was an error accessing the Google Places API');
+    console.log(err);
+  });
+};
+
+export var markSafe = function(eventId) {
+  return axios({
+    method: 'PUT',
+    url: `${URL_CONFIG}/api/events/${eventId}?safe=true`
+  })
+  .catch(err => {
+    console.log('There was an error marking the event safe.');
+    console.log(err);
+  });
+};
+
+export var markDanger = function(eventId) {
+  return axios({
+    method: 'PUT',
+    url: `${URL_CONFIG}/api/events/${eventId}?danger=true`
+  })
+  .catch(err => {
+    console.log('There was an error marking the event danger.');
     console.log(err);
   });
 };

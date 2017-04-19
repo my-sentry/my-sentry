@@ -4,6 +4,7 @@ var events = require('../db/controllers/eventCtrl');
 var auth = require('../authHelper');
 var timerService = require('../../timer/client');
 
+
 timerService.initialize();
 
 //Get all events
@@ -56,12 +57,17 @@ router.put('/:id', (req, res, next) => {
   if (req.query.safe) {
 
     timerService.alertSafe(eventId);
-    res.json(eventId);
+    events.markEventSafe(id)
+      .then(() => events.getEventById(eventId))
+      .then(event => res.json(event))
+      .catch(err => next(err));
 
   } else if (req.query.danger) {
 
     timerService.alertDanger(eventId);
-    res.json(eventId);
+    events.getEventById(eventId)
+      .then(event => res.json(event))
+      .catch(err => next(err));
 
   } else {
 
