@@ -4,11 +4,11 @@ import {Actions, ActionConst} from 'react-native-router-flux';
 import {View, TouchableHighlight, Dimensions, BackAndroid} from 'react-native';
 import { Container, Title, Text, Grid, Row, Form, Content, Button, Left, Right, Body, List, ListItem, H1 } from 'native-base';
 import { logoutCtrl } from '../../actions/axiosController';
-import { removeUserFromGroup, getGroupById } from '../../actions/axiosController';
+import { removeUser, getGroupById } from '../../actions/axiosController';
 
 
 
-export default connect()(class Delete extends Component { 
+export default connect()(class Delete extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -35,7 +35,7 @@ export default connect()(class Delete extends Component {
 
   render() {
 
-    var {groupId, userId, hide, username, groupName} = this.props;
+    var {groupId, user, hide, groupName, dispatch} = this.props;
     var {height, width} = Dimensions.get('window');
     return hide
       ? (
@@ -49,7 +49,7 @@ export default connect()(class Delete extends Component {
         height: height,
         width: width,
         opacity: .8,
-        backgroundColor: 'rgba(155,55,55,0.5)',          
+        backgroundColor: 'rgba(155,55,55,0.5)',
         borderStyle: 'solid',
         borderColor: '#cccccc',
         borderWidth: 1,
@@ -60,18 +60,18 @@ export default connect()(class Delete extends Component {
       top: height / 3,
       height: 150,
       width: 200,
-      backgroundColor: 'rgb(155,155,155)',          
+      backgroundColor: 'rgb(155,155,155)',
       borderStyle: 'solid',
       borderColor: '#cccccc',
       borderWidth: 1,
     }}>
     <Grid style={{flex: 1}}>
     <Row >
-    <Text style={{alignSelf: 'center'}}> Are you sure you remove {username} from {groupName}</Text>
+    <Text style={{alignSelf: 'center'}}> Are you sure you want to remove {user.username} from {groupName}</Text>
     </Row>
     <Row style={{flex: 0}}>
     <Left>
-      <Button block bordered 
+      <Button block bordered
       onPress={() =>{
         this.dismissModal();
         Actions.pop({title: groupName});
@@ -80,8 +80,9 @@ export default connect()(class Delete extends Component {
     <Right>
       <Button block onPress={()=> {
         this.dismissModal();
-        removeUserFromGroup(groupId, userId)
-        .then(getGroupById(groupId, dispatch)
+        removeUser(groupId, [user])
+        .then(() => dispatch({type: 'REMOVE_MEMBER', id: user.id}))
+        .then(getGroupById(groupId, this.props.dispatch)
           .then(() => Actions.pop({title: groupName})));
       }}><Text> Yes </Text>
       </Button>
@@ -90,8 +91,6 @@ export default connect()(class Delete extends Component {
   </Grid>
   </Container>
   </Container>
-  );    
+  );
   }
 });
-
-

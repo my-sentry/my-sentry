@@ -34,8 +34,12 @@ export default connect(mapStateToProps)(function GroupView ({id, groupName, user
             </Body>
               <Right>
                 <Button small bordered danger onPress={() => {
-                  removeUser(id, [user]);
-                  dispatch({type: 'REMOVE_MEMBER', id: user.id});
+                  Actions.delete({
+                    groupId: id,
+                    user: user,
+                    groupName: groupName,
+                    dispatch: dispatch
+                  });
                 }}>
                   <Icon name='ios-trash-outline' style={{color: 'red'}} />
                 </Button>
