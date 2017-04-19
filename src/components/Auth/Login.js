@@ -40,7 +40,7 @@ export var styles = {
     marginTop: 0,
   },
   text: {
-    fontSize: 8,
+    fontSize: 10,
     color: 'white',
     fontFamily: 'sans-serif',
     alignSelf: 'center'

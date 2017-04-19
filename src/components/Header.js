@@ -7,16 +7,24 @@ import { Container, Header, Title, Content, Button, Left, Right, Body, Icon, H1 
 
 const styles = {
   header: {
+    elevation: 8,
+    borderBottomColor: null,
+    borderColor: 'transparent',
     height: 60,
     backgroundColor: '#1f1f1f',
   },
   body: {
+    borderColor: 'transparent',
+    backgroundColor: 'transparent',
     justifyContent: 'center'
   },
   menu: {
+    elevation: 0,
+    borderColor: 'transparent',
     backgroundColor: 'transparent',
   },
   text: {
+    backgroundColor: 'transparent',
     fontSize: 20,
     fontWeight: 'bold',
     color: '#f0f0f0'
@@ -32,8 +40,9 @@ export default connect(mapStateToProps)(function ({prev, title}) {
     <Header style={styles.header} > 
     <Left> 
     {title !== 'My-Sentry' ? (
-      <Button style={styles.menu} onPress={()=> Actions.pop()}>
+      <Button style={styles.menu} >
         <Icon 
+        onPress={()=> Actions.pop()}
           name='arrow-back' 
           style={styles.menu}          
           />
@@ -50,7 +59,7 @@ export default connect(mapStateToProps)(function ({prev, title}) {
       {title === 'My-Sentry' 
 
       ? (<Button style={styles.menu} onPress={()=> Actions.refresh({key: 'menu', open: value => !value })}>
-              <Icon 
+              <Icon
               ios='ios-menu' 
               android="md-menu" 
               />

@@ -15,23 +15,23 @@ module.exports = function(passport) {
   });
 
   router.get('/:id', (req, res, next) => {
-    var id = req.params.id;
+    // var id = req.params.id;
 
-    if (typeof id === 'string') {
-      users.getUser(id)
+    // if (typeof id === 'string') {
+    //   users.getUser(id)
+    //     .then(result => res.json(result))
+    //     .catch(err => {
+    //       console.log(err);
+    //       next(err);
+    //     });
+    // } else {
+      users.getUserById(req.params.id)
         .then(result => res.json(result))
         .catch(err => {
           console.log(err);
           next(err);
         });
-    } else {
-      users.getUserById(id)
-        .then(result => res.json(result))
-        .catch(err => {
-          console.log(err);
-          next(err);
-        });
-    }
+    // }
   });
 
   router.post(

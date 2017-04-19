@@ -9,7 +9,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { Container, Title, Content, Button, Left, Right, List,Grid, Row, ListItem, Body, Fab, H1, H2, H3 } from 'native-base';
 const {height, width} = Dimensions.get('window');
 
-const styles = {
+export var styles = {
   container: {
     backgroundColor: '#cccccc',
     padding: 1,
@@ -19,7 +19,7 @@ const styles = {
     borderColor: 'rgba(0,0,0,0.15)',
     borderLeftColor: null,
     borderRightColor: null,
-    borderRadius: 3,
+    borderRadius: 2.22,
     position: 'absolute',
 
   },
@@ -90,7 +90,7 @@ const styles = {
     top: height * .74,
     width: width,
     position: 'absolute',
-    paddingLeft: width / 4.5,
+    paddingLeft: width / 4.2,
     alignSelf: 'center',
     flexDirection: 'column',
   },
@@ -107,7 +107,6 @@ const mapStateToProps = ({feed, auth}) => ({feed, personal: auth.id });
 
 export default connect(mapStateToProps)(function Feed ({feed, personal, dispatch}) {
   const now = new Date();
-  feed.data[2].safe = 1;
   return (
     <Container><Header /><Grid><Row style={styles.container}>
     <Content style={styles.content} >
@@ -131,11 +130,11 @@ export default connect(mapStateToProps)(function Feed ({feed, personal, dispatch
             Actions.eventView({prev: 'events', title: item.name});
           }}>
         <Body>
-          <Text style={styles.text}>{item.name.length > 40 ? [...item.name.slice(0, 40), '...'].join('') : item.name}</Text>
-          <Text style={styles.subtext}>{item.description}</Text>
+          <Text style={styles.text}>{item.fullName.length > 40 ? [...item.fullName.slice(0, 40), '...'].join('') : item.fullName}</Text>
+          <Text style={styles.subtext}>{item.name}</Text>
         </Body>
         { danger ? <Right style={styles.iconRight}><Text style={styles.iconRightText}>Danger!</Text><Icon name='circle' style={styles.warningIcon} /></Right>
-          : current ? <Right style={styles.iconRight}><Text style={styles.iconRightText}>Active!</Text><Icon name='circle' style={styles.activeIcon} /></Right>
+          : current ? <Right style={styles.iconRight}><Text style={styles.iconRightText}>Active! </Text><Icon name='circle' style={styles.activeIcon} /></Right>
           : null }
       
         </ListItem> );
@@ -147,7 +146,6 @@ export default connect(mapStateToProps)(function Feed ({feed, personal, dispatch
         outline light rounded
         style={styles.confirmButton}
         bgColor='green'
-        buttonColor='rgba(231,76,61,1)'
         onPress={async () => {
           await getGroups(dispatch);
           Actions.eventForm({title: 'New Event'});

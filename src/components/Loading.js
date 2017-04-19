@@ -3,7 +3,7 @@ import {Actions} from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import {AsyncStorage } from 'react-native';
 import { Container, Content, Spinner, Body } from 'native-base';
-import {getEvents, getGroups, verifyLogin, getGroupById} from '../actions/axiosController';
+import {getEvents, getGroups, verifyLogin, getUserById, getGroupById} from '../actions/axiosController';
 
 
 const styles = {
@@ -29,11 +29,16 @@ export default connect()(function ({dispatch}) {
       var id = await AsyncStorage.getItem('AUTHENTICATION');
       var name = await AsyncStorage.getItem('NAME');
       var events = await getEvents();
+      var userIds = await Promise.all(events.data.map(event => (
+        getUserById(event.user_id)
+        )));
       var groupIds = await Promise.all(events.data.map(event => (
         getGroupById(event.group_id)
       )));
       var feed = groupIds.map((group, i) => (
-         {...events.data[i], groupName: group.data.name}
+        {...events.data[i], 
+          groupName: group.data.name, 
+          fullName: `${userIds[i].data.first_name} ${userIds[i].data.last_name} ` }
       ));
 
       dispatch({type: 'SET_VALUES', id: id, name: name});

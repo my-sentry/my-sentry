@@ -34,12 +34,13 @@ export default connect(mapStateToProps)(function LocationSearch({ predictions, d
   return (
     <Container style={{
       position: 'absolute',
-      top: ( height / 4) + 10,
+      top: ( height / 4) + 29,
       height: 150,
       width: width,
-      backgroundColor: 'rgba(255,255,255, 0.9)',          
+      backgroundColor: '#ccc2cd',  
+      opacity: 0.9,        
       borderStyle: 'solid',
-      borderColor: '#ffffff',
+      borderColor: 'transparent',
       borderWidth: 1,
     }}>
 
