@@ -238,6 +238,7 @@ export var markSafe = function(eventId) {
     method: 'PUT',
     url: `${URL_CONFIG}/api/events/${eventId}?safe=true`
   })
+  .then(res => res.data)
   .catch(err => {
     console.log('There was an error marking the event safe.');
     console.log(err);
@@ -249,6 +250,7 @@ export var markDanger = function(eventId) {
     method: 'PUT',
     url: `${URL_CONFIG}/api/events/${eventId}?danger=true`
   })
+  .then(res => res.data)
   .catch(err => {
     console.log('There was an error marking the event danger.');
     console.log(err);

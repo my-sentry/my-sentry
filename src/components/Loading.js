@@ -25,7 +25,7 @@ export default connect()(function ({dispatch}) {
   (async function() {
     try {
       await verifyLogin();
-      await getGroups(dispatch);     
+      await getGroups(dispatch);
       var id = await AsyncStorage.getItem('AUTHENTICATION');
       var name = await AsyncStorage.getItem('NAME');
       var events = await getEvents();
@@ -36,10 +36,12 @@ export default connect()(function ({dispatch}) {
         getGroupById(event.group_id)
       )));
       var feed = groupIds.map((group, i) => (
-        {...events.data[i], 
-          groupName: group.data.name, 
+        {...events.data[i],
+          groupName: group.data.name,
           fullName: `${userIds[i].data.first_name} ${userIds[i].data.last_name} ` }
       ));
+
+      console.log('FEED::::::::', feed);
 
       dispatch({type: 'SET_VALUES', id: id, name: name});
       dispatch({type: 'UPDATE_FEED', data: feed});

@@ -23,7 +23,7 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({event, dateReducer}) => {
+const mapStateToProps = ({event, dateReducer, auth}) => {
   return {
     id: event.id,
     isPersonal: event.isPersonal,
@@ -38,10 +38,11 @@ const mapStateToProps = ({event, dateReducer}) => {
     place_id: event.place_id,
     place_name: event.place_name,
     group: event.groupName,
-    safe: event.safe
+    safe: event.safe,
+    auth_id: auth.id,
+    user_id: event.user_id
   };
 };
-
 
 
 export default connect(mapStateToProps)(class EventView extends Component {
@@ -70,11 +71,11 @@ export default connect(mapStateToProps)(class EventView extends Component {
     return `${duration.days()}d:${duration.hours()}h:${duration.minutes()}m:${duration.seconds()}s`;
   }
 
-  // (end.getHours() - current.getHours()) + ':' + (end.getUTCMinutes() - current.getUTCMinutes()) + ':' + (end.getSeconds() + (begin.getSeconds() - current.getSeconds()))
 
   render() {
 
-    const { id, active, isPersonal, name, begin, end, description, lat, long, group, current, dispatch} = this.props;
+    const { id, active, isPersonal, name, begin, end, description, lat, long, group, current, dispatch, user_id, auth_id, safe} = this.props;
+    console.log('isPersonal', isPersonal);
     return (
       <Container>
         <Header title={name}/>
@@ -84,7 +85,7 @@ export default connect(mapStateToProps)(class EventView extends Component {
           <Card>
             <CardItem>
               <Body>
-                {active ? (
+                {active && ! safe ? (
                 <H1>{this.timer()}</H1>
                 ) : (
                 <H1 style={styles.timer}>{begin.format('ddd MMM Qo YYYY hh:mm a')}</H1>
@@ -108,15 +109,28 @@ export default connect(mapStateToProps)(class EventView extends Component {
 
         </Content>
 
-        {active && isPersonal ? (
+        {active && isPersonal && !safe ? (
         <Container>
           <Button block style={styles.button} onPress={() => {
-            markSafe(id).then(event => this.props.dispatch({type: 'CURRENT_ITEM', item: event, active: active, isPersonal: isPersonal }));
+            markSafe(id).then(event => {
+              console.log('EVENT', event);
+              this.props.dispatch({
+                type: 'CURRENT_ITEM',
+                item: event,
+                active: moment().valueOf() > begin.valueOf() && moment().valueOf() < end.valueOf(),
+                personal: auth_id === user_id
+              });
+            });
           }}>
             <Text>Safe</Text>
           </Button>
           <Button danger block style={styles.button} onPress={() => {
-            markDanger(id).then(event => this.props.dispatch({type: 'CURRENT_ITEM', item: event, active: active, isPersonal: isPersonal }));
+            markDanger(id).then(event => this.props.dispatch({
+              type: 'CURRENT_ITEM',
+              item: event,
+              active: moment().valueOf() > begin.valueOf() && moment().valueOf() < end.valueOf(),
+              personal: auth_id === user_id
+            }));
           }}>
             <Text>Emergency Alert</Text>
           </Button>

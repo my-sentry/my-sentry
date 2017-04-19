@@ -6,7 +6,7 @@ import ActionButton from 'react-native-action-button';
 import Header from '../components/Header';
 import { getGroups } from '../actions/axiosController';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Container, Title, Content, Button, Left, Right, List,Grid, Row, ListItem, Body, Fab, H1, H2, H3 } from 'native-base';
+import { Container, Title, Content, Button, Left, Right, List, Grid, Row, ListItem, Body, Fab, H1, H2, H3 } from 'native-base';
 const {height, width} = Dimensions.get('window');
 
 export var styles = {
@@ -70,14 +70,14 @@ export var styles = {
     width: 20,
     paddingLeft: 5,
     margin: null,
-    color: 'red', 
+    color: 'red',
     flex: 0
   },
   activeIcon: {
     width: 20,
     paddingLeft: 5,
     margin: null,
-    color: 'green', 
+    color: 'green',
     flex: 0
   },
   iconRightText: {
@@ -110,7 +110,7 @@ export default connect(mapStateToProps)(function Feed ({feed, personal, dispatch
   return (
     <Container><Header /><Grid><Row style={styles.container}>
     <Content style={styles.content} >
-     <List 
+     <List
      dataArray={feed.data}
       renderRow={item => {
         let started = new Date(item.begin).valueOf() - now.valueOf() < 0;
@@ -118,13 +118,13 @@ export default connect(mapStateToProps)(function Feed ({feed, personal, dispatch
         let personalCheck = personal === item.user_id;
         let current = (started && !ended);
         let danger = (!item.safe && ended);
-        return ( <ListItem 
+        return ( <ListItem
           style={danger ? styles.danger : current ? styles.current : styles.inactive}
           onPress={() => {
             dispatch({
-              type: 'CURRENT_ITEM', 
-              item: item, 
-              active: started && !ended, 
+              type: 'CURRENT_ITEM',
+              item: item,
+              active: started && !ended,
               personal: personalCheck
             });
             Actions.eventView({prev: 'events', title: item.name});
@@ -136,7 +136,7 @@ export default connect(mapStateToProps)(function Feed ({feed, personal, dispatch
         { danger ? <Right style={styles.iconRight}><Text style={styles.iconRightText}>Danger!</Text><Icon name='circle' style={styles.warningIcon} /></Right>
           : current ? <Right style={styles.iconRight}><Text style={styles.iconRightText}>Active! </Text><Icon name='circle' style={styles.activeIcon} /></Right>
           : null }
-      
+
         </ListItem> );
       }}>
     </List></Content>
@@ -149,9 +149,8 @@ export default connect(mapStateToProps)(function Feed ({feed, personal, dispatch
         onPress={async () => {
           await getGroups(dispatch);
           Actions.eventForm({title: 'New Event'});
-        }}><Text style={styles.textbox}>Create a new Event</Text></Button></Row> 
+        }}><Text style={styles.textbox}>Create a new Event</Text></Button></Row>
     </Grid>
     </Container>
   );
 });
-
