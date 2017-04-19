@@ -15,7 +15,7 @@ const {height, width} = Dimensions.get('window');
 const mapStateToProps = ({groups, auth}) => {
   return {
     groups: groups.groups,
-    isAdmin: groups.id.admin_user === Number(groups.id.userId),
+    isAdmin: groups.id.admin_user === +groups.id.userId,
     userId: auth.id
   };
 };
