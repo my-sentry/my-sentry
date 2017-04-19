@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Header from './Header';
 import Datepicker from './Datepicker';
 import TimePicker from './TimePicker';
@@ -22,19 +22,18 @@ export var styles = {
     top: 25,
     justifyContent: 'center',
     backgroundColor: '#1f1f1f',
+
   },
   content: {
-    padding: 0,
-    alignSelf: 'center',
-    flex: 1,
-    padding: 0,
+    flex: 0,
+    padding: 5,
     backgroundColor: '#cccccc',
   },
   item: {
     backgroundColor: '#a0a',
   },
   form: {
-    padding: 0,
+    padding: 10,
     backgroundColor: '#cccccc',
     width: width,
   },
@@ -99,7 +98,6 @@ export var styles = {
     margin: 0,
     paddingLeft: 10,
     borderColor: 'transparent',
-    height: 50,
   },
 };
 
@@ -121,82 +119,95 @@ const mapStateToProps = ({eventForms, dateReducer, groups}) => {
   };
 };
 
-export default connect(mapStateToProps)(function EventForm ({form, groups, dispatch}) {
-  var grouplist = groups.map(group => (
-    <Item label={group.name} value={group.id} key={group.id}/>
-  ));
+export default connect(mapStateToProps)(class EventForm extends Component {
+  constructor(props) {
+    super(props);
+  }
+  static propTypes = {
+    form: PropTypes.object,
+    groups: PropTypes.array,
+    dispatch: PropTypes.func
 
-  return (
-   <Container style={{backgroundColor: '#1f1f1f'}}><Header/><Grid><Row style={styles.container}>
-      <Content 
-      scrollEnabled={true}
-      style={styles.content}>
+  }
 
-        <TextInput 
-        underlineColorAndroid='rgba(0,0,0,0)'
-        style={{flex: 1}} 
-        placeholder='Event Name' 
-        onChangeText={text => dispatch({type: 'EVENT_NAME', text: text})}/>
+  focusNextField(nextField) {
+    this.refs[nextField].focus();
+  }
 
-        <TextInput
-        style={{flex: 1}} 
-        underlineColorAndroid='rgba(0,0,0,0)'
-        placeholder="Search Locations"
-        value={form.location}
-        onFocus={() => {
-          dispatch({type: 'ADD_LOCATION', location: ''});
-          Actions.locationSearch();
-        }}
-        onChangeText={text => {
-          dispatch({type: 'ADD_LOCATION', location: text});
-          dispatch({ type: 'UPDATE_LOC_INPUT', text });
-          getPlaces(text)
-          .then(res => {
-            dispatch({ type: 'UPDATE_LOC_PREDICTIONS', predictions: res.data.predictions });
-          });
-        }}/>
-              
-        <Datepicker />
+  render() {
+    const {form, groups, dispatch} = this.props;
+    var grouplist = groups.map(group => (
+      <Item label={group.name} value={group.id} key={group.id}/>
+    ));
+    return (
+     <Container style={{backgroundColor: '#1f1f1f'}}><Header/><Grid><Row style={styles.container}>
+        <Content style={styles.content}>
+          <TextInput 
+          ref='1'
+          underlineColorAndroid='rgba(0,0,0,0)'
+          style={{flex: 1}} 
+          placeholder='Event Name' 
+          returnKeyType = {'next'}
+          onSubmitEditing={() => this.focusNextField('2')}
+          onChangeText={text => dispatch({type: 'EVENT_NAME', text: text})}/>
 
-        <Item>
-          <InputGroup>
-            <Icon name="ios-alarm"/>
-            <TimePicker type={'START'} />
-            <Icon name="ios-alarm"/>
-            <TimePicker type={'END'} />
-          </InputGroup>
-        </Item>
+          <TextInput
+          ref='2'
+          style={{flex: 1}} 
+          underlineColorAndroid='rgba(0,0,0,0)'
+          placeholder="Location"
+          value={form.location}
+          onFocus={() => {
+            dispatch({type: 'ADD_LOCATION', location: ''});
+            Actions.locationSearch();
+          }}
+          onChangeText={text => {
+            dispatch({type: 'ADD_LOCATION', location: text});
+            dispatch({ type: 'UPDATE_LOC_INPUT', text });
+            getPlaces(text)
+            .then(res => {
+              dispatch({ type: 'UPDATE_LOC_PREDICTIONS', predictions: res.data.predictions });
+            });
+          }}/>
+          <Datepicker />
+          <Item>
+            <InputGroup>
+              <Icon name="ios-alarm"/>
+              <TimePicker type={'START'} />
+              <Icon name="ios-alarm"/>
+              <TimePicker type={'END'} />
+            </InputGroup>
+          </Item>
 
-        <Picker
-          mode='dropdown'
-          style={{width: width * .8}}
-          iosHeader="Select one"
-          selectedValue={form.groupId}
-          onValueChange={id => dispatch({type: 'CURRENT_GROUP', id: id})}
-        >{grouplist}</Picker>
+          <Picker
+            mode='dropdown'
+            style={{width: width * .8}}
+            iosHeader="Select one"
+            selectedValue={form.groupId}
+            onValueChange={id => dispatch({type: 'CURRENT_GROUP', id: id})}
+          >{grouplist}</Picker>
 
-        <Item stackedLabel style={styles.listItemAlt}>
-          <Label>Event Description</Label>
-          <InputGroup style={{borderColor: 'transparent'}}regular>
-            <Input onChangeText={text => dispatch({type: 'EVENT_DESC', text: text})}/>
-          </InputGroup>
-        </Item>
+              <TextInput 
+              style={{flex: 1}}
+              placeholder='Event Description' 
+              onChangeText={text => dispatch({type: 'EVENT_DESC', text: text})}/>
 
-      </Content>
+        </Content>
 
-      </Row>      
+        </Row>      
 
-      <Row style={styles.confirm}>
-        <Button full
-          outline light rounded
-          style={styles.confirmButton} 
-          onPress={() => postEvent(form)
-            .then(() => {
-              dispatch({type: 'RESET_DATE'});
-              dispatch({type: 'RESET_EVENT_FORM'});
-            })}><Text style={styles.textbox}>Create Event</Text></Button></Row>
+        <Row style={styles.confirm}>
+          <Button full
+            outline light rounded
+            style={styles.confirmButton} 
+            onPress={() => postEvent(form)
+              .then(() => {
+                dispatch({type: 'RESET_DATE'});
+                dispatch({type: 'RESET_EVENT_FORM'});
+              })}><Text style={styles.textbox}>Create Event</Text></Button></Row>
 
-      </Grid>
-    </Container>
-  );
+        </Grid>
+      </Container>
+    );
+  }
 });

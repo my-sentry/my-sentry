@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {Actions} from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { Dimensions, TextInput, Keyboard } from 'react-native';
@@ -47,7 +47,11 @@ export default connect(mapStateToProps)(class Signup extends Component {
   constructor(props) {
     super(props);
   }
+  static propTypes = {
+    signup: PropTypes.object,
+    dispatch: PropTypes.func
 
+  }
   focusNextField(nextField) {
     this.refs[nextField].focus();
   }
@@ -126,7 +130,7 @@ export default connect(mapStateToProps)(class Signup extends Component {
           </Item>
         {!passwordRegex && signup.password.length
           ? <Text style={styles.text}
-          >password must be atleast 8 characters long and contain letters and numbers
+          >password must be 8 characters long and contain letters and numbers
           </Text>
           : null
         }

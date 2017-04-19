@@ -14,10 +14,7 @@ export default function SignupModal () {
       height: height,
       width: width,
       opacity: .8,
-      backgroundColor: 'rgba(155,55,55,0.5)',          
-      borderStyle: 'solid',
-      borderColor: '#cccccc',
-      borderWidth: 1,
+      backgroundColor: 'transparent',          
     }}>
   <Container style={{
     position: 'absolute',

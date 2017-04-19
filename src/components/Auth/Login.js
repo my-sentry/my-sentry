@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {Actions} from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import {AsyncStorage, TextInput, Keyboard, Dimensions} from 'react-native';
@@ -64,6 +64,10 @@ const mapStateToProps = ({login, token}) => {
 export default connect(mapStateToProps)(class Login extends Component {
   constructor(props) {
     super(props);
+  }
+  static propTypes = {
+    form: PropTypes.object,
+    dispatch: PropTypes.func
   }
 
   focusNextField(nextField) {

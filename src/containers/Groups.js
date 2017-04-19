@@ -6,10 +6,7 @@ import {Actions} from 'react-native-router-flux';
 import ActionButton from 'react-native-action-button';
 import { getUsers, getGroupById } from '../actions/axiosController';
 import {styles} from './Feed';
-
-
-
-import { Container, Title, Content, Button, Left, Right, List,Grid, Row, ListItem, Body, Fab, H1, H2, H3 } from 'native-base';
+import { Container, Content, Button, List, Grid, Row, ListItem, Body } from 'native-base';
 const {height, width} = Dimensions.get('window');
 
 const mapStateToProps = ({groups, auth}) => {

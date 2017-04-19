@@ -20,7 +20,9 @@ const mapStateToProps = ({groups, auth, searchBar}) => {
 export default connect(mapStateToProps)(function GroupForm ({adminUser, members, groupName, searchResults, searchValue, tempList, dispatch}) {
   return (
    <Container style={{backgroundColor: '#1f1f1f'}}><Header /><Grid><Row style={styles.container}>
-      <Content style={styles.content}>
+      <Content 
+      scrollEnabled={false}
+      style={styles.content}>
       <Form style={styles.form} >
           <Item style={styles.listItemAlt}>
             <Input onChangeText={(text) => dispatch({type: 'ADD_NAME', text: text})} placeholder='Group Name' />
@@ -37,7 +39,6 @@ export default connect(mapStateToProps)(function GroupForm ({adminUser, members,
         </Item>
 
         </Form>
-
         <Item style={styles.addMember}>
         <Row>
           <Input onChangeText={text => dispatch({type: 'SEARCH_NAME', text: text, users: members})} value={searchValue} placeholder='Add a Member'/>
