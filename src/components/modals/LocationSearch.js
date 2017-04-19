@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Text, View, Dimensions} from 'react-native';
+import { Text, View, Dimensions, Keyboard} from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { Container, Label, Item, Input, Title, List, ListItem, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, Card, CardItem, Image, Form } from 'native-base';
@@ -12,6 +12,7 @@ var mapStateToProps = function({ searchLocation }) {
 var selectLocation = function(placeId, dispatch) {
   return getPlaceDetails(placeId)
     .then(res => {
+      Keyboard.dismiss();
       var { place_id, name, geometry } = res.data.result;
       var { lat, lng } = geometry.location;
 
@@ -44,17 +45,18 @@ export default connect(mapStateToProps)(function LocationSearch({ predictions, d
       borderWidth: 1,
     }}>
 
-      <Content>
-
+      <View>
         {predictions.map(prediction => (
           <Button 
           key={prediction.place_id} block light 
-          onPress={() => selectLocation(prediction.place_id, dispatch)}>
+          onPress={() => {
+            Keyboard.dismiss();
+            selectLocation(prediction.place_id, dispatch);
+          }}>
             <Text>{prediction.description}</Text>
           </Button>
         ))}
-
-      </Content>
+      </View>
 
     </Container>
   );

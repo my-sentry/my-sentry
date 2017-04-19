@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {Actions} from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { Dimensions, TextInput, Keyboard } from 'react-native';
@@ -47,7 +47,11 @@ export default connect(mapStateToProps)(class Signup extends Component {
   constructor(props) {
     super(props);
   }
+  static propTypes = {
+    signup: PropTypes.object,
+    dispatch: PropTypes.func
 
+  }
   focusNextField(nextField) {
     this.refs[nextField].focus();
   }
