@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Header from './Header';
 import Datepicker from './Datepicker';
 import TimePicker from './TimePicker';
+import moment from 'moment';
 import { Text, View, TextInput, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
@@ -104,19 +105,12 @@ export var styles = {
 
 
 const mapStateToProps = ({eventForms, dateReducer, groups}) => {
-
-  var begin = new Date(dateReducer.date);
-  var end = new Date(dateReducer.date);
-
-  begin.setTime(dateReducer.start.getTime());
-  end.setTime(dateReducer.end.getTime());
-
   return {
     form: {
       name: eventForms.name,
       location: eventForms.location,
-      begin: begin,
-      end: end,
+      begin: dateReducer.start,
+      end: dateReducer.end,
       description: eventForms.description,
       lat: eventForms.lat,
       long: eventForms.long,
@@ -139,6 +133,7 @@ export default connect(mapStateToProps)(function EventForm ({form, groups, dispa
       style={styles.content}>
 
         <TextInput 
+        underlineColorAndroid='rgba(0,0,0,0)'
         style={{flex: 1}} 
         placeholder='Event Name' 
         onChangeText={text => dispatch({type: 'EVENT_NAME', text: text})}/>
