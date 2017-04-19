@@ -33,8 +33,6 @@ export var styles = {
     backgroundColor: '#a0a',
   },
   form: {
-    borderWidth: 5,
-    borderRadius: 5,
     padding: 10,
     backgroundColor: '#cccccc',
     width: width,
@@ -100,7 +98,6 @@ export var styles = {
     margin: 0,
     paddingLeft: 10,
     borderColor: 'transparent',
-    height: 50,
   },
 };
 
@@ -145,7 +142,6 @@ export default connect(mapStateToProps)(class EventForm extends Component {
     return (
      <Container style={{backgroundColor: '#1f1f1f'}}><Header/><Grid><Row style={styles.container}>
         <Content style={styles.content}>
-        
           <TextInput 
           ref='1'
           underlineColorAndroid='rgba(0,0,0,0)'
@@ -159,7 +155,7 @@ export default connect(mapStateToProps)(class EventForm extends Component {
           ref='2'
           style={{flex: 1}} 
           underlineColorAndroid='rgba(0,0,0,0)'
-          placeholder="Search Locations"
+          placeholder="Location"
           value={form.location}
           onFocus={() => {
             dispatch({type: 'ADD_LOCATION', location: ''});
@@ -173,7 +169,7 @@ export default connect(mapStateToProps)(class EventForm extends Component {
               dispatch({ type: 'UPDATE_LOC_PREDICTIONS', predictions: res.data.predictions });
             });
           }}/>
-
+          <Datepicker />
           <Item>
             <InputGroup>
               <Icon name="ios-alarm"/>

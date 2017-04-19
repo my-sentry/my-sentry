@@ -130,7 +130,7 @@ export default connect(mapStateToProps)(class Signup extends Component {
           </Item>
         {!passwordRegex && signup.password.length
           ? <Text style={styles.text}
-          >password must be atleast 8 characters long and contain letters and numbers
+          >password must be 8 characters long and contain letters and numbers
           </Text>
           : null
         }

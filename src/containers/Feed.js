@@ -124,7 +124,7 @@ export default connect(mapStateToProps)(function Feed ({feed, personal, dispatch
             dispatch({
               type: 'CURRENT_ITEM',
               item: item,
-              active: started && !ended,
+              active: current,
               personal: personalCheck
             });
             Actions.eventView({prev: 'events', title: item.name});

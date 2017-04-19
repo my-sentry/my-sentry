@@ -8,9 +8,10 @@ export var feed = (state = {}, action) => {
     return {...state,
       data: [...action.data]
       .filter(item => {
-        let ended = new Date(item.end).valueOf() - new Date().valueOf() < 0;
+        let ended = moment(item.end).valueOf() > moment().valueOf();
         return !ended || !item.safe;
-      }).sort((a, b) => new Date(a.begin).valueOf() - new Date(b.begin).valueOf())
+      }).sort((a, b) => moment(a.end).valueOf() - moment(b.end).valueOf())
+
     };
 
   case 'ADD_ITEM':
