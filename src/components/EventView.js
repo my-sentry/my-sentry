@@ -74,7 +74,8 @@ export default connect(mapStateToProps)(class EventView extends Component {
 
   render() {
 
-    const { id, active, isPersonal, name, begin, end, description, lat, long, group, current, dispatch, user_id, auth_id} = this.props;
+    const { id, active, isPersonal, name, begin, end, description, lat, long, group, current, dispatch, user_id, auth_id, safe} = this.props;
+    console.log('isPersonal', isPersonal);
     return (
       <Container>
         <Header title={name}/>
@@ -84,7 +85,7 @@ export default connect(mapStateToProps)(class EventView extends Component {
           <Card>
             <CardItem>
               <Body>
-                {active ? (
+                {active && ! safe ? (
                 <H1>{this.timer()}</H1>
                 ) : (
                 <H1 style={styles.timer}>{begin.format('ddd MMM Qo YYYY hh:mm a')}</H1>
@@ -108,7 +109,7 @@ export default connect(mapStateToProps)(class EventView extends Component {
 
         </Content>
 
-        {active && isPersonal ? (
+        {active && isPersonal && !safe ? (
         <Container>
           <Button block style={styles.button} onPress={() => {
             markSafe(id).then(event => {
@@ -117,7 +118,7 @@ export default connect(mapStateToProps)(class EventView extends Component {
                 type: 'CURRENT_ITEM',
                 item: event,
                 active: moment().valueOf() > begin.valueOf() && moment().valueOf() < end.valueOf(),
-                isPersonal: auth_id === user_id
+                personal: auth_id === user_id
               });
             });
           }}>
@@ -128,7 +129,7 @@ export default connect(mapStateToProps)(class EventView extends Component {
               type: 'CURRENT_ITEM',
               item: event,
               active: moment().valueOf() > begin.valueOf() && moment().valueOf() < end.valueOf(),
-              isPersonal: auth_id === user_id
+              personal: auth_id === user_id
             }));
           }}>
             <Text>Emergency Alert</Text>
