@@ -4,8 +4,11 @@ import { connect } from 'react-redux';
 import Header from './Header';
 import moment from 'moment';
 import GoogleStaticMap from 'react-native-google-static-map';
-import { markSafe, markDanger } from '../actions/axiosController';
-import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, Card, CardItem, Image } from 'native-base';
+import { markSafe, markDanger, deleteEvent } from '../actions/axiosController';
+import ActionButton from 'react-native-action-button';
+import {Actions} from 'react-native-router-flux';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body, H1, Card, CardItem, Image } from 'native-base';
 
 const styles = {
   text: {
@@ -18,8 +21,8 @@ const styles = {
     marginLeft: 20,
   },
   timer: {
-    fontSize: 35,
-    marginLeft: 90,
+    fontSize: 25,
+    fontWeight: 'bold',
   }
 };
 
@@ -69,12 +72,14 @@ export default connect(mapStateToProps)(class EventView extends Component {
   }
 
   componentDidMount() {
-    const {begin, end, current, dispatch} = this.props;
+    const {begin, end, current, dispatch, active} = this.props;
 
-    this.props.dispatch({ type: 'CURRENT' });
-    this.intervalId = setInterval(() => {
-      this.props.dispatch({ type: 'CURRENT'});
-    }, 1000);
+    if (active) {
+      this.props.dispatch({ type: 'CURRENT' });
+      this.intervalId = setInterval(() => {
+        this.props.dispatch({ type: 'CURRENT'});
+      }, 1000);
+    }
   }
 
   componentWillUnmount() {
@@ -92,19 +97,21 @@ export default connect(mapStateToProps)(class EventView extends Component {
 
   render() {
 
-    const { id, active, isPersonal, name, begin, end, description, lat, long, group, current, dispatch, user_id, auth_id, safe} = this.props;
-    console.log('isPersonal', isPersonal);
+
+    const { id, active, isPersonal, name, begin, end, description, lat, long, group, current, dispatch, user_id, auth_id, safe, place_name} = this.props;
     return (
-      <Container>
-        <Header title={name}/>
+      <Container style={{backgroundColor: '#FAEAD4'}}>
+        <Header />
 
         <Content>
 
           <Card>
             <CardItem>
               <Body>
+
                 {active && ! safe ? (
-                <H1>{this.timer()}</H1>
+                <H1 style={styles.timer}>{this.timer()}</H1>
+
                 ) : (
                 <H1 style={styles.timer}>{begin.format('ddd MMM Qo YYYY hh:mm a')}</H1>
                 )}
@@ -120,6 +127,7 @@ export default connect(mapStateToProps)(class EventView extends Component {
               <Body>
                 <Text style={styles.text}>Start: {begin.format('ddd MMM Qo YYYY hh:mm a')}</Text>
                 <Text style={styles.text}>End: {end.format('ddd MMM Qo YYYY hh:mm a')}</Text>
+                <Text style={styles.text}>Location: {place_name}</Text>
                 <Text style={styles.text}>Group Name: {group}</Text>
               </Body>
             </CardItem>
@@ -153,14 +161,28 @@ export default connect(mapStateToProps)(class EventView extends Component {
           </Button>
         </Container>
         ) : (
+        !active && isPersonal ? (
+        <View>
         <GoogleStaticMap
           latitude= {lat.toString()}
           longitude= {long.toString()}
           zoom={13}
-          size={{ width: 400, height: 325 }}
+          size={{ width: 500, height: 350 }}
         />
-        )}
-
+        <ActionButton buttonColor="rgba(231,76,60,1)" onPress={() => {
+          deleteEvent(id)
+            .then(() => Actions.loading());
+        }}>
+        </ActionButton>
+        </View>
+        ) : (
+        <GoogleStaticMap
+          latitude= {lat.toString()}
+          longitude= {long.toString()}
+          zoom={13}
+          size={{ width: 500, height: 350 }}
+        />
+        ))}
       </Container>
     );
   }
