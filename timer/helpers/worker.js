@@ -1,18 +1,12 @@
 var { getActiveTimers, getTimerById, makeTimerInactive } = require('../../server/db/controllers/timersCtrl');
 var { timerCallback } = require('./notify.js');
 var { initializeTimer } = require('./timers');
-
-var getMillisecondsToEnd = function(end) {
-  var now = new Date();
-  var then = new Date(end);
-  return then.valueOf() - now.valueOf();
-};
+var moment = require('moment');
 
 var startTimer = function(timer) {
 
   var { id, time } = timer;
-  var ms = getMillisecondsToEnd(time);
-
+  var ms = moment(time).diff(moment());
   if (ms > 0) {
     var callback = timerCallback.bind(null, timer);
     initializeTimer(id, ms, callback);

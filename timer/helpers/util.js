@@ -1,16 +1,16 @@
-const { MS_PER_MINUTE, TIMER_TYPES, TIMER_OFFSETS } = require('./constants');
+const { TIMER_TYPES, TIMER_OFFSETS } = require('./constants');
 const { endTimer } = require('./timers');
 const { sendSafe, sendDanger } = require('./notify');
 const { getEventWithRecipients } = require('../../server/db/controllers/eventCtrl');
+const moment = require('moment');
 const {
   createTimer,
   getTimersByEvent,
   makeTimerInactive
 } = require('../../server/db/controllers/timersCtrl');
 
-const offsetMinutes = function(offset, date) {
-  var ms = offset * MS_PER_MINUTE;
-  return new Date(date.valueOf() - ms);
+const offsetMinutes = function(offset, end) {
+  return moment(end).subtract(offset, 'minutes').format();
 };
 
 var cancelTimers = function(eventId) {
@@ -31,7 +31,7 @@ exports.populateTimers = function(eventId, end) {
       return {
         'event_id': eventId,
         'type': type,
-        'time': offsetMinutes(TIMER_OFFSETS[type], new Date(end))
+        'time': offsetMinutes(TIMER_OFFSETS[type], end)
       };
     })
     // wrap timers with db insert Promises

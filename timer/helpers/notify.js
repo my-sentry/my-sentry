@@ -39,40 +39,38 @@ var sendNotification = function(token, title, message) {
 };
 
 
-exports.timerCallback = function ({id, type, token, recipients, name}) {
+exports.timerCallback = function ({ id, type, token, recipients, name, username }) {
 
   switch (type) {
 
   case WARNING_10:
-    sendNotification(token, 'Ten Minute Warning', 'Mark yourself safe soon.');
+    sendNotification(token, name, '10 Minute Warning - Mark yourself safe soon.');
     break;
 
   case WARNING_2:
-    sendNotification(token, 'Two Minute Warning', 'Mark yourself safe soon.');
+    sendNotification(token, name, '2 Minute Warning - Mark yourself safe soon.');
     break;
 
   case DANGER:
     recipients.forEach(token => {
-      sendNotification(token, 'Danger', 'Someone in your group is in trouble');
+      sendNotification(token, `${name} - DANGER`, `${username} is in a dangerous situation`);
     });
     break;
   }
 
   console.log(`The ${type} timer for the ${name} event has gone off.`);
   endTimer(id);
-  makeTimerInactive(id).then(() => console.log(`Timer with id ${id} is now inactive`));
+  makeTimerInactive(id).then(() => console.log(`Time ${id} is now inactive`));
 };
 
 exports.sendSafe = function({ recipients, username, name, id }) {
   recipients.forEach(token => {
-    let message = `${username} has marked themselves safe`;
-    sendNotification(token, `${name}`, message);
+    sendNotification(token, `${name}`, `${username} has marked themselves safe`);
   });
 };
 
 exports.sendDanger = function({ recipients, username, name }) {
   recipients.forEach(token => {
-    let message = `${username} is in a dangerous situation`;
-    sendNotification(token, `${name} - DANGER`, message);
+    sendNotification(token, `${name} - DANGER`, `${username} is in a dangerous situation`);
   });
 };
