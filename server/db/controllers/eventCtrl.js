@@ -76,11 +76,10 @@ exports.updateEventById = function (id, event) {
     });
 };
 
-// delete event
+// deletes event and associated timers
 exports.deleteEventById = function (id) {
-  return knex('events')
-    .where('id', id)
-    .del();
+  return knex('timers').where('event_id', id).del()
+    .then(() => knex('events').where('id', id).del());
 };
 
 exports.getEventWithRecipients = function(id) {

@@ -30,3 +30,7 @@ exports.alertSafe = function(eventId) {
 exports.alertDanger = function(eventId) {
   ipc.of.timer.emit('danger', JSON.stringify(eventId));
 };
+
+exports.deleteTimers = function(eventId) {
+  ipc.of.timer.emit('end', JSON.stringify(eventId));
+};

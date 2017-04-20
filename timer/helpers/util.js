@@ -13,6 +13,17 @@ const offsetMinutes = function(offset, date) {
   return new Date(date.valueOf() - ms);
 };
 
+var cancelTimers = function(eventId) {
+  return getTimersByEvent(eventId)
+    // map to array of timer ids
+    .then(timers => timers.map(({ id }) => id))
+    .then(ids => {
+      // cancel each timer in memory
+      ids.forEach(id => endTimer(id));
+      return ids;
+    });
+};
+
 exports.populateTimers = function(eventId, end) {
   let insertTimers = TIMER_TYPES
     // create each timer to insert into db
@@ -32,13 +43,9 @@ exports.populateTimers = function(eventId, end) {
 };
 
 exports.endEvent = function(eventId, safe) {
-  return getTimersByEvent(eventId)
-    // map to array of timer ids
-    .then(timers => timers.map(({ id }) => id))
+  return cancelTimers(eventId)
     .then(ids => {
-      // cancel each timer in memory
-      ids.forEach(id => endTimer(id));
-      // mark each timer inactive in database
+      // mark timers inactive in database
       return Promise.all(ids.map(id => makeTimerInactive(id)));
     })
     // get event info
@@ -47,3 +54,5 @@ exports.endEvent = function(eventId, safe) {
     .then(event => safe ? sendSafe(event) : sendDanger(event))
     .catch(console.log);
 };
+
+exports.cancelEvent = cancelTimers;
