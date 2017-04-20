@@ -21,7 +21,8 @@ exports.getTimerById = function(id) {
       'events.user_id',
       'users.token',
       'users.first_name',
-      'users.last_name'
+      'users.last_name',
+      'users.username'
     ])
     .where('timers.id', id)
     .innerJoin('events', 'events.id', 'timers.event_id')

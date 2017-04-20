@@ -60,7 +60,7 @@ export default connect(({auth}) => auth)(class PushController extends Component 
         this.showLocalNotification(notif);
       });
 
-      this.refreshTokenListenter = FCM.on(FCMEvent.RefreshToken, token => {
+      this.refreshTokenListener = FCM.on(FCMEvent.RefreshToken, token => {
         console.log('TOKEN (refreshUnsubscribe)', token);
         this.props.dispatch({ type: 'UPDATE_TOKEN', token});
         if (this.props.id) {
