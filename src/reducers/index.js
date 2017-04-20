@@ -29,10 +29,9 @@ const header = (state = {title: 'My-Sentry', prev: null}, action) => {
         title: action.title ? action.title : action.key,
         prev: 'My-Sentry'
       };
-    case 'delete' :
-      return { ...state,
-        title: action.title ? action.title : action.groupName,
-        prev: 'groups'
+    case 'locationSearch' || 'delete' || 'logout' : 
+      return {...state,
+        prev: state.title
       };
     default:
       return {...state,
@@ -42,9 +41,10 @@ const header = (state = {title: 'My-Sentry', prev: null}, action) => {
     }
   case ActionConst.BACK_ACTION :
     switch (state.prev) {
-
     case 'My-Sentry' :
       return {title: 'My-Sentry', prev: null};
+    case 'New Event' :
+      return {title: 'New Event', prev: 'My-Sentry'};    
     case 'My Groups' :
       return {title: 'My Groups', prev: 'My-Sentry'};
     default: return state;
