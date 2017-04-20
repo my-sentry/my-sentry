@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import {connect} from 'react-redux';
 import {Actions, ActionConst} from 'react-native-router-flux';
 import {View, TouchableHighlight, Dimensions, BackAndroid} from 'react-native';
@@ -17,6 +17,14 @@ export default connect()(class Delete extends Component {
     this.dismissModal = this.dismissModal.bind(this);
   }
 
+  static propTypes = {
+    hide: PropTypes.boolean,
+    groupId: PropTypes.number,
+    userId: PropTypes.number,
+    username: PropTypes.string,
+    groupName: PropTypes.string
+  }
+
   componentWillMount() {
     BackAndroid.addEventListener('hardwareBackPress', () => true );
   }
@@ -27,9 +35,9 @@ export default connect()(class Delete extends Component {
 
   render() {
 
-    var {groupId, userId, username, groupName} = this.props;
+    var {groupId, userId, hide, username, groupName} = this.props;
     var {height, width} = Dimensions.get('window');
-    return this.state.hide
+    return hide
       ? (
         <View>
         </View>
@@ -73,7 +81,7 @@ export default connect()(class Delete extends Component {
       <Button block onPress={()=> {
         this.dismissModal();
         removeUserFromGroup(groupId, userId)
-        .then(getGroupById(groupId, this.props.dispatch)
+        .then(getGroupById(groupId, dispatch)
           .then(() => Actions.pop({title: groupName})));
       }}><Text> Yes </Text>
       </Button>
