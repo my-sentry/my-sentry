@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import { Text, View} from 'react-native';
+import { Text, View, Dimensions} from 'react-native';
 import { connect } from 'react-redux';
 import Header from './Header';
 import moment from 'moment';
@@ -8,9 +8,18 @@ import { markSafe, markDanger, deleteEvent } from '../actions/axiosController';
 import ActionButton from 'react-native-action-button';
 import {Actions} from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body, H1, Card, CardItem, Image } from 'native-base';
+import { Container, Grid, Row, Title, Content, Footer, FooterTab, Button, Left, Right, Body, H1, Card, CardItem, Image } from 'native-base';
+const {height, width} = Dimensions.get('window');
+
 
 const styles = {
+  content: {
+    paddingLeft: 0,
+    paddingRight: 5, 
+    paddingBottom: 0,
+    margin: 5,
+    borderColor: 'black',
+  },
   text: {
     fontSize: 16,
     fontWeight: 'bold',
@@ -23,7 +32,12 @@ const styles = {
   timer: {
     fontSize: 25,
     fontWeight: 'bold',
-  }
+  },
+  actionButtonIcon: {
+    alignSelf: 'center',
+    fontSize: 20,
+    color: 'white',
+  },
 };
 
 const mapStateToProps = ({event, dateReducer, auth}) => {
@@ -69,6 +83,7 @@ export default connect(mapStateToProps)(class EventView extends Component {
     user_id: PropTypes.number,
     auth_id: PropTypes.number,
     safe: PropTypes.number,
+    place_name: PropTypes.string,
   }
 
   componentDidMount() {
@@ -100,12 +115,8 @@ export default connect(mapStateToProps)(class EventView extends Component {
 
     const { id, active, isPersonal, name, begin, end, description, lat, long, group, current, dispatch, user_id, auth_id, safe, place_name} = this.props;
     return (
-      <Container style={{backgroundColor: '#FAEAD4'}}>
-        <Header />
-
-        <Content>
-
-          <Card>
+      <Container style={{backgroundColor: '#1f1f1f', padding: 0}}><Header /><Grid><Row style={{top: 20}}>
+          <Content style={{height: (height / 3), padding: 5}}><Card>
             <CardItem>
               <Body>
 
@@ -113,31 +124,31 @@ export default connect(mapStateToProps)(class EventView extends Component {
                 <H1 style={styles.timer}>{this.timer()}</H1>
 
                 ) : (
-                <H1 style={styles.timer}>{begin.format('ddd MMM Qo YYYY hh:mm a')}</H1>
+                <H1 style={styles.timer}>{begin.format('ddd MMM Qo YYYY')}</H1>
                 )}
               </Body>
             </CardItem>
-          </Card>
 
-          <Card>
-            <CardItem header>
+            <CardItem>
               <Text style={styles.text}>{description}</Text>
             </CardItem>
             <CardItem>
               <Body>
-                <Text style={styles.text}>Start: {begin.format('ddd MMM Qo YYYY hh:mm a')}</Text>
-                <Text style={styles.text}>End: {end.format('ddd MMM Qo YYYY hh:mm a')}</Text>
+                <Text style={styles.text}>Start: {begin.format('hh:mm a')}</Text>
+                <Text style={styles.text}>End: {end.format('hh:mm a')}</Text>
                 <Text style={styles.text}>Location: {place_name}</Text>
                 <Text style={styles.text}>Group Name: {group}</Text>
               </Body>
             </CardItem>
-          </Card>
+          </Card></Content>
 
-        </Content>
+        </Row>
 
         {active && isPersonal && !safe ? (
-        <Container>
-          <Button block style={styles.button} onPress={() => {
+
+        <View style={{flex: 1}}>
+   
+          <Button block full style={styles.button} onPress={() => {
             markSafe(id).then(event => {
               dispatch({
                 type: 'CURRENT_ITEM',
@@ -149,7 +160,8 @@ export default connect(mapStateToProps)(class EventView extends Component {
           }}>
             <Text>Safe</Text>
           </Button>
-          <Button danger block style={styles.button} onPress={() => {
+     
+          <Button danger full block style={styles.button} onPress={() => {
             markDanger(id).then(event => dispatch({
               type: 'CURRENT_ITEM',
               item: event,
@@ -159,31 +171,33 @@ export default connect(mapStateToProps)(class EventView extends Component {
           }}>
             <Text>Emergency Alert</Text>
           </Button>
-        </Container>
+        </View>
         ) : (
         !active && isPersonal ? (
-        <View>
+        <View style={styles.content}>
         <GoogleStaticMap
           latitude= {lat.toString()}
           longitude= {long.toString()}
           zoom={13}
-          size={{ width: 500, height: 350 }}
+          size={{ width: width, height: 300 }}
         />
-        <ActionButton buttonColor="rgba(231,76,60,1)" onPress={() => {
+        <ActionButton 
+        icon={<Icon name="trash" style={styles.actionButtonIcon} />}
+        buttonColor="rgba(231,76,60,0.9)"
+        onPress={() => {
           deleteEvent(id)
             .then(() => Actions.loading());
-        }}>
-        </ActionButton>
+        }}/>
         </View>
         ) : (
         <GoogleStaticMap
           latitude= {lat.toString()}
           longitude= {long.toString()}
           zoom={13}
-          size={{ width: 500, height: 350 }}
+          size={{ width: width, height: 300 }}
         />
         ))}
-      </Container>
+      </Grid></Container>
     );
   }
 });
