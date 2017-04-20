@@ -11,14 +11,10 @@ import { removeUser, deleteGroup, getGroupById, getGroups } from '../../actions/
 export default connect()(class Delete extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      hide: props.hide,
-    };
     this.dismissModal = this.dismissModal.bind(this);
   }
 
   static propTypes = {
-    hide: PropTypes.boolean,
     groupId: PropTypes.number,
     userId: PropTypes.number,
     username: PropTypes.string,
@@ -49,10 +45,7 @@ export default connect()(class Delete extends Component {
         height: height,
         width: width,
         opacity: .8,
-        backgroundColor: 'rgba(155,55,55,0.5)',
-        borderStyle: 'solid',
-        borderColor: '#cccccc',
-        borderWidth: 1,
+        backgroundColor: 'transparent',
       }}>
     <Container style={{
       position: 'absolute',
@@ -79,18 +72,16 @@ export default connect()(class Delete extends Component {
     <Left>
       <Button block bordered
       onPress={() =>{
-        this.dismissModal();
-        Actions.pop({title: groupName});
+        Actions.pop();
       }} ><Text> NO</Text></Button>
     </Left>
     <Right>
       <Button block onPress={()=> {
-        this.dismissModal();
         deletingUser ? (
           removeUser(groupId, [user])
           .then(() => dispatch({type: 'REMOVE_MEMBER', id: user.id}))
-          .then(getGroupById(groupId, this.props.dispatch)
-          .then(() => Actions.pop({title: groupName})))
+          .then(getGroupById(groupId, dispatch)
+          .then(() => Actions.pop()))
         ) : (
           removeUser(groupId, users)
           .then(() => {
