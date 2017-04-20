@@ -11,14 +11,10 @@ import { removeUser, deleteGroup, getGroupById, getGroups } from '../../actions/
 export default connect()(class Delete extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      hide: props.hide,
-    };
     this.dismissModal = this.dismissModal.bind(this);
   }
 
   static propTypes = {
-    hide: PropTypes.boolean,
     groupId: PropTypes.number,
     userId: PropTypes.number,
     username: PropTypes.string,
@@ -49,10 +45,7 @@ export default connect()(class Delete extends Component {
         height: height,
         width: width,
         opacity: .8,
-        backgroundColor: 'rgba(155,55,55,0.5)',
-        borderStyle: 'solid',
-        borderColor: '#cccccc',
-        borderWidth: 1,
+        backgroundColor: 'transparent',
       }}>
     <Container style={{
       position: 'absolute',
@@ -60,9 +53,9 @@ export default connect()(class Delete extends Component {
       top: height / 3,
       height: 150,
       width: 200,
-      backgroundColor: 'rgb(155,155,155)',
+      backgroundColor: '#ccc2cd',
       borderStyle: 'solid',
-      borderColor: '#cccccc',
+      borderColor: '#ccc2cd',
       borderWidth: 1,
     }}>
     <Grid style={{flex: 1}}>
@@ -77,20 +70,19 @@ export default connect()(class Delete extends Component {
     </Row>
     <Row style={{flex: 0}}>
     <Left>
-      <Button block bordered
+      <Button block bordered dark
       onPress={() =>{
-        this.dismissModal();
-        Actions.pop({title: groupName});
+        Actions.pop();
       }} ><Text> NO</Text></Button>
     </Left>
     <Right>
-      <Button block onPress={()=> {
-        this.dismissModal();
+      <Button block danger
+      onPress={()=> {
         deletingUser ? (
           removeUser(groupId, [user])
           .then(() => dispatch({type: 'REMOVE_MEMBER', id: user.id}))
-          .then(getGroupById(groupId, this.props.dispatch)
-          .then(() => Actions.pop({title: groupName})))
+          .then(getGroupById(groupId, dispatch)
+          .then(() => Actions.pop()))
         ) : (
           removeUser(groupId, users)
           .then(() => {
