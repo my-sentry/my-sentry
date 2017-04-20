@@ -20,7 +20,7 @@ export default connect()(function errorModal ({dispatch, clear, error}) {
         height: height,
         width: width,
         borderRadius: -1,
-        backgroundColor: 'rgba(155,55,55,0.9)',          
+        backgroundColor: 'rgba(155,55,55,1)',          
         justifyContent: 'center',
         borderWidth: .2,
         borderColor: 'black'

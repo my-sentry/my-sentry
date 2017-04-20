@@ -47,9 +47,23 @@ export default connect(mapStateToProps)(function GroupView ({id, groupName, user
               </Right>
             </ListItem>
           }>
-        </List></Content>
+        </List>
+           <Input onChangeText={text => dispatch({type: 'SEARCH_NAME', text: text, users: users})} value={searchValue} placeholder='Add a Member'/>
+           <List dataArray={searchResults}
+             renderRow={user =>
+               <ListItem onPress={() => {
+                 addUser(id, user.id)
+                   .then(() => {
+                     dispatch({type: 'ADD_MEMBER', user: user});
+                     dispatch({type: 'CLEAR_SEARCH_VALUE'});
+                   });
+               }}>
+                 <Text>{user.username}</Text>
+               </ListItem>
+             }>
+           </List>
 
-
+        </Content>
       </Row><Row style={styles.confirm}>
       <Button danger full rounded
         style={styles.confirmButton}
