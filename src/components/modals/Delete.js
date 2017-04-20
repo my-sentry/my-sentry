@@ -53,9 +53,9 @@ export default connect()(class Delete extends Component {
       top: height / 3,
       height: 150,
       width: 200,
-      backgroundColor: 'rgb(155,155,155)',
+      backgroundColor: '#ccc2cd',
       borderStyle: 'solid',
-      borderColor: '#cccccc',
+      borderColor: '#ccc2cd',
       borderWidth: 1,
     }}>
     <Grid style={{flex: 1}}>
@@ -70,13 +70,14 @@ export default connect()(class Delete extends Component {
     </Row>
     <Row style={{flex: 0}}>
     <Left>
-      <Button block bordered
+      <Button block bordered dark
       onPress={() =>{
         Actions.pop();
       }} ><Text> NO</Text></Button>
     </Left>
     <Right>
-      <Button block onPress={()=> {
+      <Button block danger
+      onPress={()=> {
         deletingUser ? (
           removeUser(groupId, [user])
           .then(() => dispatch({type: 'REMOVE_MEMBER', id: user.id}))
