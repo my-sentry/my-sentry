@@ -81,6 +81,7 @@ router.put('/:id', (req, res, next) => {
 });
 
 router.delete('/:id', (req, res) => {
+  timerService.deleteTimers(req.params.id);
   events.deleteEventById(req.params.id)
     .then(result => res.json(result))
     .catch(err => {

@@ -1,5 +1,5 @@
 const ipc = require('node-ipc');
-const { populateTimers, endEvent } = require('./helpers/util');
+const { populateTimers, endEvent, cancelEvent } = require('./helpers/util');
 
 require('./helpers/worker').start();
 
@@ -26,6 +26,11 @@ ipc.serve(() => {
     var eventId = JSON.parse(data);
     // second argument is safe boolean
     endEvent(eventId, false);
+  });
+
+  ipc.server.on('end', (data, socket) => {
+    var eventId = JSON.parse(data);
+    cancelEvent(eventId);
   });
 });
 
