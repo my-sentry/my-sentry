@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import { Text, View} from 'react-native';
 import { connect } from 'react-redux';
 import Header from './Header';
@@ -48,6 +48,24 @@ const mapStateToProps = ({event, dateReducer, auth}) => {
 export default connect(mapStateToProps)(class EventView extends Component {
   constructor(props) {
     super(props);
+  }
+
+  static propTypes = {
+    begin: PropTypes.object,
+    end: PropTypes.object,
+    current: PropTypes.object,
+    dispatch: PropTypes.func,
+    id: PropTypes.number,
+    active: PropTypes.bool,
+    isPersonal: PropTypes.bool,
+    name: PropTypes.string,
+    description: PropTypes.string,
+    lat: PropTypes.number,
+    long: PropTypes.number,
+    group: PropTypes.string,
+    user_id: PropTypes.number,
+    auth_id: PropTypes.number,
+    safe: PropTypes.number,
   }
 
   componentDidMount() {
@@ -113,8 +131,7 @@ export default connect(mapStateToProps)(class EventView extends Component {
         <Container>
           <Button block style={styles.button} onPress={() => {
             markSafe(id).then(event => {
-              console.log('EVENT', event);
-              this.props.dispatch({
+              dispatch({
                 type: 'CURRENT_ITEM',
                 item: event,
                 active: moment().valueOf() > begin.valueOf() && moment().valueOf() < end.valueOf(),
@@ -125,7 +142,7 @@ export default connect(mapStateToProps)(class EventView extends Component {
             <Text>Safe</Text>
           </Button>
           <Button danger block style={styles.button} onPress={() => {
-            markDanger(id).then(event => this.props.dispatch({
+            markDanger(id).then(event => dispatch({
               type: 'CURRENT_ITEM',
               item: event,
               active: moment().valueOf() > begin.valueOf() && moment().valueOf() < end.valueOf(),
