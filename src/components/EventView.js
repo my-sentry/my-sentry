@@ -156,18 +156,22 @@ export default connect(mapStateToProps)(class EventView extends Component {
                 active: moment().valueOf() > begin.valueOf() && moment().valueOf() < end.valueOf(),
                 personal: auth_id === user_id
               });
+              Actions.loading();
             });
           }}>
             <Text>Safe</Text>
           </Button>
      
           <Button danger full block style={styles.button} onPress={() => {
-            markDanger(id).then(event => dispatch({
-              type: 'CURRENT_ITEM',
-              item: event,
-              active: moment().valueOf() > begin.valueOf() && moment().valueOf() < end.valueOf(),
-              personal: auth_id === user_id
-            }));
+            markDanger(id).then(event => {
+              dispatch({
+                type: 'CURRENT_ITEM',
+                item: event,
+                active: moment().valueOf() > begin.valueOf() && moment().valueOf() < end.valueOf(),
+                personal: auth_id === user_id
+              });
+              Actions.loading();
+            });
           }}>
             <Text>Emergency Alert</Text>
           </Button>
@@ -190,12 +194,13 @@ export default connect(mapStateToProps)(class EventView extends Component {
         }}/>
         </View>
         ) : (
+        <View style={styles.content}>
         <GoogleStaticMap
           latitude= {lat.toString()}
           longitude= {long.toString()}
           zoom={13}
           size={{ width: width, height: 300 }}
-        />
+        /></View>
         ))}
       </Grid></Container>
     );

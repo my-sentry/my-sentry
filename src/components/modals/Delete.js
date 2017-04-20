@@ -44,7 +44,6 @@ export default connect()(class Delete extends Component {
         alignSelf: 'center',
         height: height,
         width: width,
-        opacity: .8,
         backgroundColor: 'transparent',
       }}>
     <Container style={{

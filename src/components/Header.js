@@ -10,24 +10,46 @@ const styles = {
     elevation: 8,
     borderBottomColor: null,
     borderColor: 'transparent',
-    height: 60,
+    height: 50,
     backgroundColor: '#1f1f1f',
   },
   body: {
     borderColor: 'transparent',
     backgroundColor: 'transparent',
-    justifyContent: 'center'
+    paddingLeft: 30,
   },
   menu: {
     elevation: 0,
     borderColor: 'transparent',
     backgroundColor: 'transparent',
   },
-  text: {
+  fakemenu: {
+    elevation: 0,
+    borderColor: 'transparent',
     backgroundColor: 'transparent',
-    fontSize: 20,
+    paddingRight: 10,
+  },  
+  text: {
+    paddingTop: 15,
+    paddingLeft: 15,
+    backgroundColor: 'transparent',
+    fontSize: 18,
     fontWeight: 'bold',
     color: '#f0f0f0'
+  },
+  fake: {
+    paddingTop: 15,
+    paddingLeft: 25,
+    backgroundColor: 'transparent',
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#f0f0f0'
+  },
+  nullify: {
+    margin: 0, 
+    padding: 0, 
+    alignSelf: null, 
+    flex: null
   },
 };
 
@@ -38,31 +60,33 @@ const mapStateToProps = ({header}) => ({prev: header.prev, title: header.title})
 export default connect(mapStateToProps)(function ({prev, title}) { 
   return (
     <Header style={styles.header} > 
-    <Left> 
+    <Left style={{flex: null}}> 
     {title !== 'My-Sentry' ? (
-      <Button style={styles.menu} >
+      <Button 
+      onPress={()=> Actions.pop()}
+      style={styles.menu} >
         <Icon 
-        onPress={()=> Actions.pop()}
           name='arrow-back' 
           style={styles.menu}          
           />
       </Button>
-      ) : null
+      ) : <Button disabled style={styles.fakemenu}/>
   }
     </Left>
-
-      <Body style={styles.body}>
-      <Text style={styles.text}>{title.length > 30 ? `${title.slice(0, 30)}...` : title}</Text>
-      </Body>      
+    <Body style={styles.nullify} >
+      <Text style={title !== 'My-Sentry' ? styles.text : styles.fake }>{title.length > 25 ? `${title.slice(0, 25)}...` : title}</Text>
+    </Body>
          
     <Right>
       {title === 'My-Sentry' 
 
-      ? (<Button style={styles.menu} onPress={()=> Actions.refresh({key: 'menu', open: value => !value })}>
-              <Icon
-              ios='ios-menu' 
-              android="md-menu" 
-              />
+      ? (<Button 
+        style={styles.menu} 
+        onPress={()=> Actions.refresh({key: 'menu', open: value => !value })}>
+          <Icon
+          ios='ios-menu' 
+          android="md-menu" 
+          />
         </Button>)
       : null
     }

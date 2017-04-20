@@ -157,11 +157,8 @@ export default connect(mapStateToProps)(class EventForm extends Component {
           underlineColorAndroid='rgba(0,0,0,0)'
           placeholder="Location"
           value={form.location}
-          onFocus={() => {
-            dispatch({type: 'ADD_LOCATION', location: ''});
-            Actions.locationSearch();
-          }}
           onChangeText={text => {
+            Actions.locationSearch();
             dispatch({type: 'ADD_LOCATION', location: text});
             dispatch({ type: 'UPDATE_LOC_INPUT', text });
             getPlaces(text)
