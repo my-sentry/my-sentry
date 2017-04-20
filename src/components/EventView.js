@@ -4,9 +4,11 @@ import { connect } from 'react-redux';
 import Header from './Header';
 import moment from 'moment';
 import GoogleStaticMap from 'react-native-google-static-map';
-import { markSafe, markDanger } from '../actions/axiosController';
+import { markSafe, markDanger, deleteEvent } from '../actions/axiosController';
 import ActionButton from 'react-native-action-button';
-import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, H1, Card, CardItem, Image } from 'native-base';
+import {Actions} from 'react-native-router-flux';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { Container, Title, Content, Footer, FooterTab, Button, Left, Right, Body, H1, Card, CardItem, Image } from 'native-base';
 
 const styles = {
   text: {
@@ -78,7 +80,7 @@ export default connect(mapStateToProps)(class EventView extends Component {
   render() {
 
 
-    const { id, active, isPersonal, name, begin, end, description, lat, long, group, current, dispatch, user_id, auth_id, safe} = this.props;
+    const { id, active, isPersonal, name, begin, end, description, lat, long, group, current, dispatch, user_id, auth_id, safe, place_name} = this.props;
     return (
       <Container style={{backgroundColor: '#FAEAD4'}}>
         <Header />
@@ -150,7 +152,10 @@ export default connect(mapStateToProps)(class EventView extends Component {
           zoom={13}
           size={{ width: 500, height: 350 }}
         />
-        <ActionButton>
+        <ActionButton buttonColor="rgba(231,76,60,1)" onPress={() => {
+          deleteEvent(id)
+            .then(() => Actions.loading());
+        }}>
         </ActionButton>
         </View>
         ) : (

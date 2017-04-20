@@ -77,6 +77,17 @@ export var getEvents = function() {
     .catch(err => console.log(err));
 };
 
+export var deleteEvent = function(eventId) {
+  return axios({
+    method: 'delete',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    url: `${URL_CONFIG}/api/events/${eventId}?delete=true`
+  });
+};
+
 
 export var postEvent = function(data) {
   return axios({
