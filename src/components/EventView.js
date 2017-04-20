@@ -9,7 +9,7 @@ import ActionButton from 'react-native-action-button';
 import {Actions} from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Container, Grid, Row, Title, Content, Footer, FooterTab, Button, Left, Right, Body, H1, Card, CardItem, Image } from 'native-base';
-const {height, width} = Dimensions.get('window');
+
 
 
 const styles = {
@@ -19,6 +19,7 @@ const styles = {
     paddingBottom: 0,
     margin: 5,
     borderColor: 'black',
+    backgroundColor: 'transparent'
   },
   text: {
     fontSize: 16,
@@ -106,13 +107,13 @@ export default connect(mapStateToProps)(class EventView extends Component {
     var remaining = end.valueOf() - current.valueOf();
     var duration = moment.duration(remaining);
 
-    return `${duration.days()}d:${duration.hours()}h:${duration.minutes()}m:${duration.seconds()}s`;
+    return `${Math.abs(duration.hours())}h:${Math.abs(duration.minutes())}m:${Math.abs(duration.seconds())}s`;
   }
 
 
   render() {
-
-
+    var {height, width} = Dimensions.get('window');
+    width = Math.trunc(width);
     const { id, active, isPersonal, name, begin, end, description, lat, long, group, current, dispatch, user_id, auth_id, safe, place_name} = this.props;
     return (
       <Container style={{backgroundColor: '#1f1f1f', padding: 0}}><Header /><Grid><Row style={{top: 20}}>
@@ -120,7 +121,7 @@ export default connect(mapStateToProps)(class EventView extends Component {
             <CardItem>
               <Body>
 
-                {active && ! safe ? (
+                {active && !safe ? (
                 <H1 style={styles.timer}>{this.timer()}</H1>
 
                 ) : (
@@ -177,7 +178,7 @@ export default connect(mapStateToProps)(class EventView extends Component {
           </Button>
         </View>
         ) : (
-        !active && isPersonal ? (
+        !active && isPersonal && !safe ? (
         <View style={styles.content}>
         <GoogleStaticMap
           latitude= {lat.toString()}
@@ -185,11 +186,26 @@ export default connect(mapStateToProps)(class EventView extends Component {
           zoom={13}
           size={{ width: width, height: 300 }}
         />
+         <ActionButton 
+        icon={<Icon name="star" style={styles.actionButtonIcon} />}
+        buttonColor="blue"
+        onPress={() => {
+          deleteEvent(id)
+            .then(() => Actions.loading());
+        }}/>
         <ActionButton 
         icon={<Icon name="trash" style={styles.actionButtonIcon} />}
         buttonColor="rgba(231,76,60,0.9)"
+        position ='left'
         onPress={() => {
-          deleteEvent(id)
+          markSafe(id).then(event => {
+            dispatch({
+              type: 'CURRENT_ITEM',
+              item: event,
+              active: moment().valueOf() > begin.valueOf() && moment().valueOf() < end.valueOf(),
+              personal: auth_id === user_id
+            });
+          })
             .then(() => Actions.loading());
         }}/>
         </View>
@@ -201,6 +217,7 @@ export default connect(mapStateToProps)(class EventView extends Component {
           zoom={13}
           size={{ width: width, height: 300 }}
         /></View>
+
         ))}
       </Grid></Container>
     );
