@@ -14,7 +14,7 @@ var morgan = require('morgan');
 var expressSession = require('express-session');
 var passport = require('passport');
 
-const port = process.env.PORT || 8001;
+const port = process.env.PORT || 8000;
 
 var app = express();
 

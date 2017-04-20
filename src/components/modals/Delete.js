@@ -4,7 +4,7 @@ import {Actions, ActionConst} from 'react-native-router-flux';
 import {View, TouchableHighlight, Dimensions, BackAndroid} from 'react-native';
 import { Container, Title, Text, Grid, Row, Form, Content, Button, Left, Right, Body, List, ListItem, H1 } from 'native-base';
 import { logoutCtrl } from '../../actions/axiosController';
-import { removeUser, getGroupById } from '../../actions/axiosController';
+import { removeUser, deleteGroup, getGroupById, getGroups } from '../../actions/axiosController';
 
 
 
@@ -35,7 +35,7 @@ export default connect()(class Delete extends Component {
 
   render() {
 
-    var {groupId, user, hide, groupName, dispatch} = this.props;
+    var {groupId, user, users, hide, groupName, deletingUser, dispatch} = this.props;
     var {height, width} = Dimensions.get('window');
     return hide
       ? (
@@ -67,7 +67,13 @@ export default connect()(class Delete extends Component {
     }}>
     <Grid style={{flex: 1}}>
     <Row >
-    <Text style={{alignSelf: 'center'}}> Are you sure you want to remove {user.username} from {groupName}</Text>
+    <Text style={{alignSelf: 'center'}}>
+      Are you sure you want to {deletingUser ? (
+        'remove ' + user.username + ' from ' + groupName + '?'
+      ) : (
+        'delete the group: ' + groupName + '?'
+      )}
+    </Text>
     </Row>
     <Row style={{flex: 0}}>
     <Left>
@@ -80,10 +86,24 @@ export default connect()(class Delete extends Component {
     <Right>
       <Button block onPress={()=> {
         this.dismissModal();
-        removeUser(groupId, [user])
-        .then(() => dispatch({type: 'REMOVE_MEMBER', id: user.id}))
-        .then(getGroupById(groupId, this.props.dispatch)
-          .then(() => Actions.pop({title: groupName})));
+        deletingUser ? (
+          removeUser(groupId, [user])
+          .then(() => dispatch({type: 'REMOVE_MEMBER', id: user.id}))
+          .then(getGroupById(groupId, this.props.dispatch)
+          .then(() => Actions.pop({title: groupName})))
+        ) : (
+          removeUser(groupId, users)
+          .then(() => {
+            return deleteGroup(groupId)
+            .then(() => {
+              return getGroups(dispatch)
+              .then(() => {
+                Actions.pop();
+                Actions.groups();
+              });
+            });
+          })
+        );
       }}><Text> Yes </Text>
       </Button>
     </Right>
