@@ -44,7 +44,7 @@ export default connect()(class Delete extends Component {
         alignSelf: 'center',
         height: height,
         width: width,
-        backgroundColor: 'transparent',
+        backgroundColor: 'rgba(74,50,50,0.9)',
       }}>
     <Container style={{
       position: 'absolute',
@@ -52,13 +52,13 @@ export default connect()(class Delete extends Component {
       top: height / 3,
       height: 150,
       width: 200,
-      backgroundColor: '#ccc2cd',
+      backgroundColor: 'rgb(155,155,155)',          
       borderStyle: 'solid',
-      borderColor: '#ccc2cd',
+      borderColor: '#cccccc',
       borderWidth: 1,
     }}>
     <Grid style={{flex: 1}}>
-    <Row >
+    <Row style={{alignItems: 'center'}}>
     <Text style={{alignSelf: 'center'}}>
       Are you sure you want to {deletingUser ? (
         'remove ' + user.username + ' from ' + groupName + '?'

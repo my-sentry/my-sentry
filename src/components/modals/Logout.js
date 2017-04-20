@@ -13,7 +13,7 @@ export default function SignupModal () {
       alignSelf: 'center',
       height: height,
       width: width,
-      backgroundColor: 'transparent',          
+      backgroundColor: 'rgba(74,50,50,0.9)',          
     }}>
   <Container style={{
     position: 'absolute',
