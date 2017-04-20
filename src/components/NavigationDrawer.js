@@ -16,7 +16,7 @@ const drawerStyles = {
 export default class NavigationDrawer extends Component {
 
   static propTypes = {
-    navigationState: PropTypes.object
+    navigationState: PropTypes.object,
   }
   render() {
     const state = this.props.navigationState;
