@@ -25,7 +25,7 @@ export default connect(mapStateToProps)(function GroupView ({id, groupName, user
    <Container style={{backgroundColor: '#1f1f1f'}}><Header /><Grid><Row style={styles.container}>
       <Content style={styles.content}>
 
-        <List 
+        <List
         dataArray={users}
           renderRow={user =>
             <ListItem>
@@ -34,8 +34,13 @@ export default connect(mapStateToProps)(function GroupView ({id, groupName, user
             </Body>
               <Right>
                 <Button small bordered danger onPress={() => {
-                  removeUser(id, [user]);
-                  dispatch({type: 'REMOVE_MEMBER', id: user.id});
+                  Actions.delete({
+                    groupId: id,
+                    user: user,
+                    groupName: groupName,
+                    deletingUser: true,
+                    dispatch: dispatch
+                  });
                 }}>
                   <Icon name='ios-trash-outline' style={{color: 'red'}} />
                 </Button>
@@ -49,14 +54,21 @@ export default connect(mapStateToProps)(function GroupView ({id, groupName, user
       <Button danger full rounded
         style={styles.confirmButton}
         onPress={() => {
-          removeUser(id, users)
-          .then(() => {
-            return deleteGroup(id)
-            .then(() => {
-              return getGroups(dispatch)
-              .then(() => Actions.groups());
-            });
+          Actions.delete({
+            groupId: id,
+            users: users,
+            groupName: groupName,
+            deletingUser: false,
+            dispatch: dispatch
           });
+          // removeUser(id, users)
+          // .then(() => {
+          //   return deleteGroup(id)
+          //   .then(() => {
+          //     return getGroups(dispatch)
+          //     .then(() => Actions.groups());
+          //   });
+          // });
         }}><Text style={styles.textbox}>Delete Group</Text></Button></Row>
         </Grid>
       </Container>
