@@ -85,7 +85,8 @@ export var deleteEvent = function(eventId) {
       'Content-Type': 'application/json'
     },
     url: `${URL_CONFIG}/api/events/${eventId}?delete=true`
-  });
+  })
+  .catch(err => console.log(err));
 };
 
 
