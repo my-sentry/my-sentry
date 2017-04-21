@@ -186,20 +186,22 @@ export default connect(mapStateToProps)(class EventView extends Component {
           zoom={13}
           size={{ width: width, height: 300 }}
         />
-         <ActionButton 
-        icon={<Icon name="star" style={styles.actionButtonIcon} />}
-        buttonColor="blue"
+        <ActionButton 
+        icon={<Icon name="trash" style={styles.actionButtonIcon} />}
+        position ='left'
+        buttonColor="rgba(231,76,60,0.9)"
         onPress={() => 
           Actions.delete({
             event: id,
             source: 'eventView',
             name: name
           })
+
+
         }/>
-        <ActionButton 
-        icon={<Icon name="trash" style={styles.actionButtonIcon} />}
-        buttonColor="rgba(231,76,60,0.9)"
-        position ='left'
+         <ActionButton 
+        icon={<Icon name="star" style={styles.actionButtonIcon} />}
+        buttonColor="blue"
         onPress={() => {
           markSafe(id).then(event => {
             dispatch({
@@ -208,9 +210,7 @@ export default connect(mapStateToProps)(class EventView extends Component {
               active: moment().valueOf() > begin.valueOf() && moment().valueOf() < end.valueOf(),
               personal: auth_id === user_id
             });
-          })
-            .then(() => Actions.loading());
-
+          }).then(() => Actions.loading());
         }}/>
         </View>
         ) : (
