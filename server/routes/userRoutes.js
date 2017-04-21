@@ -25,7 +25,7 @@ module.exports = function(passport) {
     //       next(err);
     //     });
     // } else {
-      users.getUserById(req.params.id)
+    users.getUserById(req.params.id)
         .then(result => res.json(result))
         .catch(err => {
           console.log(err);
