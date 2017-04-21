@@ -15,7 +15,7 @@ import { Container, Grid, Row, Title, Content, Footer, FooterTab, Button, Left, 
 const styles = {
   content: {
     paddingLeft: 0,
-    paddingRight: 5, 
+    paddingRight: 5,
     paddingBottom: 0,
     margin: 5,
     borderColor: 'black',
@@ -138,8 +138,8 @@ export default connect(mapStateToProps)(class EventView extends Component {
                 ) : (
                 active && !safe ? (
                 <H1 style={styles.timer}>{this.timer()}</H1>
-                ) : ( 
-                <H1 style={styles.timer}>{begin.format('ddd MMM Qo YYYY')}</H1>
+                ) : (
+                <H1 style={styles.timer}>{begin.format('ddd MMM Do YYYY')}</H1>
                 ))}
               </Body>
             </CardItem>
@@ -162,7 +162,7 @@ export default connect(mapStateToProps)(class EventView extends Component {
         {active && isPersonal && !safe ? (
 
         <View style={{flex: 1}}>
-   
+
           <Button block full style={styles.button} onPress={() => {
             markSafe(id).then(event => {
               dispatch({
@@ -176,7 +176,7 @@ export default connect(mapStateToProps)(class EventView extends Component {
           }}>
             <Text>Safe</Text>
           </Button>
-     
+
           <Button danger full block style={styles.button} onPress={() => {
             markDanger(id).then(event => {
               dispatch({
@@ -200,11 +200,11 @@ export default connect(mapStateToProps)(class EventView extends Component {
           zoom={13}
           size={{ width: width, height: 300 }}
         />
-        <ActionButton 
+        <ActionButton
         icon={<Icon name="trash" style={styles.actionButtonIcon} />}
         position ='left'
         buttonColor="rgba(231,76,60,0.9)"
-        onPress={() => 
+        onPress={() =>
           Actions.delete({
             event: id,
             source: 'eventView',
@@ -213,7 +213,7 @@ export default connect(mapStateToProps)(class EventView extends Component {
 
 
         }/>
-         <ActionButton 
+         <ActionButton
         icon={<Icon name="star" style={styles.actionButtonIcon} />}
         buttonColor="blue"
         onPress={() => {

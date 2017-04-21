@@ -22,7 +22,7 @@ export default connect(mapStateToProps)(function Groups ({groups, userId, isAdmi
     <Content style={styles.content} >
        <List dataArray={groups}
         renderRow={group =>
-          <ListItem 
+          <ListItem
           style={styles.danger}
           onPress={() => {
             getGroupById(group.id)
@@ -31,6 +31,7 @@ export default connect(mapStateToProps)(function Groups ({groups, userId, isAdmi
                 dispatch({type: 'CURRENT_GROUP', id: {...group, userId: userId}});
               })
               .then(() => {
+                dispatch({type: 'CLEAR_SEARCH_VALUE'});
                 return getUsers().then((res) => {
                   dispatch({type: 'RECEIVE_SEARCH_DATA', users: res.data});
                   Actions.groupView({ title: group.name });
@@ -57,7 +58,7 @@ export default connect(mapStateToProps)(function Groups ({groups, userId, isAdmi
                 dispatch({type: 'RECEIVE_USERS', users: res.data});
                 dispatch({type: 'RECEIVE_SEARCH_DATA', users: res.data});
               })
-              .then(() => Actions.groupForm({title: 'Create a new Group'})) }><Text style={styles.textbox}>Create a new Group</Text></Button></Row> 
+              .then(() => Actions.groupForm({title: 'Create a new Group'})) }><Text style={styles.textbox}>Create a new Group</Text></Button></Row>
 
     </Grid>
     </Container>
