@@ -34,6 +34,11 @@ const styles = {
     fontSize: 25,
     fontWeight: 'bold',
   },
+  dangerTimer: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    color: 'red',
+  },
   actionButtonIcon: {
     alignSelf: 'center',
     fontSize: 20,
@@ -88,9 +93,14 @@ export default connect(mapStateToProps)(class EventView extends Component {
   }
 
   componentDidMount() {
-    const {begin, end, current, dispatch, active} = this.props;
+    const {begin, end, current, dispatch, active, safe} = this.props;
 
-    if (active) {
+    if (active && !safe) {
+      this.props.dispatch({ type: 'CURRENT' });
+      this.intervalId = setInterval(() => {
+        this.props.dispatch({ type: 'CURRENT'});
+      }, 1000);
+    } else if (!active && !safe) {
       this.props.dispatch({ type: 'CURRENT' });
       this.intervalId = setInterval(() => {
         this.props.dispatch({ type: 'CURRENT'});
@@ -114,19 +124,23 @@ export default connect(mapStateToProps)(class EventView extends Component {
   render() {
     var {height, width} = Dimensions.get('window');
     width = Math.trunc(width);
-    const { id, active, isPersonal, name, begin, end, description, lat, long, group, current, dispatch, user_id, auth_id, safe, place_name} = this.props;
+    const { id, isPersonal, name, begin, end, description, lat, long, group, current, dispatch, user_id, auth_id, safe, place_name} = this.props;
+    const active = moment().valueOf() > begin.valueOf() && moment().valueOf() < end.valueOf();
     return (
       <Container style={{backgroundColor: '#1f1f1f', padding: 0}}><Header /><Grid><Row style={{top: 20}}>
           <Content style={{height: (height / 3), padding: 5}}><Card>
             <CardItem>
               <Body>
 
-                {active && !safe ? (
-                <H1 style={styles.timer}>{this.timer()}</H1>
+                {!active && !safe && (current.valueOf() > end.valueOf()) ? (
+                <H1 style={styles.dangerTimer}>{this.timer()}</H1>
 
                 ) : (
+                active && !safe ? (
+                <H1 style={styles.timer}>{this.timer()}</H1>
+                ) : ( 
                 <H1 style={styles.timer}>{begin.format('ddd MMM Qo YYYY')}</H1>
-                )}
+                ))}
               </Body>
             </CardItem>
 
