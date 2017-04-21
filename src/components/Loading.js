@@ -45,7 +45,7 @@ export default connect()(function ({dispatch}) {
 
       dispatch({type: 'SET_VALUES', id: id, name: name});
       dispatch({type: 'UPDATE_FEED', data: feed});
-      return Actions.menu();
+      return Actions.menu({title: 'My-Sentry'});
 
     } catch ({response}) {
       if (response.status === 401) {

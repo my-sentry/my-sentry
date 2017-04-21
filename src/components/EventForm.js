@@ -201,6 +201,7 @@ export default connect(mapStateToProps)(class EventForm extends Component {
               .then(() => {
                 dispatch({type: 'RESET_DATE'});
                 dispatch({type: 'RESET_EVENT_FORM'});
+                Actions.loading();
               })}><Text style={styles.textbox}>Create Event</Text></Button></Row>
 
         </Grid>

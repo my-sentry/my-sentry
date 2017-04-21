@@ -34,9 +34,9 @@ const header = (state = {title: 'My-Sentry', prev: null}, action) => {
         prev: state.title
       };
     case 'delete' :
-      return {...state,
-        prev: 'groupView'
-      };
+      return /group/.test(action.source) 
+      ? {...state, prev: 'groupView'}
+      : {...state, prev: 'eventView'};
     default:
       return {...state,
         title: action.title ? action.title : action.key,
@@ -45,7 +45,8 @@ const header = (state = {title: 'My-Sentry', prev: null}, action) => {
     }
   case ActionConst.BACK_ACTION :
     switch (state.prev) {
-      
+    case 'eventView' :
+      return {...state, prev: 'My-Sentry'};      
     case 'groupView' : 
       return {...state, prev: 'My Groups'};
     case 'My-Sentry' :
