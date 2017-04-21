@@ -80,7 +80,7 @@ router.put('/:id', (req, res, next) => {
   }
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', (req, res, next) => {
   timerService.deleteTimers(req.params.id);
   events.deleteEventById(req.params.id)
     .then(result => res.json(result))
