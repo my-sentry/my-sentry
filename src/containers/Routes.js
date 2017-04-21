@@ -16,7 +16,7 @@ import ErrorModal from '../components/modals/Error';
 import Logout from '../components/modals/Logout';
 import Delete from '../components/modals/Delete';
 import LocationSearch from '../components/modals/LocationSearch';
-
+import SearchResults from '../components/modals/searchResults';
 
 import { connect } from 'react-redux';
 
@@ -50,6 +50,7 @@ const scenes = Actions.create(
   <Scene key='logout' duration={1} component={Logout} />
   <Scene key='delete' duration={1} component={Delete} />
   <Scene key='locationSearch' duration={1} component={LocationSearch} />
+  <Scene key='searchResults' duration={1} component={SearchResults} />
   <Scene key='errorModal' duration={1} component={ErrorModal} />
 
   </Scene>

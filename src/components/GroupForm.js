@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Text, View} from 'react-native';
+import { Text, TextInput,  View} from 'react-native';
 import { connect } from 'react-redux';
 import {Actions} from 'react-native-router-flux';
 import Header from './Header';
@@ -17,6 +17,7 @@ const mapStateToProps = ({groups, auth, searchBar}) => {
   };
 };
 
+
 export default connect(mapStateToProps)(function GroupForm ({adminUser, members, groupName, searchResults, searchValue, tempList, dispatch}) {
   return (
    <Container style={{backgroundColor: '#1f1f1f'}}><Header /><Grid><Row style={styles.container}>
@@ -25,7 +26,10 @@ export default connect(mapStateToProps)(function GroupForm ({adminUser, members,
       style={styles.content}>
       <Form style={styles.form} >
           <Item style={styles.listItemAlt}>
-            <Input onChangeText={(text) => dispatch({type: 'ADD_NAME', text: text})} placeholder='Group Name' />
+            <TextInput 
+            style={{flex: 1}}
+            onChangeText={(text) => dispatch({type: 'ADD_NAME', text: text})} 
+            placeholder='Group Name' />
           </Item>
 
         <Item style={styles.list}>
@@ -37,22 +41,17 @@ export default connect(mapStateToProps)(function GroupForm ({adminUser, members,
             }>
           </List>
         </Item>
+          <TextInput 
+          style={{flex: 1}} 
+          onChangeText={text => {
+            Actions.searchResults({form: true});
+            dispatch({type: 'SEARCH_NAME', text: text, users: members});
+          }} 
+          value={searchValue} 
+          placeholder='Add a Member'/>
 
         </Form>
         <Item style={styles.addMember}>
-        <Row>
-          <Input onChangeText={text => dispatch({type: 'SEARCH_NAME', text: text, users: members})} value={searchValue} placeholder='Add a Member'/>
-          </Row>
-          <List dataArray={searchResults}
-            renderRow={user =>
-              <ListItem style={styles.listItem} onPress={() => {
-                dispatch({type: 'ADD_MEMBER', form: true, user: user});
-                dispatch({type: 'CLEAR_SEARCH_VALUE'});
-              }}><Text>{user.username}</Text>
-              </ListItem>
-            }>
-          </List>
-
         </Item>
 
       </Content>

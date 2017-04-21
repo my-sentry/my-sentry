@@ -33,6 +33,10 @@ const header = (state = {title: 'My-Sentry', prev: null}, action) => {
       return {...state,
         prev: state.title
       };
+    case 'searchResults' : 
+      return {...state,
+        prev: 'groupView'
+      };
     case 'delete' :
       return /group/.test(action.source) 
       ? {...state, prev: 'groupView'}
