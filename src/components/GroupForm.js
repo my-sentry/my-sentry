@@ -21,14 +21,14 @@ const mapStateToProps = ({groups, auth, searchBar}) => {
 export default connect(mapStateToProps)(function GroupForm ({adminUser, members, groupName, searchResults, searchValue, tempList, dispatch}) {
   return (
    <Container style={{backgroundColor: '#1f1f1f'}}><Header /><Grid><Row style={styles.container}>
-      <Content 
+      <Content
       scrollEnabled={false}
       style={styles.content}>
       <Form style={styles.form} >
           <Item style={styles.listItemAlt}>
-            <TextInput 
+            <TextInput
             style={{flex: 1}}
-            onChangeText={(text) => dispatch({type: 'ADD_NAME', text: text})} 
+            onChangeText={(text) => dispatch({type: 'ADD_NAME', text: text})}
             placeholder='Group Name' />
           </Item>
 
@@ -41,13 +41,13 @@ export default connect(mapStateToProps)(function GroupForm ({adminUser, members,
             }>
           </List>
         </Item>
-          <TextInput 
-          style={{flex: 1}} 
+          <TextInput
+          style={{flex: 1}}
           onChangeText={text => {
             Actions.searchResults({form: true});
             dispatch({type: 'SEARCH_NAME', text: text, users: members});
-          }} 
-          value={searchValue} 
+          }}
+          value={searchValue}
           placeholder='Add a Member'/>
 
         </Form>
