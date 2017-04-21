@@ -48,20 +48,13 @@ export default connect(mapStateToProps)(function GroupView ({id, groupName, user
             </ListItem>
           }>
         </List>
-           <Input onChangeText={text => dispatch({type: 'SEARCH_NAME', text: text, users: users})} value={searchValue} placeholder='Add a Member'/>
-           <List dataArray={searchResults}
-             renderRow={user =>
-               <ListItem onPress={() => {
-                 addUser(id, user.id)
-                   .then(() => {
-                     dispatch({type: 'ADD_MEMBER', user: user});
-                     dispatch({type: 'CLEAR_SEARCH_VALUE'});
-                   });
-               }}>
-                 <Text>{user.username}</Text>
-               </ListItem>
-             }>
-           </List>
+           <Input 
+            onChangeText={text => {
+              Actions.searchResults();
+              dispatch({type: 'SEARCH_NAME', text: text, users: users});
+            }} 
+           value={searchValue} 
+           placeholder='Add a Member'/>
 
         </Content>
       </Row><Row style={styles.confirm}>
@@ -75,14 +68,6 @@ export default connect(mapStateToProps)(function GroupView ({id, groupName, user
             source: 'groupPage',
             dispatch: dispatch
           });
-          // removeUser(id, users)
-          // .then(() => {
-          //   return deleteGroup(id)
-          //   .then(() => {
-          //     return getGroups(dispatch)
-          //     .then(() => Actions.groups());
-          //   });
-          // });
         }}><Text style={styles.textbox}>Delete Group</Text></Button></Row>
         </Grid>
       </Container>

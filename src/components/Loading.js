@@ -40,9 +40,7 @@ export default connect()(function ({dispatch}) {
           groupName: group.data.name,
           fullName: `${userIds[i].data.first_name} ${userIds[i].data.last_name} ` }
       ));
-
-      console.log('FEED::::::::', feed);
-
+      
       dispatch({type: 'SET_VALUES', id: id, name: name});
       dispatch({type: 'UPDATE_FEED', data: feed});
       return Actions.menu({title: 'My-Sentry'});
