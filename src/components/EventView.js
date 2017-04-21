@@ -189,10 +189,13 @@ export default connect(mapStateToProps)(class EventView extends Component {
          <ActionButton 
         icon={<Icon name="star" style={styles.actionButtonIcon} />}
         buttonColor="blue"
-        onPress={() => {
-          deleteEvent(id)
-            .then(() => Actions.loading());
-        }}/>
+        onPress={() => 
+          Actions.delete({
+            event: id,
+            source: 'eventView',
+            name: name
+          })
+        }/>
         <ActionButton 
         icon={<Icon name="trash" style={styles.actionButtonIcon} />}
         buttonColor="rgba(231,76,60,0.9)"
@@ -207,6 +210,7 @@ export default connect(mapStateToProps)(class EventView extends Component {
             });
           })
             .then(() => Actions.loading());
+
         }}/>
         </View>
         ) : (

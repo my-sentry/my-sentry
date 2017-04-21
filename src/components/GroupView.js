@@ -38,7 +38,7 @@ export default connect(mapStateToProps)(function GroupView ({id, groupName, user
                     groupId: id,
                     user: user,
                     groupName: groupName,
-                    deletingUser: true,
+                    source: 'groupUser',
                     dispatch: dispatch
                   });
                 }}>
@@ -71,8 +71,8 @@ export default connect(mapStateToProps)(function GroupView ({id, groupName, user
           Actions.delete({
             groupId: id,
             users: users,
-            groupName: groupName,
-            deletingUser: false,
+            name: groupName,
+            source: 'groupPage',
             dispatch: dispatch
           });
           // removeUser(id, users)

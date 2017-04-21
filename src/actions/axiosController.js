@@ -99,7 +99,7 @@ export var postEvent = function(data) {
     },
     url: `${URL_CONFIG}/api/events/`,
     data: JSON.stringify(data)
-  }).then(() => Actions.loading())
+  })
     .catch(({response}) => {
       Actions.errorModal({
         error: /ER_DATA_TOO_LONG:/.test(response.data)
